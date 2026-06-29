@@ -222,8 +222,17 @@ print(type(precos_dataframe))</pre>
       <strong>💡 Colchete duplo = mantém a estrutura de tabela.</strong> É o erro mais comum desta semana: <code>df['col']</code> vira Series, <code>df[['col']]</code> continua DataFrame.
     </div>
 
+    <h3>Exemplo 3 (resolvido) — Exportando e lendo um arquivo CSV real</h3>
+    <pre class="codeblock">vendas.to_csv("vendas.csv", index=False)
+
+vendas_lida = pd.read_csv("vendas.csv")
+print(vendas_lida.head())</pre>
+    <div class="box tip">
+      <strong>💡 É assim que você vai carregar qualquer dataset real</strong> (do Kaggle, de um relatório da empresa, de um portal de dados abertos): com <code>pd.read_csv("nome_do_arquivo.csv")</code>. O DataFrame <code>vendas</code> deste exemplo nasceu de um dicionário só para fins didáticos — mas a partir de agora, todo dataset que você receber vai chegar como um arquivo, e a leitura é sempre essa mesma linha de código.
+    </div>
+
     <div class="ex">
-      <strong>✏️ Agora é sua vez:</strong> no notebook, crie seu próprio DataFrame com 4 colunas e use <code>head()</code>, <code>describe()</code> e <code>groupby()</code>.
+      <strong>✏️ Agora é sua vez:</strong> no notebook, crie seu próprio DataFrame com 4 colunas, use <code>head()</code> e <code>shape</code>, e depois exporte e leia de volta com <code>to_csv()</code>/<code>read_csv()</code>.
     </div>
   </section>
 
@@ -233,6 +242,19 @@ print(type(precos_dataframe))</pre>
     <pre class="codeblock">print(vendas.describe())</pre>
     <p><code>describe()</code> é como rodar uma análise estatística instantânea: média, mínimo, máximo, desvio padrão — tudo de uma vez.</p>
 
+    <div class="box">
+      <strong>⚠️ Veja como é um erro real do Python:</strong> se você digitar o nome de uma coluna errada, como <code>vendas["preco_errado"]</code>, o Pandas recusa e mostra:
+      <pre class="codeblock" style="margin:10px 0 0;">KeyError: 'preco_errado'</pre>
+      Antes de selecionar uma coluna, confira os nomes exatos com <code>vendas.columns</code>.
+    </div>
+
+    <h3>Selecionando por posição ou por rótulo: <code>.loc</code> e <code>.iloc</code></h3>
+    <pre class="codeblock">print(vendas.loc[0, "produto"])      # .loc: pelo nome da coluna + posição da linha
+print(vendas.iloc[0, 0])             # .iloc: só por posição numérica (linha 0, coluna 0)</pre>
+    <div class="box tip">
+      <strong>💡 <code>.loc</code> usa rótulos (nomes), <code>.iloc</code> usa posições (números).</strong> Os dois fazem a mesma coisa de jeitos diferentes — use <code>.loc</code> quando você sabe o nome da coluna, e <code>.iloc</code> quando só sabe a posição (ex.: "a primeira linha, a primeira coluna").
+    </div>
+
     <h3>Exemplo 2 (resolvido) — Filtro e groupby</h3>
     <pre class="codeblock"># Filtro: só produtos vendidos mais de 20 vezes
 mais_vendidos = vendas[vendas["quantidade_vendida"] > 20]
@@ -240,9 +262,22 @@ print(mais_vendidos)
 
 # groupby: preço médio por categoria
 print(vendas.groupby("categoria")["preco"].mean())</pre>
+
+    <h3>Como o groupby pensa por dentro: Dividir → Aplicar → Combinar</h3>
+    <table>
+      <tr><th>Etapa</th><th>O que acontece</th></tr>
+      <tr><td>1. Dividir (split)</td><td>O Pandas separa as linhas em grupos, um para cada valor de <code>categoria</code> — todas as linhas "Papelaria" em um grupo, "Acessórios" em outro</td></tr>
+      <tr><td>2. Aplicar (apply)</td><td>Dentro de cada grupo separado, calcula a função pedida (ex.: <code>mean()</code> dos preços <em>apenas daquele grupo</em>)</td></tr>
+      <tr><td>3. Combinar (combine)</td><td>Junta o resultado de cada grupo numa única Series/tabela de resposta</td></tr>
+    </table>
     <div class="box tip">
-      <strong>💡 groupby é o mesmo que uma Tabela Dinâmica no Excel:</strong> você agrupa linhas por uma categoria e calcula um resumo (média, soma, etc.) para cada grupo.
+      <strong>💡 groupby é o mesmo que uma Tabela Dinâmica no Excel:</strong> é exatamente isso que ela faz por trás dos panos — o <code>groupby</code> só está explicitando os 3 passos da tabela acima.
     </div>
+
+    <h3>Ordenando o resultado: <code>sort_values()</code></h3>
+    <pre class="codeblock">preco_medio_por_categoria = vendas.groupby("categoria")["preco"].mean()
+print(preco_medio_por_categoria.sort_values(ascending=False))</pre>
+    <p><code>sort_values()</code> ordena os valores do maior para o menor (ou o contrário) — útil para responder "qual categoria tem o maior preço médio?" sem precisar procurar manualmente o maior número na tabela.</p>
   </section>
 
   <section>
@@ -255,8 +290,13 @@ quantidades = np.array([30, 80, 5, 60])
 
 receita = precos * quantidades   # multiplicação elemento a elemento, sem for!
 print(receita)</pre>
-    <div class="box tip">
-      <strong>💡 Isso não funciona com listas Python comuns</strong> (<code>lista1 * lista2</code> daria erro ou repetiria a lista) — é exatamente essa operação vetorizada que torna o NumPy rápido.
+    <div class="box">
+      <strong>⚠️ Veja como é um erro real do Python:</strong> tente fazer a mesma multiplicação com listas comuns (não arrays):
+      <pre class="codeblock" style="margin:10px 0 0;">lista1 = [12.5, 2.0, 150.0]
+lista2 = [30, 80, 5]
+lista1 * lista2</pre>
+      <pre class="codeblock" style="margin:10px 0 0;">TypeError: can't multiply sequence by non-int of type 'list'</pre>
+      É exatamente por isso que o NumPy existe: arrays permitem multiplicação elemento a elemento, listas comuns não.
     </div>
 
     <h3>Exemplo 2 (resolvido) — Broadcasting (escalar com array)</h3>
@@ -266,6 +306,15 @@ print(precos_com_aumento)
 print(f"Receita total: {receita.sum()}")
 print(f"Preço médio: {precos.mean()}")</pre>
     <p><strong>Broadcasting</strong> é a capacidade do NumPy de operar um array com um único número (ou com outro array de formato compatível) sem precisar repetir a operação manualmente.</p>
+
+    <div class="box">
+      <strong>⚠️ Quando o broadcasting NÃO funciona:</strong> arrays de tamanhos incompatíveis também geram um erro real, não um resultado "estranho":
+      <pre class="codeblock" style="margin:10px 0 0;">a = np.array([1, 2, 3])
+b = np.array([1, 2])
+a * b</pre>
+      <pre class="codeblock" style="margin:10px 0 0;">ValueError: operands could not be broadcast together with shapes (3,) (2,)</pre>
+      Os dois arrays precisam ter o mesmo tamanho (ou um deles ser um único número/escalar).
+    </div>
 
     <div class="ex">
       <strong>✏️ Agora é sua vez:</strong> no notebook, crie dois arrays e calcule a receita por produto usando multiplicação vetorizada.
@@ -296,7 +345,8 @@ print(f"Preço médio: {precos.mean()}")</pre>
       <label><input type="radio" name="q1" value="a"> Não há diferença</label>
       <label><input type="radio" name="q1" value="b"> O primeiro retorna Series, o segundo um DataFrame</label>
       <label><input type="radio" name="q1" value="c"> O segundo só funciona com texto</label>
-      <button onclick="check(this)">Verificar</button>
+      <label><input type="radio" name="q1" value="d"> <code>df[['preco']]</code> é mais rápido</label>
+      <button type="button" onclick="check(this)">Verificar</button>
       <div class="feedback"></div>
     </div>
 
@@ -305,7 +355,8 @@ print(f"Preço médio: {precos.mean()}")</pre>
       <label><input type="radio" name="q2" value="a"> Apenas o nome das colunas</label>
       <label><input type="radio" name="q2" value="b"> Estatísticas descritivas (média, mínimo, máximo...)</label>
       <label><input type="radio" name="q2" value="c"> Os primeiros 5 registros</label>
-      <button onclick="check(this)">Verificar</button>
+      <label><input type="radio" name="q2" value="d"> O número total de linhas</label>
+      <button type="button" onclick="check(this)">Verificar</button>
       <div class="feedback"></div>
     </div>
 
@@ -314,7 +365,8 @@ print(f"Preço médio: {precos.mean()}")</pre>
       <label><input type="radio" name="q3" value="a"> Enviar dados pela internet</label>
       <label><input type="radio" name="q3" value="b"> Operar arrays de formatos diferentes sem usar for</label>
       <label><input type="radio" name="q3" value="c"> Um tipo de gráfico</label>
-      <button onclick="check(this)">Verificar</button>
+      <label><input type="radio" name="q3" value="d"> Um erro comum ao criar arrays</label>
+      <button type="button" onclick="check(this)">Verificar</button>
       <div class="feedback"></div>
     </div>
 
@@ -323,7 +375,8 @@ print(f"Preço médio: {precos.mean()}")</pre>
       <label><input type="radio" name="q4" value="a"> <code>df.describe()</code></label>
       <label><input type="radio" name="q4" value="b"> <code>df.head()</code></label>
       <label><input type="radio" name="q4" value="c"> <code>df.groupby("categoria")["preco"].mean()</code></label>
-      <button onclick="check(this)">Verificar</button>
+      <label><input type="radio" name="q4" value="d"> <code>df.shape</code></label>
+      <button type="button" onclick="check(this)">Verificar</button>
       <div class="feedback"></div>
     </div>
 
@@ -332,7 +385,8 @@ print(f"Preço médio: {precos.mean()}")</pre>
       <label><input type="radio" name="q5" value="a"> 50 linhas e 4 colunas</label>
       <label><input type="radio" name="q5" value="b"> 50 colunas e 4 linhas</label>
       <label><input type="radio" name="q5" value="c"> 50 valores nulos</label>
-      <button onclick="check(this)">Verificar</button>
+      <label><input type="radio" name="q5" value="d"> Um erro de sintaxe</label>
+      <button type="button" onclick="check(this)">Verificar</button>
       <div class="feedback"></div>
     </div>
   </section>

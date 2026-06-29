@@ -264,13 +264,23 @@
 
   <section>
     <h2>Avaliação Diagnóstica</h2>
-    <p>Antes de começar, reflita e marque suas respostas (sem certo ou errado — é só para o professor entender o ponto de partida da turma):</p>
+    <p>Antes de começar, reflita e marque suas respostas (sem certo ou errado — é só para sua própria autorreflexão agora; a versão oficial usada pelo professor para sondar a turma é aplicada em sala, no início do Encontro 1):</p>
     <div class="box">
       <label style="display:block;margin:6px 0;"><input type="checkbox"> Já escrevi algum código ou fórmula (mesmo que simples, como no Excel) antes</label>
       <label style="display:block;margin:6px 0;"><input type="checkbox"> Já ouvi falar em Python, SQL ou Pandas</label>
       <label style="display:block;margin:6px 0;"><input type="checkbox"> Já usei o Google Colab ou Jupyter Notebook</label>
       <label style="display:block;margin:6px 0;"><input type="checkbox"> Já participei de algum curso ou trabalho que envolvesse análise de dados</label>
       <label style="display:block;margin:6px 0;"><input type="checkbox"> Sei o que é Git/GitHub</label>
+    </div>
+  </section>
+
+  <section>
+    <h2>O que é, no fim das contas, "Análise de Dados"?</h2>
+    <div class="box tip">
+      <strong>💡 Definição simples:</strong> Análise de dados é o processo de transformar números, textos e registros brutos do dia a dia em decisões melhores. É isso, resumido em uma frase — todo o resto desta semana (e do curso) é aprender a fazer esse processo de forma estruturada e repetível.
+    </div>
+    <div class="box">
+      <strong>⚠️ O que NÃO é análise de dados:</strong> ter uma planilha cheia de números, por si só, <u>não</u> é analisar dados — é só ter coletado dados (etapa 1 de 5, que você vai ver na seção 3). Análise de dados só acontece quando alguém limpa, examina, visualiza e comunica algo útil a partir desses números. Guardar dados não é o mesmo que entendê-los.
     </div>
   </section>
 
@@ -290,7 +300,7 @@
 
     <div class="box">
       <strong>📺 Aula Inaugural:</strong> segunda 29/06 às 19h, via YouTube — apresentação do modelo de curso, cronograma, equipe e combinados.<br>
-      Link: <a href="https://www.youtube.com/watch?v=zmMRCS4DzmQ" target="_blank">youtube.com/watch?v=zmMRCS4DzmQ</a>
+      Link: <a href="https://www.youtube.com/watch?v=zmMRCS4DzmQ" target="_blank" rel="noopener">youtube.com/watch?v=zmMRCS4DzmQ</a>
     </div>
 
     <p>Ao abrir o Laboratório Virtual (Google Colab) pela primeira vez, vamos rodar juntos o primeiro código do curso:</p>
@@ -310,6 +320,16 @@ print("A partir da próxima semana, vamos aprender lógica de programação de v
       <tr><td>Marketing</td><td>Direcionar campanhas para o público certo</td></tr>
       <tr><td>Setor público</td><td>Planejar políticas com base em dados reais da população</td></tr>
     </table>
+
+    <div class="box tip">
+      <strong>🗺️ Mapa do que vem a seguir:</strong> ao pesquisar vagas, você vai ver termos como Python, SQL, Excel e Power BI — ainda não precisa saber o que cada um faz, só guarde este mapa:
+      <ul>
+        <li><strong>Python</strong> — você começa a programar de fato já na Semana 02</li>
+        <li><strong>Pandas/NumPy</strong> — ferramentas de Python para manipular tabelas de dados, a partir da Semana 05</li>
+        <li><strong>SQL</strong> e <strong>Excel/Power BI</strong> — vêm em blocos mais avançados do curso</li>
+      </ul>
+      Toda vez que você ouvir um termo novo de tecnologia nesta semana, ele vai aparecer de novo, explicado, mais adiante — não precisa entender agora.
+    </div>
   </section>
 
   <section>
@@ -318,13 +338,30 @@ print("A partir da próxima semana, vamos aprender lógica de programação de v
     <table>
       <tr><th>Conceito</th><th>Definição</th><th>Exemplo</th></tr>
       <tr><td><strong>Dado</strong></td><td>Registro bruto, sem contexto</td><td><code>37</code></td></tr>
-      <tr><td><strong>Tipo</strong></td><td>A natureza desse dado (número, texto, data...)</td><td><code>37</code> é um número (temperatura)</td></tr>
+      <tr><td><strong>Tipo</strong></td><td>A natureza desse dado</td><td>veja a tabela abaixo</td></tr>
       <tr><td><strong>Informação</strong></td><td>Dado organizado, com contexto</td><td>"A temperatura do paciente é 37°C"</td></tr>
       <tr><td><strong>Conhecimento</strong></td><td>Informação aplicada a uma decisão</td><td>"37°C é febre? Não — está dentro do normal, não preciso agir"</td></tr>
     </table>
+
+    <h3>O conceito de Tipo, com mais de um exemplo</h3>
+    <p>"Tipo" não é uma palavra única — é uma categoria, e existem vários tipos diferentes de dado. Veja 4 lado a lado:</p>
+    <table>
+      <tr><th>Tipo</th><th>O que guarda</th><th>Exemplo</th></tr>
+      <tr><td>Número</td><td>Quantidades, medidas</td><td><code>37</code> (temperatura)</td></tr>
+      <tr><td>Texto</td><td>Palavras, frases</td><td><code>"João Silva"</code> (nome)</td></tr>
+      <tr><td>Data</td><td>Dia, mês, ano (ou hora)</td><td><code>"2026-06-30"</code> (data da matrícula)</td></tr>
+      <tr><td>Verdadeiro/Falso</td><td>Sim ou não, ligado ou desligado</td><td><code>Sim</code> (cliente está ativo?)</td></tr>
+    </table>
+    <p>Isso importa porque o <strong>tipo</strong> é o que determina o que você pode fazer com o dado: números podem ser somados, textos podem ser comparados letra a letra, datas podem ser subtraídas para calcular "quantos dias faltam". A partir da Semana 02, esses tipos vão ganhar nomes em Python: <code>int</code> (número inteiro), <code>float</code> (número decimal), <code>str</code> (texto) e <code>bool</code> (verdadeiro/falso).</p>
+
     <div class="box tip">
       <strong>💡 Pense assim:</strong> dado é a matéria-prima; informação é o produto organizado; conhecimento é a decisão que você toma com ele.
     </div>
+
+    <div class="box">
+      <strong>🔍 Onde fica a fronteira entre Dado e Informação?</strong> Se eu só dissesse "<code>152</code>", sem dizer mais nada, isso ainda seria só <strong>dado</strong> — um número solto, sem contexto. Só virou <strong>informação</strong> no exemplo abaixo porque dissemos o que ele representa: "vendemos 152 unidades hoje, 20% acima da média". O número sozinho não muda — o que muda é o contexto que colocamos em volta dele.
+    </div>
+
     <p>Veja isso em código — o <strong>dado</strong> vira uma <strong>variável</strong>, e o <code>print()</code> mostra a <strong>informação</strong>:</p>
     <pre class="codeblock"><span class="c"># DADO: um número guardado em uma variável</span>
 temperatura = 37
@@ -332,8 +369,12 @@ temperatura = 37
 <span class="c"># INFORMAÇÃO: o dado organizado, com contexto</span>
 print(f"A temperatura do paciente é {temperatura}°C")
 
-<span class="c"># CONHECIMENTO: a decisão que tomamos a partir da informação</span>
-print("37°C está dentro do normal — não preciso agir.")</pre>
+<span class="c"># CONHECIMENTO: a decisão, comparando a informação com um critério/faixa conhecida</span>
+<span class="c"># a faixa de temperatura corporal considerada normal é 36°C a 37,5°C</span>
+print("37°C está dentro da faixa normal (36°C–37,5°C) — não preciso agir.")</pre>
+    <div class="box tip">
+      <strong>💡 O padrão por trás do "Conhecimento":</strong> quase toda decisão segue a mesma receita: <em>informação + um critério de comparação (faixa, meta, limite) = conhecimento</em>. Aqui o critério foi "a faixa normal é 36°C–37,5°C". Guarde esse padrão — ele vai se repetir o curso inteiro.
+    </div>
 
     <h3>Exemplo 2 — Vendas do dia em uma loja</h3>
     <table>
@@ -413,180 +454,10 @@ print("5. Comunicação:", "quem cancela assiste 70% menos conteúdo no 1º mês
   </section>
 
   <section>
-    <h2>5. Configurando o GitHub — Sua Pasta no Repositório da Turma</h2>
-    <p>A partir de hoje, toda a turma vai trabalhar dentro de um <strong>repositório compartilhado</strong>: <code>t5-analise-de-dados-com-python</code>. É lá que você vai encontrar o material de cada semana e onde vai guardar (e enviar para o professor revisar) os seus próprios exercícios. Este tutorial é 100% passo a passo — siga na ordem, sem pular etapas.</p>
-
-    <div class="box">
-      <strong>📖 Antes de começar, alguns nomes que você vai ver o tempo todo:</strong>
-      <dl class="glossario">
-        <dt>Git</dt>
-        <dd>O programa que guarda o "histórico de versões" dos seus arquivos — como um Ctrl+Z gigante, que lembra de cada mudança feita, por quem e quando.</dd>
-        <dt>GitHub</dt>
-        <dd>O site que guarda esse histórico na internet (na nuvem) e permite que várias pessoas trabalhem no mesmo projeto, cada uma na sua parte.</dd>
-        <dt>Repositório ("repo")</dt>
-        <dd>A "pasta do projeto" versionada — no nosso caso, o repositório da Turma T5.</dd>
-        <dt>Branch</dt>
-        <dd>Uma "cópia paralela" do repositório, só sua, onde você trabalha sem risco de estragar o trabalho dos colegas.</dd>
-        <dt>Commit</dt>
-        <dd>Um "ponto de salvamento" das suas mudanças, com uma mensagem curta explicando o que mudou.</dd>
-        <dt>Push</dt>
-        <dd>Enviar os seus commits do seu computador para o GitHub (a nuvem) — antes do push, suas mudanças existem só na sua máquina.</dd>
-        <dt>Pull Request (PR)</dt>
-        <dd>Um pedido formal: "professor, pode revisar e aceitar essa mudança que eu fiz?" — nada entra na pasta oficial da turma sem passar por um PR aprovado.</dd>
-      </dl>
-    </div>
-
-    <h3>Pré-requisitos</h3>
+    <h2>5. Seu acesso ao Repositório da Turma (sem pressa, fora da aula de hoje)</h2>
+    <p>Toda a turma trabalha dentro de um <strong>repositório compartilhado</strong> no GitHub: <code>t5-analise-de-dados-com-python</code>. É lá que está o material de cada semana e onde você vai guardar (e enviar para o professor revisar) os seus próprios exercícios.</p>
     <div class="box tip">
-      <strong>✅ Antes de iniciar, confirme:</strong>
-      <ul>
-        <li>Computador com acesso à internet</li>
-        <li>Uma conta no GitHub (gratuita — se ainda não tem, o Passo 1 abaixo ensina a criar)</li>
-        <li>Ter enviado seu nome de usuário do GitHub para o professor no Discord, para ser adicionado como colaborador do repositório (sem isso, nenhum dos dois caminhos abaixo funciona)</li>
-        <li>Escolher um caminho: <strong>Caminho A — GitHub Desktop</strong> (programa com botões, recomendado para quem nunca usou Git) ou <strong>Caminho B — Terminal/Git Bash</strong> (digitando comandos)</li>
-      </ul>
-    </div>
-
-    <div class="caminho">
-      <h3>Caminho A — GitHub Desktop (recomendado para iniciantes)</h3>
-      <ol class="passos">
-        <li>
-          <h4>Criar sua conta no GitHub</h4>
-          <p class="porque"><strong>O que é:</strong> o GitHub funciona como uma "rede social" para projetos de código — você precisa de uma conta lá, assim como tem uma conta de e-mail.</p>
-          <p><strong>Como fazer:</strong> acesse <code>github.com/join</code>, informe e-mail, senha e escolha um nome de usuário (ex.: <code>joao-silva</code>). Esse nome de usuário é o que você vai mandar para o professor.</p>
-        </li>
-        <li>
-          <h4>Avisar o professor o seu usuário do GitHub e aceitar o convite</h4>
-          <p class="porque"><strong>Por quê:</strong> o professor precisa te adicionar como "colaborador" do repositório da turma. Sem isso, mesmo fazendo tudo certo nos próximos passos, você recebe erro de permissão.</p>
-          <p><strong>Como fazer:</strong> mande seu usuário (@seu-usuario) no Discord da turma. Você vai receber um e-mail/notificação do GitHub com um convite — abra e clique em <strong>"Accept invitation"</strong>.</p>
-        </li>
-        <li>
-          <h4>Instalar o GitHub Desktop</h4>
-          <p class="porque"><strong>O que é:</strong> um programa com botões e telas (sem precisar digitar comandos) que conversa com o Git e o GitHub por trás dos panos.</p>
-          <p><strong>Como fazer:</strong> acesse <code>desktop.github.com</code>, baixe a versão para o seu sistema (Windows/Mac), abra o instalador e siga as opções padrão.</p>
-        </li>
-        <li>
-          <h4>Fazer login no GitHub Desktop</h4>
-          <p class="porque"><strong>Por quê:</strong> o programa precisa saber que é você, para associar tudo que você fizer à sua conta do GitHub.</p>
-          <p><strong>Como fazer:</strong> abra o GitHub Desktop → na tela inicial, clique em <strong>"Sign in to GitHub.com"</strong> → faça login com a conta criada no Passo 1.</p>
-        </li>
-        <li>
-          <h4>Clonar (baixar) o repositório da turma</h4>
-          <p class="porque"><strong>O que é "clonar":</strong> baixar uma cópia completa do repositório da turma para o seu computador, já conectada ao GitHub — é a partir dessa cópia que você vai trabalhar.</p>
-          <p><strong>Como fazer:</strong> File → <strong>Clone Repository</strong> → aba "GitHub.com" → procure <code>t5-analise-de-dados-com-python</code> → escolha uma pasta no seu PC → <strong>Clone</strong>.</p>
-        </li>
-        <li>
-          <h4>Criar a sua branch</h4>
-          <p class="porque"><strong>Por quê:</strong> trabalhar direto na <code>main</code> (a pasta "oficial") é bloqueado de propósito — toda mudança precisa passar por revisão. Criando sua própria branch, você tem liberdade total para trabalhar sem afetar ninguém.</p>
-          <p><strong>Como fazer:</strong> clique em <strong>"Current Branch"</strong> (topo) → <strong>"New Branch"</strong> → nome: <code>alunos/seu-nome</code> (ex.: <code>alunos/joao-silva</code>, sem espaços ou acentos) → <strong>Create Branch</strong>.</p>
-        </li>
-        <li>
-          <h4>Criar sua pasta e colocar seus arquivos</h4>
-          <p class="porque"><strong>Por quê:</strong> cada aluno trabalha isolado dentro da própria pasta em <code>alunos/</code> — isso evita que um aluno sobrescreva o material de outro.</p>
-          <p><strong>Como fazer:</strong> no GitHub Desktop, Repository → <strong>Show in Explorer</strong> (abre a pasta clonada). Dentro de <code>alunos/</code>, crie uma pasta com o seu nome (igual ao usado na branch). Copie para lá os arquivos que quiser guardar.</p>
-        </li>
-        <li>
-          <h4>Commit — salvar uma versão com explicação</h4>
-          <p class="porque"><strong>O que é um commit:</strong> um "ponto de salvamento" das suas mudanças, junto com uma mensagem curta dizendo o que foi feito — assim, qualquer pessoa (inclusive você, no futuro) entende o histórico.</p>
-          <p><strong>Como fazer:</strong> volte ao GitHub Desktop — a aba <strong>"Changes"</strong> já mostra os arquivos novos. Escreva uma frase no campo "Summary" (ex.: <em>"Adiciona meus primeiros materiais"</em>) e clique em <strong>"Commit to alunos/seu-nome"</strong>.</p>
-        </li>
-        <li>
-          <h4>Push — enviar para o GitHub</h4>
-          <p class="porque"><strong>Por quê:</strong> até aqui, tudo ficou só no seu computador. O push é o que efetivamente manda suas mudanças para a nuvem, onde o professor e a turma conseguem ver.</p>
-          <p><strong>Como fazer:</strong> clique no botão <strong>"Push origin"</strong> no topo do GitHub Desktop.</p>
-        </li>
-        <li>
-          <h4>Abrir o Pull Request</h4>
-          <p class="porque"><strong>O que é:</strong> o pedido formal para o professor revisar e aprovar sua mudança antes dela entrar de fato na pasta oficial (<code>main</code>) da turma.</p>
-          <p><strong>Como fazer:</strong> depois do push, aparece um botão <strong>"Create Pull Request"</strong> — clique (abre o navegador), escreva um título/descrição curtos e clique em <strong>"Create pull request"</strong>.</p>
-        </li>
-        <li>
-          <h4>Aguardar a aprovação</h4>
-          <p class="porque"><strong>Isso é normal:</strong> sua PR vai aparecer marcada como <em>"Review required"</em> — não é erro, é a proteção que existe para todo o material da turma. O professor revisa, e só depois disso seu conteúdo entra na pasta oficial.</p>
-        </li>
-      </ol>
-    </div>
-
-    <div class="caminho">
-      <h3>Caminho B — Terminal / Git Bash</h3>
-      <ol class="passos">
-        <li>
-          <h4>Instalar o Git</h4>
-          <p class="porque"><strong>O que é:</strong> o "motor" por trás de tudo isso — o programa que de fato versiona os arquivos (o GitHub Desktop é só uma interface bonita por cima dele).</p>
-          <p><strong>Como fazer:</strong> acesse <code>git-scm.com/downloads</code>, baixe para o seu sistema, abra o instalador e siga com as opções padrão (Next, Next... Install).</p>
-        </li>
-        <li>
-          <h4>Abrir o Git Bash</h4>
-          <p><strong>Como fazer:</strong> depois de instalar, procure "Git Bash" no menu Iniciar do Windows e abra — é nele que você vai digitar os comandos dos próximos passos.</p>
-        </li>
-        <li>
-          <h4>Configurar seu nome e e-mail (uma única vez)</h4>
-          <p class="porque"><strong>Por quê:</strong> toda vez que você salva uma versão (commit), o Git anota quem fez aquela mudança. Esse passo configura essa "assinatura" — só precisa fazer uma vez por computador.</p>
-          <pre class="codeblock">git config --global user.name "Seu Nome"
-git config --global user.email "seu-email@exemplo.com"</pre>
-        </li>
-        <li>
-          <h4>Clonar o repositório</h4>
-          <p class="porque"><strong>O que é "clonar":</strong> baixar uma cópia completa do repositório da turma para o seu computador.</p>
-          <pre class="codeblock">git clone https://github.com/cfneves/t5-analise-de-dados-com-python.git
-cd t5-analise-de-dados-com-python</pre>
-        </li>
-        <li>
-          <h4>Criar sua branch</h4>
-          <p class="porque"><strong>Por quê:</strong> a <code>main</code> é protegida de propósito — criar sua própria branch te dá um espaço livre para trabalhar sem afetar ninguém.</p>
-          <pre class="codeblock">git checkout -b alunos/seu-nome</pre>
-          <p>(troque <code>seu-nome</code> pelo seu nome, sem espaços/acentos — ex.: <code>alunos/joao-silva</code>)</p>
-        </li>
-        <li>
-          <h4>Criar sua pasta e adicionar arquivos</h4>
-          <p class="porque"><strong>Por quê:</strong> cada aluno trabalha isolado na própria pasta dentro de <code>alunos/</code>.</p>
-          <pre class="codeblock">mkdir alunos/seu-nome</pre>
-          <p>Copie seus arquivos para dentro dessa pasta (pelo Explorador de Arquivos mesmo, ou pelo terminal).</p>
-        </li>
-        <li>
-          <h4>Commit</h4>
-          <p class="porque"><strong>O que faz:</strong> <code>add</code> seleciona o que vai entrar no "ponto de salvamento"; <code>commit</code> de fato salva essa versão, com uma mensagem explicando o que foi feito.</p>
-          <pre class="codeblock">git add alunos/seu-nome
-git commit -m "Adiciona meus primeiros materiais"</pre>
-        </li>
-        <li>
-          <h4>Push</h4>
-          <p class="porque"><strong>O que faz:</strong> envia sua branch (com os commits) do seu computador para o GitHub — antes disso, tudo existia só na sua máquina.</p>
-          <pre class="codeblock">git push -u origin alunos/seu-nome</pre>
-        </li>
-        <li>
-          <h4>Abrir o Pull Request</h4>
-          <p class="porque"><strong>O que é:</strong> o pedido formal para o professor revisar e aprovar sua mudança antes dela entrar na <code>main</code> oficial.</p>
-          <p><strong>Como fazer:</strong> o terminal mostra um link parecido com <code>https://github.com/.../pull/new/alunos/seu-nome</code> — copie e cole no navegador. Ou acesse o repositório no GitHub: vai aparecer um aviso amarelo <strong>"Compare &amp; pull request"</strong> — clique nele. Escreva um título/descrição curtos e clique em <strong>"Create pull request"</strong>.</p>
-        </li>
-        <li>
-          <h4>Aguardar a aprovação</h4>
-          <p class="porque"><strong>Isso é normal:</strong> sua PR aparece marcada como <em>"Review required"</em> — é a proteção que existe para o material de toda a turma. Aguarde a revisão do professor.</p>
-        </li>
-      </ol>
-    </div>
-
-    <h3>Erros comuns</h3>
-    <table>
-      <tr><th>Mensagem / Situação</th><th>O que significa</th><th>O que fazer</th></tr>
-      <tr><td>"Permission denied" / "Repository not found" ao clonar ou dar push</td><td>Você ainda não foi adicionado como colaborador</td><td>Avise seu usuário do GitHub no Discord da turma</td></tr>
-      <tr><td>Pediu usuário/senha e não aceitou</td><td>O GitHub não usa mais senha simples para Git — precisa logar pelo navegador</td><td>Siga o fluxo de login que aparecer na tela (GitHub Desktop) ou pelo navegador (terminal)</td></tr>
-      <tr><td>Sua Pull Request mostra "Review required" e não tem botão de merge</td><td>Normal! É a proteção da branch principal</td><td>Aguardar o professor revisar — não é erro</td></tr>
-      <tr><td>Não aparece nada para "commitar" no GitHub Desktop</td><td>Os arquivos não foram salvos dentro de <code>alunos/seu-nome/</code></td><td>Confirme o caminho da pasta com Repository → Show in Explorer</td></tr>
-    </table>
-
-    <div class="box tip">
-      <strong>✅ Checklist final:</strong>
-      <ul>
-        <li>Tenho conta no GitHub</li>
-        <li>Fui adicionado como colaborador (recebi e aceitei o convite)</li>
-        <li>Instalei o GitHub Desktop OU o Git</li>
-        <li>Clonei o repositório da turma</li>
-        <li>Criei minha branch <code>alunos/&lt;meu-nome&gt;</code></li>
-        <li>Criei minha pasta dentro de <code>alunos/</code></li>
-        <li>Fiz commit e push</li>
-        <li>Abri o Pull Request e vi a mensagem "Review required" (sei que isso é normal)</li>
-      </ul>
+      <strong>🗓️ Isso não é conteúdo desta semana, é configuração de ambiente.</strong> Diferente do que vimos até aqui (que é 100% conceitual), configurar o GitHub envolve termos novos como "branch", "commit" e "Pull Request" — não tem problema nenhum não entender tudo de primeira. Faça esse passo a passo com calma, no seu tempo, seguindo o <strong><code>GUIA_GITHUB.md</code></strong> que está na raiz do repositório. Não é preciso terminar hoje nem nesta semana.
     </div>
   </section>
 
@@ -594,12 +465,13 @@ git commit -m "Adiciona meus primeiros materiais"</pre>
     <h2>Quiz de Fixação</h2>
     <p>Responda e clique em <strong>Verificar</strong> para ver o feedback de cada questão.</p>
 
-    <div class="qs" data-correct="b">
+    <div class="qs" data-correct="c">
       <p><strong>1.</strong> Qual dia da semana é sempre dedicado ao treino ativo em squads, segundo o modelo deste curso?</p>
       <label><input type="radio" name="q1" value="a"> Segunda-feira</label>
-      <label><input type="radio" name="q1" value="b"> Sexta-feira</label>
-      <label><input type="radio" name="q1" value="c"> Quarta-feira</label>
-      <button onclick="check(this)">Verificar</button>
+      <label><input type="radio" name="q1" value="b"> Quarta-feira</label>
+      <label><input type="radio" name="q1" value="c"> Sexta-feira</label>
+      <label><input type="radio" name="q1" value="d"> Quinta-feira</label>
+      <button type="button" onclick="check(this)">Verificar</button>
       <div class="feedback"></div>
     </div>
 
@@ -608,25 +480,28 @@ git commit -m "Adiciona meus primeiros materiais"</pre>
       <label><input type="radio" name="q2" value="a"> Conhecimento</label>
       <label><input type="radio" name="q2" value="b"> Informação</label>
       <label><input type="radio" name="q2" value="c"> Dado</label>
-      <button onclick="check(this)">Verificar</button>
+      <label><input type="radio" name="q2" value="d"> Comunicação</label>
+      <button type="button" onclick="check(this)">Verificar</button>
       <div class="feedback"></div>
     </div>
 
     <div class="qs" data-correct="b">
       <p><strong>3.</strong> Qual destas é a sequência correta do ciclo de vida da análise de dados?</p>
-      <label><input type="radio" name="q3" value="a"> Análise → Coleta → Limpeza → Comunicação → Visualização</label>
+      <label><input type="radio" name="q3" value="a"> Limpeza → Coleta → Comunicação → Análise → Visualização</label>
       <label><input type="radio" name="q3" value="b"> Coleta → Limpeza → Análise → Visualização → Comunicação</label>
-      <label><input type="radio" name="q3" value="c"> Visualização → Comunicação → Coleta → Limpeza → Análise</label>
-      <button onclick="check(this)">Verificar</button>
+      <label><input type="radio" name="q3" value="c"> Análise → Visualização → Coleta → Limpeza → Comunicação</label>
+      <label><input type="radio" name="q3" value="d"> Comunicação → Análise → Coleta → Visualização → Limpeza</label>
+      <button type="button" onclick="check(this)">Verificar</button>
       <div class="feedback"></div>
     </div>
 
-    <div class="qs" data-correct="a">
-      <p><strong>4.</strong> Qual ferramenta do curso é usada para acompanhar frequência e notas do aluno?</p>
-      <label><input type="radio" name="q4" value="a"> Espaço do Estudante</label>
-      <label><input type="radio" name="q4" value="b"> Discord</label>
-      <label><input type="radio" name="q4" value="c"> Google Meet</label>
-      <button onclick="check(this)">Verificar</button>
+    <div class="qs" data-correct="d">
+      <p><strong>4.</strong> Qual ferramenta do curso é usada para acompanhar frequência, notas e dados cadastrais do aluno?</p>
+      <label><input type="radio" name="q4" value="a"> Discord</label>
+      <label><input type="radio" name="q4" value="b"> Google Meet</label>
+      <label><input type="radio" name="q4" value="c"> E-mail</label>
+      <label><input type="radio" name="q4" value="d"> Espaço do Estudante</label>
+      <button type="button" onclick="check(this)">Verificar</button>
       <div class="feedback"></div>
     </div>
 
@@ -635,7 +510,8 @@ git commit -m "Adiciona meus primeiros materiais"</pre>
       <label><input type="radio" name="q5" value="a"> Coleta</label>
       <label><input type="radio" name="q5" value="b"> Limpeza</label>
       <label><input type="radio" name="q5" value="c"> Comunicação</label>
-      <button onclick="check(this)">Verificar</button>
+      <label><input type="radio" name="q5" value="d"> Visualização</label>
+      <button type="button" onclick="check(this)">Verificar</button>
       <div class="feedback"></div>
     </div>
   </section>

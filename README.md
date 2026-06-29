@@ -71,6 +71,8 @@ t5-analise-de-dados-com-python/
 
 ## Como usar (alunos)
 
+Primeira vez configurando seu acesso? Siga o passo a passo completo (com dois caminhos — programa com botões ou terminal) em **[`GUIA_GITHUB.md`](GUIA_GITHUB.md)**. Resumo para quem já tem experiência com Git:
+
 ```bash
 git clone https://github.com/cfneves/t5-analise-de-dados-com-python.git
 cd t5-analise-de-dados-com-python

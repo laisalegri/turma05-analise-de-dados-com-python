@@ -217,6 +217,9 @@
       <tr><td>JSON</td><td>Configurações, dados de APIs web</td><td><code>json</code></td></tr>
       <tr><td>Excel</td><td>Planilhas com formatação e múltiplas abas</td><td><code>openpyxl</code> (ou Pandas, a partir do Bloco 3)</td></tr>
     </table>
+    <div class="box tip">
+      <strong>💡 Como escolher entre CSV e JSON?</strong> Use <strong>CSV</strong> quando o dado é uma tabela simples, sempre com as mesmas colunas (ex.: lista de alunos com nome/nota). Use <strong>JSON</strong> quando os dados têm estrutura mais "aninhada" ou variável (ex.: um produto que às vezes tem desconto, às vezes não) — é o mesmo formato que a maioria das APIs web devolve.
+    </div>
 
     <h3>Exemplo 1 (resolvido) — Escrevendo um arquivo JSON</h3>
     <pre class="codeblock">import json
@@ -239,6 +242,35 @@ print(f"{dados['nome']} custa R$ {dados['preco']}")</pre>
     <div class="ex">
       <strong>✏️ Agora é sua vez:</strong> no notebook, escreva uma lista de dicionários (alunos) em um arquivo CSV e leia esse arquivo de volta.
     </div>
+
+    <div class="box">
+      <strong>⚠️ Veja como é um erro real do Python:</strong> se você tentar abrir um arquivo que não existe, como <code>open("nao_existe.json", "r")</code>, o Python recusa e mostra:
+      <pre class="codeblock" style="margin:10px 0 0;">FileNotFoundError: [Errno 2] No such file or directory: 'nao_existe.json'</pre>
+      É o erro mais comum de quem trabalha com arquivos — geralmente é só um nome digitado errado ou um arquivo que ainda não foi criado. Você pode se proteger dele com <code>try</code>/<code>except</code>:
+      <pre class="codeblock" style="margin:10px 0 0;">try:
+    with open("nao_existe.json", "r", encoding="utf-8") as arquivo:
+        dados = json.load(arquivo)
+except FileNotFoundError:
+    print("Arquivo não encontrado — verifique o nome ou crie o arquivo primeiro.")</pre>
+    </div>
+
+    <h3>Bônus: Excel com <code>openpyxl</code></h3>
+    <p>O Colab já vem com <code>openpyxl</code> instalado. A lógica é parecida com CSV/JSON: abrir, ler/escrever, fechar.</p>
+    <pre class="codeblock">from openpyxl import Workbook, load_workbook
+
+<span class="c"># escrevendo</span>
+planilha = Workbook()
+aba = planilha.active
+aba.append(["nome", "preco"])
+aba.append(["Mouse", 45.0])
+planilha.save("produtos.xlsx")
+
+<span class="c"># lendo de volta</span>
+planilha = load_workbook("produtos.xlsx")
+aba = planilha.active
+for linha in aba.iter_rows(values_only=True):
+    print(linha)</pre>
+    <p>A partir do Bloco 3, você vai preferir <code>pandas.read_excel()</code> para isso — mas é bom saber que existe a forma "pura" do Python também.</p>
   </section>
 
   <section>
@@ -257,20 +289,42 @@ print(f"Faltam {dias_restantes} dias para o fim do curso.")</pre>
     <pre class="codeblock">import re
 
 email = "aluno@exemplo.com"
-padrao = r".+@.+\..+"
+padrao = r"^[^\s@]+@[^\s@]+\.[^\s@]+$"
 
 if re.match(padrao, email):
     print("E-mail parece válido!")
 else:
     print("E-mail inválido.")</pre>
 
+    <table>
+      <tr><th>Trecho do padrão</th><th>O que verifica</th></tr>
+      <tr><td><code>^</code></td><td>Início do texto</td></tr>
+      <tr><td><code>[^\s@]+</code></td><td>1 ou mais caracteres que <strong>não</strong> sejam espaço (<code>\s</code>) nem <code>@</code> — a parte antes do <code>@</code></td></tr>
+      <tr><td><code>@</code></td><td>O <code>@</code> obrigatório, exatamente uma vez</td></tr>
+      <tr><td><code>[^\s@]+</code></td><td>De novo: 1+ caracteres sem espaço/<code>@</code> — o domínio</td></tr>
+      <tr><td><code>\.</code></td><td>Um ponto literal (o <code>\</code> evita que <code>.</code> signifique "qualquer caractere")</td></tr>
+      <tr><td><code>[^\s@]+</code></td><td>A extensão do domínio (ex.: <code>com</code>)</td></tr>
+      <tr><td><code>$</code></td><td>Fim do texto</td></tr>
+    </table>
+    <div class="box">
+      <strong>⚠️ Cuidado com padrões "soltos":</strong> um padrão mais simples como <code>r".+@.+\..+"</code> (sem <code>^</code>/<code>$</code> e sem excluir espaços) parece funcionar, mas na prática aceita coisas erradas, porque <code>.</code> sozinho significa "qualquer caractere" — inclusive espaço e até outro <code>@</code>. Teste sempre com um caso que <strong>deveria falhar</strong> (ex.: <code>"a b@c d.e"</code>), não só com um caso válido.
+    </div>
     <div class="box tip">
-      <strong>💡 Você não precisa decorar regex de memória</strong> — no mercado, a maioria dos profissionais consulta ou usa ferramentas para gerar o padrão certo. O importante é entender o que esse padrão verifica.
+      <strong>💡 Você não precisa decorar regex de memória</strong> — no mercado, a maioria dos profissionais consulta ou usa ferramentas para gerar o padrão certo. O importante é entender o que cada trecho do padrão verifica, como na tabela acima.
     </div>
   </section>
 
   <section>
     <h2>3. Funções: parâmetros, valores padrão e <code>return</code></h2>
+    <p>Olhe este código que calcula o total de 3 clientes diferentes:</p>
+    <pre class="codeblock">total_ana = 10 * 2 - 0
+total_bruno = 25 * 1 - 5
+total_carla = 8 * 4 - 2
+
+print(total_ana, total_bruno, total_carla)</pre>
+    <div class="box">
+      <strong>⚠️ O que tem de errado aqui?</strong> A mesma conta (<code>preço × quantidade − desconto</code>) está escrita 3 vezes. Se um dia essa regra mudar (ex.: incluir um imposto), você precisaria encontrar e corrigir as 3 linhas — e é fácil esquecer uma. Uma <strong>função</strong> resolve exatamente isso: você escreve a regra <strong>uma única vez</strong> e só chama ela:
+    </div>
     <pre class="codeblock">def calcular_total(preco, quantidade, desconto=0):
     return preco * quantidade - desconto
 
@@ -299,15 +353,39 @@ print(saudacao("Ana", formal=True))</pre>
     <div class="ex">
       <strong>✏️ Agora é sua vez:</strong> no notebook, crie a função <code>calcular_total</code> e teste com e sem desconto.
     </div>
+
+    <div class="box tip">
+      <strong>🚀 Avançado (opcional) — parâmetros "ilimitados" com <code>*args</code>:</strong> toda função até aqui tinha um número fixo de parâmetros. Com <code>*args</code>, uma função aceita <strong>qualquer quantidade</strong> de argumentos, que chegam agrupados numa tupla:
+      <pre class="codeblock" style="margin:10px 0 0;">def media(*args):
+    return sum(args) / len(args)
+
+print(media(7, 8, 9))        <span class="c"># funciona com 3 valores</span>
+print(media(7, 8, 9, 10))    <span class="c"># e também com 4, sem mudar a função</span></pre>
+      Isso é a base do desafio opcional do notebook desta semana.
+    </div>
   </section>
 
   <section>
     <h2>4. Lambda e Módulos</h2>
-    <h3>Função lambda (função de uma linha)</h3>
+    <h3>Exemplo 1 (resolvido) — Função lambda (função de uma linha)</h3>
     <pre class="codeblock">media = lambda lista: sum(lista) / len(lista)
 
 print(media([7.5, 8.0, 6.5]))</pre>
     <p>Uma <code>lambda</code> é equivalente a uma função criada com <code>def</code>, só que escrita em uma única linha — útil para funções pequenas e simples.</p>
+
+    <h3>Exemplo 2 (resolvido) — Onde o lambda realmente brilha: dentro de <code>sorted()</code></h3>
+    <p>Guardar uma lambda numa variável (como acima) é raro na prática. O uso real e mais comum é passar a lambda <strong>direto</strong> como argumento de outra função, como <code>sorted()</code>, <code>max()</code> ou <code>min()</code>, para dizer "ordene/compare por <em>este</em> critério":</p>
+    <pre class="codeblock">produtos = [
+    {"nome": "Mouse", "preco": 45.0},
+    {"nome": "Teclado", "preco": 89.0},
+    {"nome": "Borracha", "preco": 2.0},
+]
+
+mais_barato = min(produtos, key=lambda p: p["preco"])
+print(f"O mais barato é {mais_barato['nome']}, por R$ {mais_barato['preco']}")</pre>
+    <div class="box tip">
+      <strong>💡 Como ler isso:</strong> <code>key=lambda p: p["preco"]</code> diz ao <code>min()</code> "para decidir qual item é o menor, olhe o <code>preco</code> de cada um (<code>p</code>)". Sem a lambda, você precisaria escrever um <code>for</code> manual comparando item a item — a lambda só descreve <strong>o critério</strong>, e o Python faz a comparação para você.
+    </div>
 
     <h3>Criando seu próprio módulo</h3>
     <p>Um módulo é só um arquivo <code>.py</code> com funções, que pode ser importado em qualquer outro script — assim você nunca precisa reescrever a mesma função duas vezes.</p>
@@ -345,16 +423,18 @@ print(utilidades.calcular_total(10, 2, 5))</pre>
       <label><input type="radio" name="q1" value="a"> <code>csv</code></label>
       <label><input type="radio" name="q1" value="b"> <code>json</code></label>
       <label><input type="radio" name="q1" value="c"> <code>re</code></label>
-      <button onclick="check(this)">Verificar</button>
+      <label><input type="radio" name="q1" value="d"> <code>datetime</code></label>
+      <button type="button" onclick="check(this)">Verificar</button>
       <div class="feedback"></div>
     </div>
 
     <div class="qs" data-correct="b">
       <p><strong>2.</strong> O que uma função sem <code>return</code> devolve quando chamada?</p>
-      <label><input type="radio" name="q2" value="a"> Um erro</label>
+      <label><input type="radio" name="q2" value="a"> Um erro (<code>SyntaxError</code>)</label>
       <label><input type="radio" name="q2" value="b"> <code>None</code></label>
       <label><input type="radio" name="q2" value="c"> O nome da função</label>
-      <button onclick="check(this)">Verificar</button>
+      <label><input type="radio" name="q2" value="d"> O último valor impresso com <code>print()</code></label>
+      <button type="button" onclick="check(this)">Verificar</button>
       <div class="feedback"></div>
     </div>
 
@@ -363,7 +443,8 @@ print(utilidades.calcular_total(10, 2, 5))</pre>
       <label><input type="radio" name="q3" value="a"> Um erro de sintaxe</label>
       <label><input type="radio" name="q3" value="b"> Um parâmetro obrigatório</label>
       <label><input type="radio" name="q3" value="c"> Um parâmetro opcional com valor padrão</label>
-      <button onclick="check(this)">Verificar</button>
+      <label><input type="radio" name="q3" value="d"> O valor de retorno da função</label>
+      <button type="button" onclick="check(this)">Verificar</button>
       <div class="feedback"></div>
     </div>
 
@@ -372,7 +453,8 @@ print(utilidades.calcular_total(10, 2, 5))</pre>
       <label><input type="radio" name="q4" value="a"> O código roda mais rápido</label>
       <label><input type="radio" name="q4" value="b"> As funções podem ser reutilizadas em outros scripts</label>
       <label><input type="radio" name="q4" value="c"> É obrigatório para usar <code>return</code></label>
-      <button onclick="check(this)">Verificar</button>
+      <label><input type="radio" name="q4" value="d"> Não é possível usar <code>import</code> sem um módulo próprio</label>
+      <button type="button" onclick="check(this)">Verificar</button>
       <div class="feedback"></div>
     </div>
 
@@ -381,7 +463,8 @@ print(utilidades.calcular_total(10, 2, 5))</pre>
       <label><input type="radio" name="q5" value="a"> Retorna 10</label>
       <label><input type="radio" name="q5" value="b"> Imprime 10</label>
       <label><input type="radio" name="q5" value="c"> Retorna erro</label>
-      <button onclick="check(this)">Verificar</button>
+      <label><input type="radio" name="q5" value="d"> Retorna 5</label>
+      <button type="button" onclick="check(this)">Verificar</button>
       <div class="feedback"></div>
     </div>
   </section>

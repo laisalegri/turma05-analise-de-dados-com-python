@@ -7,9 +7,11 @@
 
 # Materiais internos do professor (planos, exercícios, atividades avaliativas com
 # gabarito, guias de instrutor, mapas, rubricas) NÃO vão para o repositório da turma.
-# Só o material do aluno (HTML teórico + notebook) e o README do repositório são enviados.
+# Só o material do aluno (HTML teórico + notebook), o README do repositório e o
+# guia de configuração do GitHub (setup, não atrelado a uma semana) são enviados.
 *.md
 !README.md
+!GUIA_GITHUB.md
 !alunos/**/README.md
 
 # Calendário/planejamento interno (capturas de tela do cronograma)
