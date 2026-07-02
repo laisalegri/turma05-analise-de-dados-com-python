@@ -454,90 +454,67 @@ print("5. Comunicação:", "quem cancela assiste 70% menos conteúdo no 1º mês
   </section>
 
   <section>
-    <h2>5. Como abrir o notebook desta semana no Google Colab</h2>
-    <p>Cada semana tem um arquivo <code>notebook_colab.ipynb</code> com exemplos de código e atividades práticas. Você vai abrir esse arquivo no <strong>Google Colab</strong> — um ambiente de programação que roda no navegador, sem instalar nada no seu computador.</p>
+    <h2>5. Configurando o Ambiente — Google Colab + Google Drive</h2>
+    <p>O Colab roda na nuvem, mas <strong>cada sessão começa do zero</strong> — qualquer arquivo criado some quando a sessão encerrar. Para resolver isso de uma vez por todas: vamos clonar o repositório da turma dentro do <strong>Google Drive</strong>. Os arquivos ficam salvos permanentemente e você acessa de qualquer sessão futura sem precisar clonar de novo.</p>
 
     <div class="box tip">
-      <strong>⚠️ Primeiro passo sempre igual em qualquer caminho abaixo:</strong> ao abrir o notebook, ele está em modo <u>somente leitura</u> — é a versão oficial do professor. Antes de escrever qualquer coisa, clique em <strong>Arquivo → Salvar uma cópia no Drive</strong>. Uma nova aba abre com <em>a sua cópia</em> — trabalhe sempre nela.
+      <strong>Duas células, dois momentos distintos:</strong><br>
+      &bull; <strong>Célula 1</strong> — execute <em>uma única vez</em>: cria a pasta <code>Turma05</code> no Drive e clona o repositório dentro dela.<br>
+      &bull; <strong>Célula 2</strong> — execute <em>toda nova sessão</em>: monta o Drive e navega direto para a pasta da semana.
     </div>
 
     <div class="caminho">
-      <h3>Caminho A — Link direto (recomendado)</h3>
+      <h3>Célula 1 — Primeira vez: clone o repositório no Drive</h3>
       <ol class="passos">
         <li>
-          <h4>Clique no link abaixo</h4>
-          <p class="porque">O Google Colab já abre com o notebook desta semana carregado — nenhum passo extra necessário.</p>
-          <p><a href="https://colab.research.google.com/github/cfneves/turma05-analise-de-dados-com-python/blob/main/01_Introducao_Fundamentos_Analise_Dados/notebook_colab.ipynb" target="_blank" rel="noopener" style="display:inline-block;background:#F9AB00;color:#000;padding:9px 20px;border-radius:6px;font-weight:bold;text-decoration:none;font-size:.95rem;">▶ Abrir notebook no Colab — Semana 01</a></p>
-        </li>
-        <li>
-          <h4>Salve uma cópia no Drive</h4>
-          <p class="porque">No Colab, clique em <strong>Arquivo → Salvar uma cópia no Drive</strong>. Uma nova aba abre com <em>a sua cópia</em> — é ela que você vai usar para fazer os exercícios.</p>
-        </li>
-      </ol>
-    </div>
-
-    <div class="caminho">
-      <h3>Caminho B — Pelo menu do Google Colab</h3>
-      <ol class="passos">
-        <li>
-          <h4>Abra o Google Colab</h4>
-          <p class="porque">Acesse <a href="https://colab.research.google.com" target="_blank" rel="noopener">colab.research.google.com</a> no navegador.</p>
-        </li>
-        <li>
-          <h4>Clique em Arquivo → Abrir notebook</h4>
-          <p class="porque">No menu superior do Colab, clique em <strong>Arquivo</strong> e depois em <strong>Abrir notebook</strong>. Uma janela com várias abas vai aparecer.</p>
-        </li>
-        <li>
-          <h4>Selecione a aba "GitHub"</h4>
-          <p class="porque">Na janela que abriu, clique na aba <strong>GitHub</strong> (não "Google Drive" nem "Upload").</p>
-        </li>
-        <li>
-          <h4>Busque o repositório da turma</h4>
-          <p class="porque">No campo de busca, digite o nome abaixo e pressione <strong>Enter</strong>:</p>
-          <pre class="codeblock">cfneves/turma05-analise-de-dados-com-python</pre>
-        </li>
-        <li>
-          <h4>Clique no arquivo da semana</h4>
-          <p class="porque">Aguarde a lista de arquivos carregar. Clique em:</p>
-          <pre class="codeblock">01_Introducao_Fundamentos_Analise_Dados/notebook_colab.ipynb</pre>
-          <p class="porque">O notebook abre diretamente no Colab.</p>
-        </li>
-        <li>
-          <h4>Salve uma cópia no Drive</h4>
-          <p class="porque">Clique em <strong>Arquivo → Salvar uma cópia no Drive</strong> — só assim você pode editar e guardar suas respostas.</p>
-        </li>
-      </ol>
-    </div>
-
-    <div class="caminho">
-      <h3>Caminho C — Clonar o repositório dentro do Colab</h3>
-      <ol class="passos">
-        <li>
-          <h4>Abra um novo notebook no Colab</h4>
+          <h4>Abra o Google Colab e crie um novo notebook</h4>
           <p class="porque">Acesse <a href="https://colab.research.google.com" target="_blank" rel="noopener">colab.research.google.com</a> e clique em <strong>"+ Novo notebook"</strong>.</p>
         </li>
         <li>
-          <h4>Clone o repositório numa célula de código</h4>
-          <p class="porque">Clique na primeira célula, cole o código abaixo e pressione <strong>Shift+Enter</strong> para executar. O Colab baixa todos os arquivos do repositório para a memória da sessão.</p>
-          <pre class="codeblock">!git clone https://github.com/cfneves/turma05-analise-de-dados-com-python.git
-%cd turma05-analise-de-dados-com-python
-!ls</pre>
+          <h4>Cole e execute o código abaixo (Shift+Enter)</h4>
+          <p class="porque">Quando um link de autorização aparecer, clique nele, faça login com sua conta Google e copie o código de volta para o Colab. Depois que o Drive montar, o clone começa automaticamente.</p>
+          <pre class="codeblock">from google.colab import drive
+drive.mount('/content/drive')      <span class="c"># autorize quando o link aparecer</span>
+
+import os
+os.makedirs('/content/drive/MyDrive/Turma05', exist_ok=True)
+%cd /content/drive/MyDrive/Turma05
+
+!git clone https://github.com/cfneves/turma05-analise-de-dados-com-python.git
+!ls    <span class="c"># deve aparecer: turma05-analise-de-dados-com-python/</span></pre>
+          <p class="porque"><strong>Pronto!</strong> O repositório agora está salvo em: <code>Meu Drive → Turma05 → turma05-analise-de-dados-com-python</code>. Você não precisa fazer isso de novo.</p>
         </li>
+      </ol>
+    </div>
+
+    <div class="caminho">
+      <h3>Célula 2 — Toda nova sessão: monte e navegue</h3>
+      <ol class="passos">
         <li>
-          <h4>Abra o painel de arquivos</h4>
-          <p class="porque">No painel esquerdo do Colab, clique no ícone de <strong>pasta (📁)</strong>. A pasta do repositório aparece na lista de arquivos.</p>
+          <h4>Monte o Drive e vá para a pasta desta semana</h4>
+          <p class="porque">A cada nova sessão do Colab, o Drive precisa ser remontado (a conexão não persiste entre sessões). Execute o código abaixo — é tudo que você precisa fazer antes de começar.</p>
+          <pre class="codeblock">from google.colab import drive
+drive.mount('/content/drive')
+
+%cd "/content/drive/MyDrive/Turma05/turma05-analise-de-dados-com-python"
+!ls                            <span class="c"># mostra as semanas disponíveis</span>
+
+%cd "01_Introducao_Fundamentos_Analise_Dados"
+!ls
+!pwd</pre>
         </li>
+      </ol>
+    </div>
+
+    <div class="caminho">
+      <h3>📥 Quando uma nova semana for liberada</h3>
+      <ol class="passos">
         <li>
-          <h4>Navegue até o notebook da semana</h4>
-          <p class="porque">Na lista de arquivos, clique na pasta <strong><code>01_Introducao_Fundamentos_Analise_Dados</code></strong> para expandi-la.</p>
-        </li>
-        <li>
-          <h4>Abra o notebook com clique duplo</h4>
-          <p class="porque">Clique <strong>duas vezes</strong> em <code>notebook_colab.ipynb</code>. O notebook abre em uma nova aba do Colab.</p>
-        </li>
-        <li>
-          <h4>Salve uma cópia no Drive — obrigatório neste caminho</h4>
-          <p class="porque"><strong style="color:var(--red-dark);">Não pule este passo:</strong> o arquivo clonado está na memória temporária do Colab — se a sessão cair ou o navegador fechar, tudo que você escreveu some. Clique em <strong>Arquivo → Salvar uma cópia no Drive</strong> antes de começar.</p>
+          <h4>Atualize o repositório com git pull</h4>
+          <p class="porque">O professor publica o material da nova semana no repositório. Execute o <code>git pull</code> antes de navegar para a nova pasta — ele baixa o conteúdo novo direto para o seu Drive.</p>
+          <pre class="codeblock">%cd "/content/drive/MyDrive/Turma05/turma05-analise-de-dados-com-python"
+!git pull</pre>
+          <p class="porque">Depois do pull, navegue para a pasta da nova semana e continue normalmente.</p>
         </li>
       </ol>
     </div>

@@ -29,48 +29,67 @@
 
 ---
 
-## Caminho C — Google Colab (para os primeiros encontros, sem instalar nada)
+## Caminho C — Google Colab + Google Drive (Blocos 1 e 2)
 
-Use este caminho enquanto o curso utilizar o **Google Colab** como ambiente principal (Blocos 1 e 2). Você não precisa instalar nada — só de um navegador, uma conta Google e uma conta GitHub.
+Use este caminho nos primeiros blocos do curso. Você não precisa instalar nada — só um navegador, conta Google e conta GitHub.
 
-1. **Criar sua conta no GitHub.** Acesse `github.com/join`, informe e-mail, senha e escolha um nome de usuário (ex.: `joao-silva`). Guarde esse nome de usuário — você vai precisar dele.
+**A ideia central:** o Colab começa do zero a cada sessão. Para não perder trabalho, clonamos o repositório dentro do **Google Drive** — ele fica lá permanentemente, e o Colab acessa de lá sempre que precisar.
 
-2. **Avisar o professor e aceitar o convite.** Mande seu nome de usuário do GitHub no Discord da turma. O professor te adiciona como colaborador. Você receberá um e-mail/notificação do GitHub com o convite — abra e clique em **"Accept invitation"**.
+1. **Criar sua conta no GitHub.** Acesse `github.com/join`, informe e-mail, senha e escolha um nome de usuário (ex.: `joao-silva`). Guarde esse nome — você vai precisar dele.
 
-3. **Abrir o notebook da semana no Google Colab.** Três formas:
+2. **Avisar o professor e aceitar o convite.** Mande seu nome de usuário no Discord da turma. Você receberá um e-mail do GitHub com o convite — clique em **"Accept invitation"**.
 
-   - **Link direto (Semana 01):**
-     `https://colab.research.google.com/github/cfneves/turma05-analise-de-dados-com-python/blob/main/01_Introducao_Fundamentos_Analise_Dados/notebook_colab.ipynb`
+3. **Configurar o ambiente — Célula 1 (faça uma vez).** Abra o Google Colab (`colab.research.google.com`), crie um novo notebook e execute:
 
-   - **Pelo Colab:** acesse `colab.research.google.com` → **Arquivo → Abrir notebook → aba GitHub** → busque `cfneves/turma05-analise-de-dados-com-python` → clique no `notebook_colab.ipynb` da semana
+   ```python
+   from google.colab import drive
+   drive.mount('/content/drive')      # autorize quando o link aparecer
 
-   - **Clonar o repositório dentro do Colab:** crie uma nova célula de código e execute:
-     ```python
-     !git clone https://github.com/cfneves/turma05-analise-de-dados-com-python.git
-     %cd turma05-analise-de-dados-com-python
-     !ls
-     ```
-     O repositório aparece no painel de arquivos (ícone de pasta, à esquerda). Navegue até a semana e clique no `notebook_colab.ipynb`.
+   import os
+   os.makedirs('/content/drive/MyDrive/Turma05', exist_ok=True)
+   %cd /content/drive/MyDrive/Turma05
 
-4. **Salvar uma cópia no Drive.** O notebook aberto via link ou pelo menu do Colab é somente leitura — é a versão do professor. Clique em **Arquivo → Salvar uma cópia no Drive** para criar a sua versão editável no Google Drive. Trabalhe sempre nessa cópia.
+   !git clone https://github.com/cfneves/turma05-analise-de-dados-com-python.git
+   !ls    # deve aparecer: turma05-analise-de-dados-com-python/
+   ```
 
-5. **Fazer o exercício.** O Colab salva automaticamente no Drive enquanto você trabalha.
+   O repositório fica em `Meu Drive → Turma05 → turma05-analise-de-dados-com-python`. Não precisa fazer isso de novo.
 
-6. **Baixar seu notebook quando terminar.** Clique em **Arquivo → Fazer download → Fazer download do .ipynb** — salva o arquivo no seu computador.
+4. **Início de cada nova sessão — Célula 2.** Toda vez que abrir o Colab, reconecte o Drive e navegue até a semana:
 
-7. **Fazer upload no GitHub.** Acesse o repositório em `github.com/cfneves/turma05-analise-de-dados-com-python`:
-   - Navegue até `alunos/` → entre na sua pasta `alunos/seu-nome/` (se ainda não tiver sua pasta, veja abaixo)
-   - Clique em **"Add file → Upload files"**
-   - Selecione o arquivo `.ipynb` que você baixou
+   ```python
+   from google.colab import drive
+   drive.mount('/content/drive')
+
+   %cd "/content/drive/MyDrive/Turma05/turma05-analise-de-dados-com-python"
+   !ls                              # semanas disponíveis
+
+   %cd "01_Introducao_Fundamentos_Analise_Dados"   # troque pelo nome da semana atual
+   !ls
+   !pwd
+   ```
+
+5. **Quando uma nova semana for liberada.** Antes de navegar para a pasta nova, atualize o repositório:
+
+   ```python
+   %cd "/content/drive/MyDrive/Turma05/turma05-analise-de-dados-com-python"
+   !git pull
+   ```
+
+6. **Trabalhar no notebook da semana.** Os arquivos estão no Drive — o Colab salva automaticamente. Trabalhe normalmente na pasta da semana.
+
+7. **Enviar seu trabalho para a pasta `alunos/`.** Quando terminar, faça upload do notebook via GitHub web:
+   - No Colab: **Arquivo → Fazer download → Fazer download do .ipynb**
+   - Acesse o repositório no GitHub → `alunos/seu-nome/`
+   - Clique em **"Add file → Upload files"** → selecione o arquivo baixado
    - Em "Commit changes", selecione **"Create a new branch and start a pull request"**
-   - Digite `alunos/seu-nome` como nome da branch (ex.: `alunos/joao-silva`)
-   - Clique em **"Propose changes"**
+   - Use `alunos/seu-nome` como nome da branch → **"Propose changes"**
 
-8. **Abrir o Pull Request.** Na tela seguinte, escreva um título curto (ex.: *"Adiciona notebook Semana 01 — João Silva"*) e clique em **"Create pull request"**.
+8. **Abrir o Pull Request.** Escreva um título curto (ex.: *"Adiciona notebook Semana 01 — João Silva"*) e clique em **"Create pull request"**.
 
 9. **Aguardar a aprovação.** A PR fica marcada como *"Review required"* — não é erro. O professor revisa e aprova.
 
-> **Ainda não tem sua pasta criada em `alunos/`?** Na primeira vez, clique em **"Add file → Create new file"**, digite `alunos/seu-nome/README.md` no campo do nome (o GitHub cria a pasta automaticamente ao digitar a barra `/`), escreva qualquer coisa no arquivo e siga os passos 7 a 9 para criar a pasta via PR. Depois disso, use o upload normalmente.
+> **Ainda não tem sua pasta em `alunos/`?** Clique em **"Add file → Create new file"**, digite `alunos/seu-nome/README.md` (o GitHub cria a pasta ao digitar a `/`), escreva qualquer texto e siga os passos 7–9. Depois disso, use o upload normalmente.
 
 ---
 

@@ -83,7 +83,50 @@ Clique em **Open in Colab** para abrir o notebook da semana diretamente no Googl
 | 06 | Limpeza e Transformação de Dados | *em breve* |
 | 07 | Visualização e Pipelines | *em breve* |
 
-> ⚠️ **Primeira coisa a fazer ao abrir:** clique em **Arquivo → Salvar uma cópia no Drive**. O notebook aberto pelo botão é a versão do professor (somente leitura) — a sua cópia no Drive é onde você escreve e salva suas respostas.
+> Os badges acima abrem a versão do professor diretamente no Colab. Para trabalho persistente entre sessões, configure o ambiente abaixo (faça uma vez).
+
+---
+
+## Configuração do ambiente — faça uma vez
+
+O Colab começa do zero a cada sessão — qualquer arquivo some ao encerrar. Solução: clonar o repositório dentro do **Google Drive** (uma vez), onde tudo fica salvo permanentemente.
+
+**Célula 1 — clone inicial (só na primeira vez):**
+
+```python
+from google.colab import drive
+drive.mount('/content/drive')      # autorize quando o link aparecer
+
+import os
+os.makedirs('/content/drive/MyDrive/Turma05', exist_ok=True)
+%cd /content/drive/MyDrive/Turma05
+
+!git clone https://github.com/cfneves/turma05-analise-de-dados-com-python.git
+!ls    # deve aparecer: turma05-analise-de-dados-com-python/
+```
+
+**Célula 2 — início de cada nova sessão (toda vez):**
+
+```python
+from google.colab import drive
+drive.mount('/content/drive')
+
+%cd "/content/drive/MyDrive/Turma05/turma05-analise-de-dados-com-python"
+!ls                            # semanas disponíveis
+
+%cd "01_Introducao_Fundamentos_Analise_Dados"
+!ls
+!pwd
+```
+
+**Quando uma nova semana for liberada — baixar o conteúdo:**
+
+```python
+%cd "/content/drive/MyDrive/Turma05/turma05-analise-de-dados-com-python"
+!git pull
+```
+
+> Passo a passo detalhado com explicações no [GUIA_GITHUB.md](GUIA_GITHUB.md) — Caminho C.
 
 ---
 
@@ -91,7 +134,7 @@ Clique em **Open in Colab** para abrir o notebook da semana diretamente no Googl
 
 ### Notebook prático
 
-Clique em **Open in Colab** na tabela acima — o notebook já abre no modo executável, pronto para rodar.
+Configure o ambiente acima (clone inicial) e execute a Célula 2 a cada sessão para ir direto à pasta da semana.
 
 ### Aula teórica (HTML)
 
