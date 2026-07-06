@@ -232,6 +232,15 @@
     .hero h1{ font-size:1.6rem; }
     .ciclo{ flex-direction:column; }
   }
+
+  /* Estrutura de aula: abertura / checagem / fechamento */
+  .abertura{background:#E8F5E9;border-left:5px solid #1B5E20;border-radius:8px;padding:20px 24px;margin:0 0 32px;}
+  .abertura h3{color:#1B5E20;margin:0 0 10px;font-size:1.05rem;}
+  .abertura ul,.fechamento ul{margin:8px 0 0;padding-left:22px;line-height:1.8;}
+  .checagem{background:#FFF3E0;border-left:5px solid #E65100;border-radius:6px;padding:14px 18px;margin:0 0 28px;font-size:.95rem;}
+  .checagem strong{color:#BF360C;display:block;margin-bottom:6px;}
+  .fechamento{background:#E3F2FD;border-left:5px solid #0D47A1;border-radius:8px;padding:20px 24px;margin:0 0 32px;}
+  .fechamento h3{color:#0D47A1;margin:0 0 10px;font-size:1.05rem;}
 </style>
 </head>
 <body>
@@ -261,6 +270,13 @@
       <li>Descrever as 5 etapas da <strong>análise de dados</strong></li>
     </ul>
   </section>
+    <div class="abertura">
+      <h3>🟢 Abertura — Semana 01: Introdução e Fundamentos</h3>
+      <p>Esta é a <strong>primeira semana do curso</strong>. Não há pré-requisito técnico — só curiosidade.</p>
+      <p><strong>O que você vai aprender hoje:</strong></p>
+      <ul><li>Entender o que é análise de dados e qual é o papel do analista de dados</li><li>Conhecer o ciclo de vida dos dados: coleta → limpeza → análise → visualização → comunicação</li><li>Dar os primeiros passos com Python: variáveis, tipos de dados e <code>print()</code></li></ul>
+    </div>
+
 
   <section>
     <h2>Avaliação Diagnóstica</h2>
@@ -283,6 +299,11 @@
       <strong>⚠️ O que NÃO é análise de dados:</strong> ter uma planilha cheia de números, por si só, <u>não</u> é analisar dados — é só ter coletado dados (etapa 1 de 5, que você vai ver na seção 3). Análise de dados só acontece quando alguém limpa, examina, visualiza e comunica algo útil a partir desses números. Guardar dados não é o mesmo que entendê-los.
     </div>
   </section>
+    <div class="checagem">
+      <strong>✅ Checagem rápida — antes de avançar:</strong>
+      Você consegue explicar — com suas palavras — o que significa transformar dados em informação? Se não, releia essa seção antes de continuar.
+    </div>
+<!-- checagem_O_que_é -->
 
   <section>
     <h2>1. Funcionamento do Curso e Ferramentas</h2>
@@ -331,6 +352,11 @@ print("A partir da próxima semana, vamos aprender lógica de programação de v
       Toda vez que você ouvir um termo novo de tecnologia nesta semana, ele vai aparecer de novo, explicado, mais adiante — não precisa entender agora.
     </div>
   </section>
+    <div class="checagem">
+      <strong>✅ Checagem rápida — antes de avançar:</strong>
+      Você localizou o notebook da semana e conseguiu abrir o Google Colab? Se ainda não, resolva isso antes de avançar.
+    </div>
+<!-- checagem_1._Funcionamento -->
 
   <section>
     <h2>2. Conceitos Fundamentais: Dado, Informação, Conhecimento e Tipo</h2>
@@ -392,6 +418,11 @@ print("Como estamos 20% acima da média, vamos repor o estoque antes do fim de s
       <strong>✏️ Atividade Prática 1 (no notebook):</strong> substitua <code>...</code> pelos seus próprios valores e execute — <code>meu_dado = ...</code>, <code>minha_informacao = "..."</code>, <code>meu_conhecimento = "..."</code>.
     </div>
   </section>
+    <div class="checagem">
+      <strong>✅ Checagem rápida — antes de avançar:</strong>
+      Você consegue dar um exemplo real de dado que só vira informação depois de ser processado?
+    </div>
+<!-- checagem_2._Conceitos -->
 
   <section>
     <h2>3. O Ciclo de Vida da Análise de Dados</h2>
@@ -437,6 +468,11 @@ print("5. Comunicação:", "quem cancela assiste 70% menos conteúdo no 1º mês
       <strong>✏️ Atividade Prática 2 (no notebook):</strong> escolha um cenário seu (trabalho, estudo ou vida pessoal) e complete o código substituindo os <code>"..."</code> por cada uma das 5 etapas.
     </div>
   </section>
+    <div class="checagem">
+      <strong>✅ Checagem rápida — antes de avançar:</strong>
+      Você consegue listar as 5 etapas do ciclo de vida dos dados sem olhar o material?
+    </div>
+<!-- checagem_3._O_Ciclo -->
 
   <section>
     <h2>4. Treino em Squads — Sexta-feira (Encontro 3)</h2>
@@ -528,7 +564,14 @@ drive.mount('/content/drive')
     </div>
   </section>
 
-  <section>
+  
+    <div class="fechamento">
+      <h3>🏁 Fechamento — Semana 01</h3>
+      <p><strong>Nesta semana você aprendeu:</strong></p>
+      <ul><li>O que é dado, informação e conhecimento — e como um se transforma no outro</li><li>As 5 etapas do ciclo de vida da análise de dados</li><li>Como configurar o Google Colab e rodar os primeiros comandos Python</li></ul>
+      <p style="margin-top:14px;"><strong>Próxima semana:</strong> Semana 02 — Lógica de Programação: variáveis, operadores, condicionais e laços.</p>
+    </div>
+<section>
     <h2>Quiz de Fixação</h2>
     <p>Responda e clique em <strong>Verificar</strong> para ver o feedback de cada questão.</p>
 
