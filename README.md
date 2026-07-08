@@ -31,10 +31,9 @@
 
 ## O que é este repositório
 
-Espaço de colaboração da **Turma T5** durante o Módulo Básico (*Manipulação de Dados com Python e SQL*). Aqui ficam:
+Repositório de consulta da **Turma T5** durante o Módulo Básico (*Manipulação de Dados com Python e SQL*). Aqui ficam:
 
 - O material de estudo de cada semana (teoria + notebook prático)
-- A pasta `alunos/`, onde cada estudante organiza seus próprios materiais e exercícios
 
 ---
 
@@ -58,11 +57,7 @@ turma05-analise-de-dados-com-python/
 ├── 05_Pandas_e_NumPy/
 │   ├── aula_teorica.html      ← teoria + quiz interativo
 │   └── notebook_colab.ipynb   ← notebook prático (abra no Google Colab)
-├── 06_..._ (próximas semanas, liberadas ao longo do curso)
-└── alunos/
-    ├── LEIA-ME.txt
-    ├── <seu-nome>/                ← cada aluno cria a sua pasta aqui
-    └── ...
+└── 06_..._ (próximas semanas, liberadas ao longo do curso)
 ```
 
 ---
@@ -123,7 +118,7 @@ drive.mount('/content/drive')
 
 Quando uma semana nova for liberada (ou quando o professor atualizar o conteúdo já publicado), siga os passos abaixo **antes de abrir o notebook da semana**.
 
-> **⚠️ Salve seu trabalho primeiro!** Se você já preencheu exercícios no notebook desta semana, salve uma cópia em `alunos/seu-nome/` antes de continuar. O Passo 2 descarta alterações locais — incluindo suas respostas.
+> **⚠️ Atenção!** O Passo 2 descarta alterações locais no notebook. Se você preencheu exercícios e quer guardar suas respostas, faça download do arquivo antes de continuar (**Arquivo → Fazer download → .ipynb** no Colab).
 
 **Passo 1 — Monte o Drive e vá para o repositório:**
 
@@ -142,7 +137,7 @@ drive.mount('/content/drive')
 !git checkout -- 02_Logica_de_Programacao
 ```
 
-*Por que esse passo é necessário?* Quando você abre um notebook no Colab, ele modifica automaticamente o arquivo (contagens de execução, saídas das células). Isso cria um conflito que impede o `git pull` de funcionar. Esse comando desfaz essas alterações automáticas — sem apagar seus arquivos em `alunos/`.
+*Por que esse passo é necessário?* Quando você abre um notebook no Colab, ele modifica automaticamente o arquivo (contagens de execução, saídas das células). Isso cria um conflito que impede o `git pull` de funcionar. Esse comando desfaz essas alterações automáticas.
 
 **Passo 3 — Baixe as atualizações do repositório:**
 
@@ -151,8 +146,6 @@ drive.mount('/content/drive')
 ```
 
 Ao final, você verá as pastas e arquivos novos listados no terminal. Abra o notebook da semana normalmente.
-
-> Passo a passo detalhado com explicações no [GUIA_GITHUB.md](GUIA_GITHUB.md) — Caminho C.
 
 ---
 
@@ -167,53 +160,6 @@ Configure o ambiente acima (clone inicial) e execute a Célula 2 a cada sessão 
 1. Clique no arquivo `aula_teorica.html` na pasta da semana
 2. Clique no ícone de download (↓ no canto superior direito) → salve o arquivo
 3. Abra no navegador — a aula com quiz interativo funciona completamente offline
-
----
-
-## Como enviar seus exercícios para o repositório
-
-Para o setup completo (criar conta no GitHub, aceitar convite, criar sua pasta), veja o **[GUIA_GITHUB.md](GUIA_GITHUB.md)**. Resumo:
-
-### Pelo navegador — sem Git instalado (Blocos 1 e 2, Google Colab)
-
-Ideal para quem trabalha no Google Colab e ainda não configurou o Git localmente:
-
-1. No Colab, faça **Arquivo → Fazer download → Fazer download do .ipynb**
-2. Acesse o repositório no GitHub → navegue até `alunos/seu-nome/`
-3. Clique em **"Add file → Upload files"** → selecione o arquivo baixado
-4. Em "Commit changes", selecione **"Create a new branch and start a pull request"** e use `alunos/seu-nome` como nome da branch
-5. Clique em **"Propose changes"** → **"Create pull request"**
-6. Aguarde a aprovação do professor (*"Review required"* é normal — não é erro)
-
-### Via Git local (a partir do Bloco 2, Semana 03)
-
-```bash
-git clone https://github.com/cfneves/turma05-analise-de-dados-com-python.git
-cd turma05-analise-de-dados-com-python
-git checkout -b alunos/seu-nome
-mkdir alunos/seu-nome
-# adicione seus arquivos dentro de alunos/seu-nome/
-git add alunos/seu-nome
-git commit -m "Adiciona materiais de [seu nome]"
-git push -u origin alunos/seu-nome
-# depois, abra um Pull Request da sua branch para a main
-```
-
-Veja também `alunos/LEIA-ME.txt` e o [GUIA_GITHUB.md](GUIA_GITHUB.md) completo.
-
----
-
-## Regras de colaboração — o que você PODE e NÃO PODE fazer
-
-| Você PODE | Você NÃO PODE |
-|-----------|-----------------|
-| Criar sua própria pasta em `alunos/<seu-nome>/` | Criar/editar arquivos dentro da pasta de outro colega |
-| Adicionar, editar e organizar livremente os arquivos **dentro da sua pasta** | Editar, mover ou excluir arquivos do material oficial do curso (fora de `alunos/`) |
-| Abrir Pull Requests para enviar suas mudanças | Excluir pastas ou arquivos de outros alunos |
-| Sugerir melhorias via Pull Request/Issue | Fazer push direto na branch `main` (sempre via Pull Request) |
-| Pedir revisão/ajuda ao professor ou colegas | Forçar push (`--force`) ou apagar branches de outras pessoas |
-
-> A branch `main` é protegida: **todo Pull Request precisa da aprovação do professor** antes do merge (o GitHub nunca permite que o autor aprove o próprio PR, então a aprovação sempre vem de outra pessoa — por padrão, o professor).
 
 ---
 
