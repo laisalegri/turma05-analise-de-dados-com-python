@@ -1,0 +1,1435 @@
+﻿<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Semana 03 — Versionamento (Git/GitHub) e Python Local</title>
+<style>
+  :root{
+    --red:#CC0000;
+    --red-dark:#990000;
+    --ink:#1a1a2e;
+    --bg:#f7f7fa;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    font-family:'Segoe UI', Roboto, Arial, sans-serif;
+    background:var(--bg);
+    color:#222;
+    line-height:1.6;
+  }
+  .hero{
+    background:linear-gradient(135deg,#0d1b2a,#1b263b,var(--red));
+    color:#fff;
+    padding:60px 24px;
+    text-align:center;
+  }
+  .hero h1{
+    margin:0 0 10px;
+    font-size:2.2rem;
+  }
+  .hero h1 span{ color:#FFD60A; }
+  .hero p{
+    max-width:760px;
+    margin:14px auto 0;
+    font-size:1.05rem;
+    opacity:.92;
+  }
+  .badge{
+    display:inline-block;
+    background:rgba(255,255,255,.15);
+    border:1px solid rgba(255,255,255,.4);
+    border-radius:20px;
+    padding:6px 16px;
+    margin-top:18px;
+    font-size:.9rem;
+  }
+  main{
+    max-width:980px;
+    margin:0 auto;
+    padding:40px 20px 80px;
+  }
+  section{ margin-bottom:48px; }
+  h2{
+    color:var(--red-dark);
+    border-bottom:3px solid var(--red);
+    padding-bottom:8px;
+    font-size:1.5rem;
+  }
+  h3{ color:var(--ink); }
+  table{
+    width:100%;
+    border-collapse:collapse;
+    margin:18px 0;
+    box-shadow:0 1px 4px rgba(0,0,0,.08);
+  }
+  th, td{
+    border:1px solid #ddd;
+    padding:10px 12px;
+    text-align:left;
+    font-size:.95rem;
+  }
+  th{
+    background:var(--red);
+    color:#fff;
+  }
+  tr:nth-child(even){ background:#fafafa; }
+  .box{
+    background:#fff3f3;
+    border-left:5px solid var(--red);
+    padding:16px 20px;
+    border-radius:6px;
+    margin:18px 0;
+  }
+  .box.tip{
+    background:#F0F7FF;
+    border-left-color:#1565C0;
+  }
+  .fluxo{
+    display:flex;
+    flex-wrap:wrap;
+    gap:14px;
+    margin:24px 0;
+    align-items:center;
+  }
+  .fluxo .etapa{
+    flex:1 1 150px;
+    background:var(--ink);
+    color:#fff;
+    border-radius:10px;
+    padding:18px 14px;
+    text-align:center;
+  }
+  .fluxo .seta{ font-size:1.4rem; color:var(--red); }
+  .qs{
+    background:var(--ink);
+    color:#eee;
+    border-radius:10px;
+    padding:20px 22px;
+    margin:16px 0;
+  }
+  .qs code{
+    background:rgba(255,255,255,.15);
+    color:#E0E0E0;
+    padding:2px 6px;
+    border-radius:4px;
+    font-family:Consolas, monospace;
+  }
+  .qs label{
+    display:block;
+    background:rgba(255,255,255,.06);
+    padding:8px 12px;
+    margin:6px 0;
+    border-radius:6px;
+    cursor:pointer;
+  }
+  .qs label:hover{ background:rgba(255,255,255,.12); }
+  .qs button{
+    background:var(--red);
+    color:#fff;
+    border:none;
+    padding:8px 18px;
+    border-radius:6px;
+    cursor:pointer;
+    margin-top:10px;
+    font-weight:bold;
+  }
+  .qs button:hover{ background:var(--red-dark); }
+  .feedback{
+    margin-top:10px;
+    padding:10px 14px;
+    border-radius:6px;
+    display:none;
+    font-weight:bold;
+  }
+  .feedback.correct{ background:#1b5e20; display:block; }
+  .feedback.wrong{ background:#7a1f1f; display:block; }
+  .ex{
+    background:#F0F7FF;
+    border:1px solid #BBDEFB;
+    border-radius:8px;
+    padding:16px 20px;
+    margin:14px 0;
+  }
+  pre.codeblock{
+    background:var(--ink);
+    color:#E0E0E0;
+    padding:16px 20px;
+    border-radius:8px;
+    overflow-x:auto;
+    font-family:Consolas, monospace;
+    font-size:.9rem;
+    margin:14px 0;
+  }
+  pre.codeblock .c{ color:#8a8aa0; }
+  .caminho{
+    background:#fff;
+    border:1px solid #eee;
+    border-radius:10px;
+    padding:6px 22px 22px;
+    margin:18px 0 28px;
+  }
+  .caminho > h3{
+    background:var(--ink);
+    color:#fff;
+    margin:0 -22px 18px;
+    padding:12px 22px;
+    border-radius:10px 10px 0 0;
+  }
+  ol.passos{ list-style:none; padding:0; margin:0; counter-reset:passo; }
+  ol.passos > li{
+    counter-increment:passo;
+    position:relative;
+    background:#fafafa;
+    border:1px solid #eee;
+    border-left:4px solid var(--red);
+    border-radius:8px;
+    padding:14px 18px 14px 54px;
+    margin:14px 0;
+  }
+  ol.passos > li::before{
+    content:counter(passo);
+    position:absolute;
+    left:14px;
+    top:16px;
+    width:26px;
+    height:26px;
+    border-radius:50%;
+    background:var(--red);
+    color:#fff;
+    font-weight:bold;
+    font-size:.85rem;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  ol.passos h4{ margin:0 0 6px; color:var(--ink); font-size:1.02rem; }
+  ol.passos .porque{ color:#555; font-size:.88rem; margin:4px 0; }
+  ol.passos .porque strong{ color:var(--red-dark); }
+  ol.passos pre.codeblock{ margin:8px 0 0; font-size:.82rem; }
+  footer{
+    background:var(--ink);
+    color:#ccc;
+    text-align:center;
+    padding:26px 16px;
+    font-size:.9rem;
+  }
+  footer strong{ color:#fff; }
+  @media (max-width:768px){
+    .hero h1{ font-size:1.6rem; }
+    .fluxo{ flex-direction:column; }
+  }
+
+  /* Estrutura de aula: abertura / checagem / fechamento */
+  .abertura{background:#E8F5E9;border-left:5px solid #1B5E20;border-radius:8px;padding:20px 24px;margin:0 0 32px;}
+  .abertura h3{color:#1B5E20;margin:0 0 10px;font-size:1.05rem;}
+  .abertura ul,.fechamento ul{margin:8px 0 0;padding-left:22px;line-height:1.8;}
+  .checagem{background:#FFF3E0;border-left:5px solid #E65100;border-radius:6px;padding:14px 18px;margin:0 0 28px;font-size:.95rem;}
+  .checagem strong{color:#BF360C;display:block;margin-bottom:6px;}
+  .fechamento{background:#E3F2FD;border-left:5px solid #0D47A1;border-radius:8px;padding:20px 24px;margin:0 0 32px;}
+  .fechamento h3{color:#0D47A1;margin:0 0 10px;font-size:1.05rem;}
+
+  /* ── Guia de instalação: step-by-step ── */
+  .step-wrapper{display:flex;gap:16px;margin:22px 0;align-items:flex-start;}
+  .step-num{flex-shrink:0;width:38px;height:38px;background:var(--red);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:bold;font-size:1.05rem;}
+  .step-content{flex:1;}
+  .step-content h4{margin:0 0 8px;color:var(--ink);font-size:1.05rem;}
+  .simulacao-win{border:2px solid #bbb;border-radius:7px;overflow:hidden;margin:14px 0;max-width:540px;box-shadow:0 4px 14px rgba(0,0,0,.18);}
+  .win-titlebar{background:#2d2d2d;color:#fff;padding:7px 12px;font-size:.82rem;display:flex;justify-content:space-between;align-items:center;}
+  .win-body{background:#f0f0f0;padding:16px 18px;}
+  .checkbox-sim{display:flex;align-items:flex-start;gap:7px;padding:5px 7px;font-size:.88rem;border-radius:3px;margin:2px 0;line-height:1.4;}
+  .checkbox-sim.destaque{background:#FFF9C4;border:1px solid #e6a000;font-weight:bold;padding:7px 9px;}
+  .badge-critico{background:var(--red);color:#fff;border-radius:4px;padding:1px 7px;font-size:.72rem;white-space:nowrap;margin-left:6px;font-weight:bold;vertical-align:middle;}
+  .btn-sim{background:#e4e4e4;border:1px solid #aaa;border-radius:3px;padding:5px 16px;font-size:.85rem;display:inline-block;cursor:default;}
+  .btn-sim.primary{background:#0078d4;color:#fff;border-color:#005a9e;}
+  .aviso-critico{background:#fff3cd;border-left:5px solid #e67e00;padding:12px 18px;border-radius:6px;margin:14px 0;font-size:.93rem;}
+  .link-download{display:inline-block;background:var(--red);color:#fff!important;padding:9px 18px;border-radius:6px;text-decoration:none;font-weight:bold;margin:6px 0;}
+  .link-download:hover{background:var(--red-dark);}
+  kbd{background:#f3f3f3;border:1px solid #ccc;border-radius:3px;padding:2px 7px;font-size:.87rem;font-family:monospace;box-shadow:0 1px 2px rgba(0,0,0,.12);}
+  .codeblock.output{background:#1e2d23;color:#98c379;border-left-color:#27ae60;}
+  .ext-card{border:1px solid #ddd;border-radius:6px;padding:10px 12px;background:#fff;margin:6px 0;display:flex;justify-content:space-between;align-items:center;}
+  .ext-card.ativo{border-color:#0078d4;box-shadow:0 0 0 2px #cce4f7;}
+
+
+    .qs .contextualizacao { background: rgba(255,255,255,.07); border-left: 3px solid #78C043; padding: 8px 12px; border-radius: 4px; font-size: 0.93em; color: #ccc; line-height: 1.55; margin-bottom: 8px; font-style: italic; }
+    .qs .comando { font-weight: 600; margin-bottom: 10px; color: #fff; }
+    .topo-autor {
+    background: #0d1b2a;
+    color: rgba(255,255,255,0.72);
+    font-size: 0.82em;
+    font-weight: 500;
+    padding: 7px 28px;
+    text-align: left;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    letter-spacing: 0.01em;
+  }
+
+  /* ── Diagrama de fluxo de instalação ─────────────────────── */
+  .setup-flow {
+    display: flex;
+    align-items: stretch;
+    justify-content: center;
+    gap: 0;
+    margin: 28px 0 32px;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .sf-node {
+    background: var(--ink);
+    color: #fff;
+    border-radius: 12px;
+    padding: 18px 16px 14px;
+    text-align: center;
+    flex: 1;
+    min-width: 130px;
+    max-width: 170px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    box-shadow: 0 2px 8px rgba(0,0,0,.18);
+  }
+  .sf-node.sf-final {
+    border: 2px solid #78C043;
+    background: #0d1b2a;
+  }
+  .sf-icon { font-size: 2rem; line-height: 1; }
+  .sf-parte {
+    font-size: 0.68rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #78C043;
+    margin-top: 2px;
+  }
+  .sf-title {
+    font-size: 1rem;
+    font-weight: 700;
+    margin: 2px 0;
+  }
+  .sf-steps {
+    list-style: none;
+    margin: 6px 0 0;
+    padding: 0;
+    font-size: 0.76rem;
+    color: #bbb;
+    text-align: left;
+    border-top: 1px solid rgba(255,255,255,.1);
+    padding-top: 6px;
+    line-height: 1.7;
+  }
+  .sf-steps li::before { content: "✓ "; color: #78C043; font-weight: 700; }
+  .sf-final .sf-steps li::before { content: "$ "; color: #78C043; }
+  .sf-arrow {
+    display: flex;
+    align-items: center;
+    color: #78C043;
+    font-size: 1.6rem;
+    font-weight: 900;
+    padding: 0 2px;
+    flex-shrink: 0;
+    align-self: center;
+  }
+  @media(max-width:600px) {
+    .setup-flow { flex-direction: column; align-items: center; }
+    .sf-arrow { transform: rotate(90deg); }
+    .sf-node { max-width: 100%; width: 100%; }
+  }
+
+  /* == Simulacao barra lateral VS Code == */
+  .vsc-sim-wrap{display:flex;gap:0;border-radius:8px;overflow:hidden;border:1px solid #333;margin:14px 0;max-width:460px;font-size:.82rem;box-shadow:0 2px 8px rgba(0,0,0,.3);}
+  .vsc-actbar{background:#333;padding:8px 0;display:flex;flex-direction:column;align-items:center;gap:4px;width:48px;flex-shrink:0;}
+  .vsc-actbtn{width:36px;height:36px;display:flex;align-items:center;justify-content:center;border-radius:6px;font-size:1.1rem;color:#ccc;}
+  .vsc-actbtn.ativo{background:#1e1e1e;color:#fff;outline:2px solid #78C043;outline-offset:-2px;}
+  .vsc-panel{background:#252526;color:#ccc;flex:1;padding:10px;}
+  .vsc-panel-title{font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:#aaa;margin-bottom:8px;}
+  .vsc-search{background:#3c3c3c;border:1px solid #555;border-radius:4px;padding:5px 8px;font-size:.8rem;color:#ccc;width:100%;box-sizing:border-box;margin-bottom:8px;}
+  .vsc-main{background:#1e1e1e;flex:2;padding:12px;color:#ccc;}
+  .vsc-tab{background:#2d2d2d;border-bottom:2px solid #78C043;color:#fff;font-size:.78rem;padding:4px 12px;display:inline-block;margin-bottom:10px;border-radius:4px 4px 0 0;}
+  /* == Cards de extensao == */
+  .ext-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:12px 0;}
+  @media(max-width:560px){.ext-grid{grid-template-columns:1fr;}}
+  .ext-card2{background:#f8f8f8;border:1px solid #ddd;border-radius:8px;padding:12px;display:flex;flex-direction:column;gap:4px;}
+  .ext-card2.obrig{border-left:4px solid #CC0000;}
+  .ext-card2.rec{border-left:4px solid #78C043;}
+  .ext-card2-name{font-weight:700;font-size:.92rem;}
+  .ext-card2-autor{font-size:.72rem;color:#777;}
+  .ext-card2-desc{font-size:.79rem;color:#444;line-height:1.45;margin-top:2px;}
+  .ext-badge-obrig{display:inline-block;background:#CC0000;color:#fff;font-size:.64rem;font-weight:700;padding:1px 6px;border-radius:3px;text-transform:uppercase;letter-spacing:.05em;margin-bottom:2px;}
+  .ext-badge-rec{display:inline-block;background:#78C043;color:#fff;font-size:.64rem;font-weight:700;padding:1px 6px;border-radius:3px;text-transform:uppercase;letter-spacing:.05em;margin-bottom:2px;}
+  .ext-install-btn{margin-top:auto;background:#0078d4;color:#fff;border-radius:4px;font-size:.75rem;font-weight:600;padding:4px 10px;display:inline-block;width:fit-content;margin-top:8px;}
+
+  /* == Opcoes de criacao de repositorio == */
+  .opcao-bloco {
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    overflow: hidden;
+    margin: 16px 0;
+  }
+  .opcao-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 16px;
+    font-weight: 700;
+    font-size: 0.95rem;
+    background: #f0f0f0;
+    border-bottom: 1px solid #ddd;
+  }
+  .opcao-header.rec {
+    background: #e8f5e9;
+    border-bottom-color: #78C043;
+    color: #2e7d32;
+  }
+  .opcao-header.alt {
+    background: #e8eaf6;
+    border-bottom-color: #3949ab;
+    color: #283593;
+  }
+  .opcao-badge {
+    display: inline-block;
+    font-size: 0.65rem;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 3px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    background: #78C043;
+    color: #fff;
+  }
+  .opcao-badge.alt { background: #3949ab; }
+  .opcao-body { padding: 16px; }
+  .ou-divider {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 20px 0;
+    color: #999;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+  .ou-divider::before,
+  .ou-divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: #ddd;
+  }
+</style>
+</head>
+<body>
+
+<div class="topo-autor">Professor: Cláudio Ferreira Neves - Especialista em Dados</div>
+<div class="hero">
+  <h1>Semana 03 · <span>Versionamento e Python Local</span></h1>
+  <p>Unidade Curricular: <strong>Manipulação de Dados com Python e SQL</strong> (150h) — Bloco 2, Semanas 03 e 04. Você já programa lógica no Colab — agora você aprende a guardar o histórico do que escreve e a programar fora do navegador.</p>
+  <span class="badge">3 encontros · 9h · Git/GitHub, Python local, VS Code, listas/tuplas/dicionários</span>
+</div>
+
+<main>
+
+  <section>
+    <h2>Competência da Unidade Curricular</h2>
+    <div class="box tip">
+      "Desenvolver competências em lógica de programação com Python, modelagem de dados com SQL e NoSQL e utilização de bibliotecas específicas para manipulação, transformação e visualização de dados, apoiando processos de análise de dados."
+    </div>
+    <p>Todo trabalho profissional com dados é versionado e organizado em um ambiente local — não só no navegador. Esta semana você formaliza esses dois pilares.</p>
+    <div class="box">
+      <strong>🧠 Pergunta para você pensar:</strong> o que aconteceria se você perdesse todo o histórico de versões de um documento importante? É exatamente esse problema que o Git resolve.
+    </div>
+  </section>
+
+  <section>
+    <h2>Objetivos da Semana</h2>
+    <ul>
+      <li>Entender os conceitos de <strong>commit</strong>, <strong>branch</strong>, <strong>merge</strong> e <strong>Pull Request</strong></li>
+      <li>Compreender um fluxo de trabalho simplificado com Git/GitHub (<strong>GitFlow</strong>)</li>
+      <li>Instalar e configurar um <strong>ambiente Python local</strong> (Python + VS Code)</li>
+      <li>Criar e manipular <strong>listas, tuplas e dicionários</strong></li>
+    </ul>
+  </section>
+    <div class="abertura">
+      <h3>🟢 Abertura — Semana 03: Versionamento e Python Local</h3>
+      <p>Nas semanas 01–02 você aprendeu a programar no Colab. <strong>Hoje você aprende a não perder seu trabalho</strong> e a trabalhar com Python instalado na sua máquina.</p>
+      <p><strong>O que você vai aprender hoje:</strong></p>
+      <ul><li>Usar Git e GitHub para versionar seu código e colaborar com outros</li><li>Instalar Python e VS Code para trabalhar localmente</li><li>Trabalhar com listas, tuplas e dicionários — as estruturas de dados essenciais</li></ul>
+    </div>
+
+
+  <section>
+    <h2>1. Configurando seu Ambiente de Desenvolvimento</h2>
+    <p>Antes de entender como o Git funciona, você precisa das ferramentas instaladas na sua máquina. Esta seção mostra como instalar o <strong>Python</strong>, o <strong>VS Code</strong> e o <strong>Git</strong> — os três pilares do ambiente local de um profissional de dados.</p>
+    <div class="box tip">
+      <strong>📌 Ordem importa:</strong> instale Python primeiro, VS Code em seguida, Git por último. As etapas de configuração do Git vão reconhecer o VS Code se ele já estiver instalado.
+    </div>
+
+
+    <div class="setup-flow">
+
+      <div class="sf-node">
+        <div class="sf-icon">🐍</div>
+        <div class="sf-parte">Parte A</div>
+        <div class="sf-title">Python</div>
+        <ul class="sf-steps">
+          <li>Baixar instalador</li>
+          <li>Marcar Add to PATH</li>
+          <li>Verificar no terminal</li>
+        </ul>
+      </div>
+
+      <div class="sf-arrow">›</div>
+
+      <div class="sf-node">
+        <div class="sf-icon">💻</div>
+        <div class="sf-parte">Parte B</div>
+        <div class="sf-title">VS Code</div>
+        <ul class="sf-steps">
+          <li>Baixar instalador</li>
+          <li>Marcar tarefas extras</li>
+          <li>Instalar extensões</li>
+        </ul>
+      </div>
+
+      <div class="sf-arrow">›</div>
+
+      <div class="sf-node">
+        <div class="sf-icon">🔧</div>
+        <div class="sf-parte">Parte C</div>
+        <div class="sf-title">Git</div>
+        <ul class="sf-steps">
+          <li>Baixar instalador</li>
+          <li>Configurar editor + main</li>
+          <li>Registrar identidade</li>
+        </ul>
+      </div>
+
+      <div class="sf-arrow">›</div>
+
+      <div class="sf-node sf-final">
+        <div class="sf-icon">✅</div>
+        <div class="sf-parte">Final</div>
+        <div class="sf-title">Verificação</div>
+        <ul class="sf-steps">
+          <li>python --version</li>
+          <li>pip --version</li>
+          <li>code --version</li>
+          <li>git --version</li>
+        </ul>
+      </div>
+
+    </div>
+
+    <!-- ══ PARTE A: PYTHON ══ -->
+    <h3>Parte A — Instalar o Python</h3>
+
+    <div class="step-wrapper">
+      <div class="step-num">1</div>
+      <div class="step-content">
+        <h4>Baixe o instalador oficial</h4>
+        <a href="https://www.python.org/downloads/windows/" target="_blank" class="link-download">🔗 python.org/downloads/windows</a>
+        <p style="margin-top:10px;">Na página, clique em <strong>"Windows installer (64-bit)"</strong> da versão mais recente do Python 3.</p>
+        <div class="box tip" style="margin-top:10px;"><strong>📥 Onde fica o arquivo?</strong> Após clicar no link, o arquivo (<code>.exe</code>) aparece na <strong>barra de downloads do seu navegador</strong> — geralmente no canto superior ou inferior da tela. Clique nele para abrir, ou acesse a pasta <strong>Downloads</strong> pelo Explorador de Arquivos.</div>
+      </div>
+    </div>
+
+    <div class="step-wrapper">
+      <div class="step-num">2</div>
+      <div class="step-content">
+        <h4>Execute o instalador — marque "Add to PATH" primeiro</h4>
+        <div class="simulacao-win">
+          <div class="win-titlebar">
+            <span>🐍 Python 3.x.x (64-bit) Setup</span>
+            <span style="letter-spacing:2px;">─ □ ✕</span>
+          </div>
+          <div class="win-body">
+            <p style="font-size:.92rem;margin:0 0 4px;">Select Install Now or Customize installation:</p>
+            <div style="background:#fff;border:1px solid #ccc;border-radius:4px;padding:10px;margin:8px 0;font-size:.88rem;">
+              <strong>Install Now</strong>
+              <div style="font-size:.76rem;color:#555;margin-top:2px;">C:\Users\SeuNome\AppData\Local\Programs\Python\Python3x</div>
+            </div>
+            <div class="checkbox-sim destaque">
+              <span>☑</span>
+              <span>Add python.exe to <strong>PATH</strong>
+                <span class="badge-critico">← MARQUE ESTE PRIMEIRO!</span>
+              </span>
+            </div>
+            <div class="checkbox-sim">☑ Use admin privileges when installing py.exe</div>
+            <div style="display:flex;gap:10px;margin-top:14px;">
+              <div class="btn-sim primary">Install Now</div>
+              <div class="btn-sim">Customize installation</div>
+            </div>
+          </div>
+        </div>
+        <div class="aviso-critico">
+          ⚠️ <strong>Erro mais comum da semana:</strong> não marcar "Add python.exe to PATH". Sem isso o terminal não encontra o Python e você vai precisar reinstalar do zero.
+        </div>
+        <p>Com a opção marcada, clique em <strong>Install Now</strong>, aguarde e clique em <strong>Close</strong>.</p>
+      </div>
+    </div>
+
+    <div class="step-wrapper">
+      <div class="step-num">3</div>
+      <div class="step-content">
+        <h4>Verifique no terminal (Prompt de Comando)</h4>
+        <p>O <strong>terminal</strong> — também chamado de Prompt de Comando — é uma janela de texto onde você digita comandos diretamente para o computador. Para abrir: pressione a tecla <kbd>⊞ Win</kbd> (a tecla com o logotipo do Windows, no canto inferior esquerdo do teclado) + <kbd>R</kbd>, digite <code>cmd</code> e pressione <kbd>Enter</kbd>. Uma janela preta vai abrir — é o terminal. Dentro dela, rode:</p>
+        <pre class="codeblock">python --version
+pip --version</pre>
+        <pre class="codeblock output">Python 3.12.x
+pip 24.x.x from C:\Users\...\Python312\Lib\site-packages\pip (python 3.12)</pre>
+        <div class="box tip"><strong>Não apareceu?</strong> Reinicie o computador e tente novamente. Se persistir, reinstale com a opção "Add to PATH" marcada.</div>
+      </div>
+    </div>
+
+    <!-- ══ PARTE B: VS CODE ══ -->
+    <h3>Parte B — Instalar o VS Code</h3>
+
+    <div class="step-wrapper">
+      <div class="step-num">1</div>
+      <div class="step-content">
+        <h4>Baixe o instalador para Windows 64-bit</h4>
+        <a href="https://code.visualstudio.com/download" target="_blank" class="link-download">🔗 code.visualstudio.com/download</a>
+        <p style="margin-top:10px;">Na página de download, você vai ver botões para diferentes sistemas. Clique em <strong>Windows</strong> e baixe o <strong>User Installer x64</strong>. <em>User Installer</em> = instala só para o seu usuário (não precisa de senha de administrador). <em>x64</em> = versão de 64 bits, adequada para a maioria dos computadores atuais. O arquivo baixado se chama <code>VSCodeUserSetup-x64-x.xx.x.exe</code>.</p>
+      </div>
+    </div>
+
+    <div class="step-wrapper">
+      <div class="step-num">2</div>
+      <div class="step-content">
+        <h4>Execute o instalador — marque todas as tarefas adicionais</h4>
+        <p>Nas primeiras telas: marque a opção <strong>"I accept the agreement"</strong> (aceito o contrato) e clique em <strong>Next → Next → Next</strong>. Na tela <strong>"Tarefas Adicionais"</strong>:</p>
+        <div class="simulacao-win">
+          <div class="win-titlebar">
+            <span>💻 Instalação — Visual Studio Code</span>
+            <span style="letter-spacing:2px;">─ □ ✕</span>
+          </div>
+          <div class="win-body">
+            <p style="font-size:.85rem;margin:0 0 8px;font-weight:bold;">Selecionar Tarefas Adicionais</p>
+            <div class="checkbox-sim">☑ Criar um ícone na área de trabalho</div>
+            <div class="checkbox-sim destaque">
+              <span>☑</span>
+              <span>Adicionar "Abrir com Code" ao menu de contexto de <strong>arquivo</strong>
+                <span class="badge-critico">← MARQUE</span>
+              </span>
+            </div>
+            <div class="checkbox-sim destaque">
+              <span>☑</span>
+              <span>Adicionar "Abrir com Code" ao menu de contexto de <strong>diretório</strong>
+                <span class="badge-critico">← MARQUE</span>
+              </span>
+            </div>
+            <div class="checkbox-sim">☑ Registrar Code como editor para tipos de arquivo suportados</div>
+            <div class="checkbox-sim destaque">
+              <span>☑</span>
+              <span>Adicionar ao PATH (requer reinicialização do shell)
+                <span class="badge-critico">← MARQUE</span>
+              </span>
+            </div>
+            <div style="display:flex;gap:8px;margin-top:14px;justify-content:flex-end;">
+              <div class="btn-sim">Voltar</div>
+              <div class="btn-sim primary">Próximo</div>
+            </div>
+          </div>
+        </div>
+        <p>Clique em <strong>Próximo → Instalar → Concluir</strong>. Deixe "Iniciar o Visual Studio Code" marcado.</p>
+      </div>
+    </div>
+
+        <div class="step-wrapper">
+      <div class="step-num">3</div>
+      <div class="step-content">
+        <h4>Conheça a interface e instale as extensões</h4>
+
+        <!-- Orientação: barra lateral do VS Code -->
+        <p>Ao abrir o VS Code, você vai ver uma <strong>barra lateral de ícones</strong> no lado esquerdo — é a "Activity Bar". Cada ícone abre um painel diferente:</p>
+
+        <div class="vsc-sim-wrap">
+          <div class="vsc-actbar">
+            <div class="vsc-actbtn" title="Explorer">📄</div>
+            <div class="vsc-actbtn" title="Search">🔍</div>
+            <div class="vsc-actbtn" title="Source Control">🔀</div>
+            <div class="vsc-actbtn" title="Run & Debug">▶️</div>
+            <div class="vsc-actbtn ativo" title="Extensions">🧩</div>
+          </div>
+          <div class="vsc-panel">
+            <div class="vsc-panel-title">EXTENSIONS</div>
+            <div class="vsc-search">🔍 Search Extensions in Marketplace</div>
+            <div style="font-size:.76rem;color:#888;">Python · Jupyter · Material Icon Theme · ...</div>
+          </div>
+          <div class="vsc-main">
+            <div class="vsc-tab">🧩 Extensions</div>
+            <div style="font-size:.76rem;color:#aaa;line-height:1.7;">
+              ← Clique no ícone de<br>
+              <strong style="color:#78C043;">quebra-cabeça 🧩</strong><br>
+              ou pressione<br>
+              <kbd style="background:#444;color:#fff;padding:1px 5px;border-radius:3px;font-size:.8em;">Ctrl</kbd>
+              +
+              <kbd style="background:#444;color:#fff;padding:1px 5px;border-radius:3px;font-size:.8em;">Shift</kbd>
+              +
+              <kbd style="background:#444;color:#fff;padding:1px 5px;border-radius:3px;font-size:.8em;">X</kbd>
+            </div>
+          </div>
+        </div>
+
+        <!-- Como instalar qualquer extensão -->
+        <p><strong>Como instalar uma extensão (passo a passo para qualquer uma):</strong></p>
+        <ol style="margin:6px 0 14px 20px;line-height:2.1;">
+          <li>Abra o painel Extensions (<kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>X</kbd> ou clique em 🧩)</li>
+          <li>Clique na barra de busca e <strong>digite o nome</strong> da extensão</li>
+          <li>Nos resultados, confirme o <strong>nome do autor</strong> (está escrito embaixo do título)</li>
+          <li>Clique no botão azul <strong>Install</strong></li>
+          <li>Aguarde — quando o botão mudar para <strong>Uninstall</strong>, a extensão está instalada ✓</li>
+        </ol>
+
+        <div class="box tip">
+          <strong>⚠️ Sempre confirme o autor!</strong> Existem extensões com nomes parecidos feitas por pessoas diferentes.
+          Instale apenas as que têm o autor correto indicado abaixo.
+        </div>
+
+        <!-- Extensões obrigatórias -->
+        <p style="margin:16px 0 6px;"><strong>Extensões obrigatórias</strong> — instale estas duas primeiro:</p>
+        <div class="ext-grid">
+
+          <div class="ext-card2 obrig">
+            <span class="ext-badge-obrig">Obrigatória</span>
+            <div class="ext-card2-name">🐍 Python</div>
+            <div class="ext-card2-autor">Autor: <strong>Microsoft</strong> · 116M+ downloads</div>
+            <div class="ext-card2-desc">Permite rodar arquivos <code>.py</code> com o botão ▶, ativa o IntelliSense (autocompletar) e mostra erros enquanto você digita.</div>
+            <div class="ext-install-btn">Install</div>
+          </div>
+
+          <div class="ext-card2 obrig">
+            <span class="ext-badge-obrig">Obrigatória</span>
+            <div class="ext-card2-name">📒 Jupyter</div>
+            <div class="ext-card2-autor">Autor: <strong>Microsoft</strong> · 68M+ downloads</div>
+            <div class="ext-card2-desc">Abre e executa notebooks <code>.ipynb</code> diretamente no VS Code — o mesmo formato que usamos no Google Colab.</div>
+            <div class="ext-install-btn">Install</div>
+          </div>
+
+        </div>
+
+        <div class="box tip" style="margin-bottom:14px;">
+          <strong>📌 Pylance — não precisa instalar separado.</strong> Quando você instala o Python (Microsoft),
+          o <strong>Pylance</strong> é instalado automaticamente junto. Ele adiciona verificação de tipos e
+          sugestões mais inteligentes. Você vai vê-lo aparecer na lista de extensões instaladas.
+        </div>
+
+        <!-- Extensões recomendadas -->
+        <p style="margin:16px 0 6px;"><strong>Extensões recomendadas</strong> — facilitam muito o dia a dia no curso:</p>
+        <div class="ext-grid">
+
+          <div class="ext-card2 rec">
+            <span class="ext-badge-rec">Recomendada</span>
+            <div class="ext-card2-name">🎨 Material Icon Theme</div>
+            <div class="ext-card2-autor">Autor: <strong>Philipp Kief</strong> · 25M+ downloads</div>
+            <div class="ext-card2-desc">Troca os ícones do Explorer por ícones coloridos por tipo de arquivo — pasta azul, <code>.py</code> cobra amarela, <code>.ipynb</code> laranja. Muito mais fácil de achar o arquivo certo.</div>
+            <div class="ext-install-btn">Install</div>
+          </div>
+
+          <div class="ext-card2 rec">
+            <span class="ext-badge-rec">Recomendada</span>
+            <div class="ext-card2-name">➡️ Python Indent</div>
+            <div class="ext-card2-autor">Autor: <strong>Kevin Rose</strong> · 3M+ downloads</div>
+            <div class="ext-card2-desc">Corrige automaticamente a indentação ao pressionar <kbd>Enter</kbd> após <code>if</code>, <code>for</code>, <code>def</code>, etc. Evita boa parte dos erros de <code>IndentationError</code>.</div>
+            <div class="ext-install-btn">Install</div>
+          </div>
+
+          <div class="ext-card2 rec">
+            <span class="ext-badge-rec">Recomendada</span>
+            <div class="ext-card2-name">🌈 Rainbow CSV</div>
+            <div class="ext-card2-autor">Autor: <strong>mechatroner</strong> · 6M+ downloads</div>
+            <div class="ext-card2-desc">Colore cada coluna de arquivos <code>.csv</code> com uma cor diferente. Quando chegarmos na semana de Pandas e abrirmos datasets, essa extensão vai salvar muito tempo.</div>
+            <div class="ext-install-btn">Install</div>
+          </div>
+
+          <div class="ext-card2 rec">
+            <span class="ext-badge-rec">Recomendada</span>
+            <div class="ext-card2-name">🔍 GitLens — Supercharge Git in VS Code</div>
+            <div class="ext-card2-autor">Autor: <strong>GitKraken</strong> · 28M+ downloads</div>
+            <div class="ext-card2-desc">Mostra no próprio código quem fez cada alteração e quando — linha a linha. Como esta semana é de Git, o GitLens vai tornar o histórico visível direto no editor.</div>
+            <div class="ext-install-btn">Install</div>
+          </div>
+
+          <div class="ext-card2 rec">
+            <span class="ext-badge-rec">Recomendada</span>
+            <div class="ext-card2-name">📄 vscode-pdf</div>
+            <div class="ext-card2-autor">Autor: <strong>tomoki1207</strong> · 6M+ downloads</div>
+            <div class="ext-card2-desc">Abre arquivos <code>.pdf</code> diretamente dentro do VS Code — sem precisar trocar de programa. Útil para consultar documentações, rubricas e enunciados de atividades sem sair do editor.</div>
+            <div class="ext-install-btn">Install</div>
+          </div>
+
+        </div>
+
+        <!-- Configurar interpretador Python -->
+        <p style="margin-top:16px;">Com as extensões instaladas, <strong>conecte o VS Code ao Python que você instalou</strong>:</p>
+        <ol style="margin:6px 0 0 20px;line-height:2.1;">
+          <li>Pressione <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>P</kbd> para abrir a <strong>Paleta de Comandos</strong> (uma barra de busca no topo da tela)</li>
+          <li>Comece a digitar <code>select interpreter</code> e clique em <strong>Python: Select Interpreter</strong></li>
+          <li>Na lista que aparecer, clique em <code>Python 3.x.x</code> — é o Python que você instalou na Parte A</li>
+        </ol>
+        <div class="box tip" style="margin-top:10px;">
+          <strong>Por que fazer isso?</strong> O VS Code pode ter mais de um Python instalado no computador.
+          Selecionar o interpretador garante que ele use exatamente o que você configurou.
+        </div>
+
+      </div>
+    </div>
+
+        <!-- ══ PARTE C: GIT ══ -->
+    <h3>Parte C — Instalar o Git</h3>
+
+    <div class="step-wrapper">
+      <div class="step-num">1</div>
+      <div class="step-content">
+        <h4>Baixe o Git para Windows</h4>
+        <a href="https://git-scm.com/download/win" target="_blank" class="link-download">🔗 git-scm.com/download/win</a>
+        <p style="margin-top:10px;">O download começa automaticamente. Se não começar em alguns segundos, procure na página o link <strong>"64-bit Git for Windows Setup"</strong> e clique nele. O arquivo baixado (<code>Git-x.xx.x-64-bit.exe</code>) aparece na barra de downloads do navegador — clique para abrir.</p>
+      </div>
+    </div>
+
+    <div class="step-wrapper">
+      <div class="step-num">2</div>
+      <div class="step-content">
+        <h4>Duas opções importantes durante o instalador</h4>
+        <p>A maioria das telas pode ficar no padrão. Preste atenção nestas duas:</p>
+
+        <div class="simulacao-win">
+          <div class="win-titlebar">
+            <span>🔧 Git Setup — Choosing the default editor</span>
+            <span style="letter-spacing:2px;">─ □ ✕</span>
+          </div>
+          <div class="win-body">
+            <p style="font-size:.85rem;margin:0 0 4px;">Which editor would you like Git to use?</p>
+            <p style="font-size:.77rem;color:#888;margin:0 0 8px;">⚠️ No instalador real essa opção é um <strong>menu suspenso (dropdown)</strong> — clique nele e role para baixo até encontrar "Use Visual Studio Code as Git's default editor".</p>
+            <div style="background:#fff;border:1px solid #0078d4;border-radius:4px;padding:6px 10px;font-size:.84rem;display:flex;justify-content:space-between;align-items:center;">
+              <span>Use <strong>Visual Studio Code</strong> as Git's default editor</span>
+              <span style="color:#888;">▾</span>
+            </div>
+            <span class="badge-critico" style="margin-top:4px;display:inline-block;">← SELECIONE ESTA OPÇÃO NO DROPDOWN</span>
+          </div>
+        </div>
+
+        <div class="simulacao-win" style="margin-top:10px;">
+          <div class="win-titlebar">
+            <span>🔧 Git Setup — Initial branch name</span>
+            <span style="letter-spacing:2px;">─ □ ✕</span>
+          </div>
+          <div class="win-body">
+            <p style="font-size:.85rem;margin:0 0 8px;">What should the default branch be called?</p>
+            <div class="checkbox-sim destaque">
+              <span>●</span>
+              <span>Override the default branch name for new repositories:
+                <strong> main</strong>
+                <span class="badge-critico">← ESCOLHA E ESCREVA "main"</span>
+              </span>
+            </div>
+            <div class="checkbox-sim" style="color:#888;font-size:.82rem;">○ Let Git decide (master)</div>
+          </div>
+        </div>
+
+        <div class="box tip" style="margin-top:10px;">
+          <strong>Por que "main" e não "master"?</strong> O GitHub usa <code>main</code> como nome padrão desde 2020. Configurar o mesmo nome no Git local evita divergências na hora de fazer push para o GitHub.
+        </div>
+
+        <p>Nas demais telas, deixe os padrões selecionados e clique em <strong>Next → Install → Finish</strong>.</p>
+      </div>
+    </div>
+
+    <div class="step-wrapper">
+      <div class="step-num">3</div>
+      <div class="step-content">
+        <h4>Configure sua identidade no Git</h4>
+        <p>O Git precisa saber quem é você para assinar os commits. Abra o <strong>terminal do VS Code</strong> (menu <strong>Terminal → New Terminal</strong>, ou pressione <kbd>Ctrl</kbd> + <kbd>`</kbd>) e rode os dois comandos abaixo, substituindo pelo seu nome e e-mail:</p>
+        <pre class="codeblock">git config --global user.name "Maria Silva"
+git config --global user.email "maria.silva@email.com"</pre>
+        <p>Troque <code>"Maria Silva"</code> pelo seu nome completo e <code>"maria.silva@email.com"</code> pelo seu e-mail real.</p>
+        <div class="box tip" style="margin-bottom:8px;"><strong>📌 Qual e-mail usar?</strong> Use o mesmo e-mail que você vai cadastrar na sua conta do GitHub (explicado na Seção 2). Se ainda não tem conta no GitHub, crie a conta primeiro e volte aqui com o e-mail cadastrado.</div>
+        <p>Após rodar os dois comandos, o terminal vai mostrar só o cursor piscando — <strong>isso é normal</strong>, significa que funcionou. Para confirmar, rode:</p>
+        <pre class="codeblock">git config --global user.name
+git config --global user.email</pre>
+        <p>O terminal vai exibir o nome e e-mail que você digitou. Se estiverem corretos, está tudo certo.</p>
+      </div>
+    </div>
+
+    <!-- ══ VERIFICAÇÃO FINAL ══ -->
+    <h3>Verificação final — tudo instalado?</h3>
+    <p>No terminal do VS Code (<kbd>Ctrl</kbd> + <kbd>`</kbd>), rode os quatro comandos:</p>
+    <pre class="codeblock">python --version   # Python 3.x.x
+pip --version      # pip 24.x.x
+code --version     # x.xx.x (VS Code)
+git --version      # git version 2.x.x.windows.x</pre>
+    <p>Se os quatro responderem com versões, o ambiente está pronto. Agora faça um teste rápido:</p>
+    <ol style="margin:8px 0 0 20px;line-height:2.2;">
+      <li>No VS Code, clique em <strong>File → New File…</strong> (ou pressione <kbd>Ctrl</kbd> + <kbd>N</kbd>)</li>
+      <li>Salve o arquivo com <kbd>Ctrl</kbd> + <kbd>S</kbd> — vai abrir uma janela de "Salvar como". No painel esquerdo clique em <strong>Downloads</strong>, no campo de nome do arquivo apague o que estiver escrito e digite <code>teste.py</code>, depois clique em <strong>Salvar</strong></li>
+      <li>Digite na área branca: <code>print("Ambiente OK!")</code></li>
+      <li>Clique no botão <strong>▶ Run Python File</strong> no canto superior direito do VS Code</li>
+      <li>No terminal que abrir embaixo, deve aparecer: <code>Ambiente OK!</code></li>
+    </ol>
+    <p>Apareceu a mensagem? Ótimo — Python, VS Code e Git estão todos funcionando na sua máquina! 🎉</p>
+  </section>
+    <div class="checagem">
+      <strong>✅ Checagem rápida — antes de avançar:</strong>
+      Você consegue abrir o terminal do VS Code e rodar <code>python --version</code> e <code>git --version</code> na sua máquina?
+    </div>
+<!-- checagem_1._Instalando_Ferramentas -->
+
+  <section>
+    <h2>2. Git e GitHub — Controle de Versão e Seu Repositório</h2>
+    <p>Com as ferramentas instaladas, agora você vai entender <strong>o que</strong> cada conceito do Git significa e, na sequência, criar o <strong>seu próprio repositório</strong> — onde o código que você escreve neste curso vai ficar salvo e versionado.</p>
+    <div class="box">
+      <strong>📌 Repositório da turma × seu repositório:</strong> o repositório <code>cfneves/turma05-analise-de-dados-com-python</code> é para você <strong>consultar o material do curso</strong> (HTML e notebook de cada semana). O repositório que você vai criar agora é o <strong>seu</strong> — onde fica o código que você escreve.
+    </div>
+
+    <h3>Os conceitos essenciais</h3>
+    <table>
+      <tr><th>Conceito</th><th>O que é</th><th>Analogia</th></tr>
+      <tr><td><strong>Repositório</strong></td><td>Pasta do projeto versionada pelo Git</td><td>A caixa onde você guarda tudo</td></tr>
+      <tr><td><strong>Commit</strong></td><td>Um "ponto de salvamento" das suas mudanças, com mensagem</td><td>Fotografia + legenda do estado atual</td></tr>
+      <tr><td><strong>Branch</strong></td><td>Cópia paralela onde você trabalha sem afetar a versão principal</td><td>Rascunho antes de passar a limpo</td></tr>
+      <tr><td><strong>Push</strong></td><td>Enviar seus commits do computador para o GitHub</td><td>Salvar na nuvem</td></tr>
+      <tr><td><strong>Pull</strong></td><td>Baixar as atualizações do GitHub para o seu computador</td><td>Sincronizar o arquivo</td></tr>
+      <tr><td><strong>Clone</strong></td><td>Copiar um repositório do GitHub para o seu computador</td><td>Baixar o projeto completo</td></tr>
+    </table>
+
+    <h3>O fluxo do dia a dia</h3>
+    <div class="fluxo">
+      <div class="etapa">1. Editar arquivo</div>
+      <div class="seta">→</div>
+      <div class="etapa">2. git add</div>
+      <div class="seta">→</div>
+      <div class="etapa">3. git commit</div>
+      <div class="seta">→</div>
+      <div class="etapa">4. git push</div>
+    </div>
+    <pre class="codeblock">git add meu_script.py
+git commit -m "Adiciona análise de vendas da Semana 03"
+git push origin main</pre>
+    <div class="box tip">
+      <strong>💡 Mensagem de commit: seja específico.</strong> <code>"Update"</code> ou <code>"Mudanças"</code> não dizem nada. <code>"Corrige cálculo de média quando notas são zero"</code> conta a história — você mesmo vai agradecer em duas semanas.
+    </div>
+
+    <!-- ══ CRIANDO SEU REPOSITÓRIO ══ -->
+    <h3>Criando seu próprio repositório no GitHub</h3>
+    <p>Existem duas formas de criar um repositório. Escolha a que faz mais sentido para você agora:</p>
+
+    <!-- ══ OPÇÃO 1: PELO GITHUB.COM ══ -->
+    <div class="opcao-bloco">
+      <div class="opcao-header rec">
+        <span class="opcao-badge">Opção 1</span>
+        🌐 Criar pelo GitHub.com — recomendado para iniciantes
+      </div>
+      <div class="opcao-body">
+        <p style="margin:0 0 14px;font-size:.92rem;color:#444;">Você cria o repositório direto no site do GitHub, depois traz para o seu computador. Mais visual e mais fácil para quem nunca usou Git antes.</p>
+
+        <!-- PASSO 1: CRIAR CONTA -->
+        <div class="step-wrapper">
+          <div class="step-num">1</div>
+          <div class="step-content">
+            <h4>Crie sua conta no GitHub</h4>
+            <p>Acesse o link abaixo e clique em <strong>Sign up</strong>:</p>
+            <a href="https://github.com/signup" target="_blank" class="link-download">🔗 github.com/signup</a>
+            <p style="margin-top:12px;">O cadastro tem 3 campos — preencha um por vez e clique em <strong>Continue</strong> após cada um:</p>
+            <div class="simulacao-win" style="margin-top:10px;">
+              <div class="win-titlebar">
+                <span>🐙 GitHub — Create your account</span>
+                <span style="letter-spacing:2px;">─ □ ✕</span>
+              </div>
+              <div class="win-body">
+                <p style="font-size:.78rem;font-weight:700;margin:0 0 10px;">Preencha cada campo e clique em Continue:</p>
+                <div style="margin-bottom:8px;">
+                  <div style="font-size:.76rem;color:#555;margin-bottom:3px;">① E-mail address</div>
+                  <div style="background:#fff;border:1px solid #0078d4;border-radius:4px;padding:6px 10px;font-size:.85rem;">seu@email.com</div>
+                  <div style="font-size:.72rem;color:#888;margin-top:2px;">Use o mesmo e-mail do Git que você configurou na Parte C</div>
+                </div>
+                <div style="margin-bottom:8px;">
+                  <div style="font-size:.76rem;color:#555;margin-bottom:3px;">② Password (mínimo 8 caracteres)</div>
+                  <div style="background:#fff;border:1px solid #ccc;border-radius:4px;padding:6px 10px;font-size:.85rem;color:#999;">••••••••••</div>
+                </div>
+                <div style="margin-bottom:12px;">
+                  <div style="font-size:.76rem;color:#555;margin-bottom:3px;">③ Username (nome que aparece no seu perfil)</div>
+                  <div style="background:#fff;border:1px solid #ccc;border-radius:4px;padding:6px 10px;font-size:.85rem;">maria-silva</div>
+                  <div style="font-size:.72rem;color:#888;margin-top:2px;">Letras minúsculas e hífens. Ex: <code>joao-analista</code>, <code>maria-dados</code></div>
+                </div>
+                <div class="btn-sim primary" style="width:100%;text-align:center;">Continue</div>
+              </div>
+            </div>
+            <div class="box tip" style="margin-top:10px;">
+              <strong>📧 Verifique seu e-mail!</strong> O GitHub vai enviar um código de verificação. Abra o e-mail, copie o código de 6 dígitos e cole na tela do GitHub para ativar a conta.
+            </div>
+          </div>
+        </div>
+
+        <!-- PASSO 2: CRIAR REPOSITÓRIO -->
+        <div class="step-wrapper">
+          <div class="step-num">2</div>
+          <div class="step-content">
+            <h4>Crie um novo repositório</h4>
+            <p>Depois de fazer login, você está na página inicial do GitHub. Para criar um repositório, clique no ícone <strong>+</strong> no canto superior direito da tela:</p>
+            <div class="simulacao-win" style="margin-top:10px;">
+              <div class="win-titlebar">
+                <span>🌐 github.com</span>
+                <span style="letter-spacing:2px;">─ □ ✕</span>
+              </div>
+              <div class="win-body" style="padding:8px 12px;">
+                <div style="display:flex;align-items:center;justify-content:space-between;background:#24292f;padding:8px 12px;border-radius:6px;color:#fff;font-size:.82rem;">
+                  <span>🐙 <strong>GitHub</strong></span>
+                  <div style="display:flex;align-items:center;gap:10px;">
+                    <span style="color:#aaa;">🔔</span>
+                    <div style="background:#238636;color:#fff;border-radius:4px;padding:3px 10px;font-size:.78rem;font-weight:700;border:2px solid #78C043;">
+                      <strong>+</strong> ▾ <span class="badge-critico" style="margin-left:4px;">← CLIQUE AQUI</span>
+                    </div>
+                    <span style="font-size:1.2rem;">👤</span>
+                  </div>
+                </div>
+                <div style="background:#fff;border:1px solid #ddd;border-radius:4px;padding:8px;margin-top:8px;font-size:.8rem;">
+                  <div style="padding:4px 8px;border-radius:3px;background:#f0f0f0;margin-bottom:2px;cursor:default;">📁 New repository</div>
+                  <div style="padding:4px 8px;color:#aaa;font-size:.76rem;">New gist</div>
+                  <div style="padding:4px 8px;color:#aaa;font-size:.76rem;">New organization</div>
+                </div>
+              </div>
+            </div>
+            <p style="margin-top:12px;">Clique em <strong>New repository</strong>. Na página que abrir, preencha assim:</p>
+            <div class="simulacao-win" style="margin-top:8px;">
+              <div class="win-titlebar">
+                <span>🐙 GitHub — Create a new repository</span>
+                <span style="letter-spacing:2px;">─ □ ✕</span>
+              </div>
+              <div class="win-body">
+                <div style="margin-bottom:10px;">
+                  <p style="font-size:.78rem;font-weight:700;margin:0 0 4px;">Repository name *</p>
+                  <div style="background:#fff;border:1px solid #0078d4;border-radius:4px;padding:6px 10px;font-size:.88rem;">analise-de-dados-python</div>
+                  <div style="font-size:.72rem;color:#888;margin-top:2px;">Só letras minúsculas e hífens. Sem espaços, sem acentos.</div>
+                </div>
+                <div style="margin-bottom:10px;">
+                  <p style="font-size:.78rem;font-weight:700;margin:0 0 4px;">Description (opcional)</p>
+                  <div style="background:#fff;border:1px solid #ccc;border-radius:4px;padding:6px 10px;font-size:.85rem;color:#aaa;">Meu repositório do curso de Análise de Dados</div>
+                </div>
+                <div style="margin-bottom:10px;">
+                  <p style="font-size:.78rem;font-weight:700;margin:0 0 4px;">Visibility</p>
+                  <div class="checkbox-sim destaque">● <strong>Public</strong> <span class="badge-critico">← ESCOLHA PUBLIC</span></div>
+                  <div class="checkbox-sim" style="color:#888;font-size:.82rem;">○ Private</div>
+                </div>
+                <div class="checkbox-sim" style="color:#888;">☐ Add a README file — <em>deixe desmarcado</em></div>
+                <div style="font-size:.76rem;color:#777;margin:2px 0 0 24px;">Você vai criar seus próprios arquivos depois do clone.</div>
+                <div style="margin-top:14px;">
+                  <div class="btn-sim primary">Create repository</div>
+                </div>
+              </div>
+            </div>
+            <div class="box tip" style="margin-top:10px;">
+              <strong>Por que Public?</strong> Repositórios públicos são gratuitos e ficam visíveis no seu perfil — qualquer recrutador pode ver. Tudo que não quiser expor vai para o <code>.gitignore</code>.
+            </div>
+          </div>
+        </div>
+
+        <!-- PASSO 3: CLONAR -->
+        <div class="step-wrapper">
+          <div class="step-num">3</div>
+          <div class="step-content">
+            <h4>Traga o repositório para o seu computador</h4>
+            <p>Após criar, você cai na página do repositório. Localize o botão verde <strong>Code</strong> — ele fica no lado direito, acima da lista de arquivos:</p>
+            <div class="simulacao-win" style="margin-top:10px;">
+              <div class="win-titlebar">
+                <span>🐙 github.com/seu-usuario/analise-de-dados-python</span>
+                <span style="letter-spacing:2px;">─ □ ✕</span>
+              </div>
+              <div class="win-body" style="padding:10px;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+                  <span style="font-size:.82rem;color:#555;">📁 <strong>analise-de-dados-python</strong></span>
+                  <div style="background:#238636;color:#fff;border-radius:5px;padding:4px 12px;font-size:.82rem;font-weight:700;border:2px solid #78C043;">
+                    ⬇ Code ▾ <span class="badge-critico" style="margin-left:4px;">← CLIQUE AQUI</span>
+                  </div>
+                </div>
+                <div style="background:#f6f8fa;border:1px solid #ddd;border-radius:6px;padding:10px;font-size:.8rem;margin-top:4px;">
+                  <div style="display:flex;gap:8px;margin-bottom:8px;">
+                    <span style="border-bottom:2px solid #0078d4;padding:2px 6px;font-weight:700;font-size:.78rem;">HTTPS</span>
+                    <span style="color:#aaa;padding:2px 6px;font-size:.78rem;">SSH</span>
+                    <span style="color:#aaa;padding:2px 6px;font-size:.78rem;">GitHub CLI</span>
+                  </div>
+                  <div style="display:flex;align-items:center;gap:6px;background:#fff;border:1px solid #ccc;border-radius:4px;padding:5px 8px;">
+                    <span style="font-size:.78rem;flex:1;color:#333;">https://github.com/seu-usuario/analise-de-dados-python.git</span>
+                    <span style="cursor:default;font-size:.9rem;" title="Copiar">📋 <span class="badge-critico">← COPIE</span></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <p style="margin-top:12px;">Com a URL copiada, abra o <strong>terminal do VS Code</strong> (<strong>Terminal → New Terminal</strong>) e execute:</p>
+            <pre class="codeblock">git clone https://github.com/seu-usuario/analise-de-dados-python.git</pre>
+            <p>Uma pasta <code>analise-de-dados-python</code> vai aparecer no seu computador. Abra ela no VS Code:</p>
+            <pre class="codeblock">cd analise-de-dados-python
+code .</pre>
+          </div>
+        </div>
+
+        <!-- PASSO 4: PRIMEIRO COMMIT -->
+        <div class="step-wrapper">
+          <div class="step-num">4</div>
+          <div class="step-content">
+            <h4>Crie um arquivo, salve no histórico e envie para o GitHub</h4>
+            <p>No VS Code, crie um novo arquivo (<kbd>Ctrl</kbd>+<kbd>N</kbd>), salve como <code>semana03.py</code> (<kbd>Ctrl</kbd>+<kbd>S</kbd>) e escreva:</p>
+            <pre class="codeblock">print("Meu primeiro script local — Semana 03!")
+print("Análise de Dados com Python — Turma T5")</pre>
+            <p>No terminal, rode os três comandos — um por vez, aguardando cada um terminar:</p>
+            <pre class="codeblock">git add semana03.py        # "Git, presta atenção nesse arquivo"
+git commit -m "Adiciona script da Semana 03"   # "Git, salva isso no histórico"
+git push origin main       # "Git, manda para o GitHub"</pre>
+            <p>Agora acesse <strong>github.com/seu-usuario/analise-de-dados-python</strong> no navegador — você vai ver o arquivo <code>semana03.py</code> aparecendo lá. Portfólio começando. 🎉</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <div class="ou-divider">ou</div>
+
+    <!-- ══ OPÇÃO 2: GIT INIT NO TERMINAL ══ -->
+    <div class="opcao-bloco">
+      <div class="opcao-header alt">
+        <span class="opcao-badge alt">Opção 2</span>
+        💻 Criar pelo terminal — para quem já tem uma pasta no computador
+      </div>
+      <div class="opcao-body">
+        <p style="margin:0 0 14px;font-size:.92rem;color:#444;">Você já tem uma pasta com arquivos no seu computador e quer começar a versionar. Aqui você inicializa o Git localmente e conecta ao GitHub depois.</p>
+
+        <div class="step-wrapper">
+          <div class="step-num">1</div>
+          <div class="step-content">
+            <h4>Abra a pasta do projeto no VS Code e inicialize o Git</h4>
+            <p>No terminal do VS Code (<strong>Terminal → New Terminal</strong>), navegue até a pasta do seu projeto e rode:</p>
+            <pre class="codeblock">git init</pre>
+            <p>Isso cria um repositório Git vazio dentro da pasta. Você vai ver uma pasta oculta <code>.git</code> aparecer — é onde o Git guarda todo o histórico.</p>
+          </div>
+        </div>
+
+        <div class="step-wrapper">
+          <div class="step-num">2</div>
+          <div class="step-content">
+            <h4>Faça o primeiro commit com os arquivos existentes</h4>
+            <pre class="codeblock">git add .
+git commit -m "Primeiro commit — início do projeto"</pre>
+            <p><code>git add .</code> adiciona todos os arquivos da pasta de uma vez. <code>git commit</code> salva o estado atual no histórico.</p>
+          </div>
+        </div>
+
+        <div class="step-wrapper">
+          <div class="step-num">3</div>
+          <div class="step-content">
+            <h4>Crie um repositório vazio no GitHub</h4>
+            <p>Acesse <strong>github.com/new</strong> e crie o repositório — mas desta vez <strong>NÃO marque "Add a README file"</strong>. O repositório precisa estar vazio para receber o seu histórico local.</p>
+            <div class="aviso-critico">⚠️ <strong>Atenção:</strong> se marcar README, o GitHub cria um commit automático e vai dar conflito na hora do push. Repositório vazio = sem nenhuma opção marcada.</div>
+          </div>
+        </div>
+
+        <div class="step-wrapper">
+          <div class="step-num">4</div>
+          <div class="step-content">
+            <h4>Conecte o repositório local ao GitHub e envie</h4>
+            <p>Copie a URL do repositório recém-criado no GitHub e rode no terminal:</p>
+            <pre class="codeblock">git remote add origin https://github.com/seu-usuario/nome-do-repo.git
+git push -u origin main</pre>
+            <p>O <code>-u origin main</code> é só na primeira vez — configura o vínculo entre o seu computador e o GitHub. Nos próximos pushes basta <code>git push</code>.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ══ MERGE E CONFLITO ══ -->
+    <h3>Quando o Git pede ajuda: conflito de merge</h3>
+    <p><strong>Quando acontece na prática:</strong> você e um colega editam o <em>mesmo arquivo, na mesma linha</em>, e os dois fazem push. O Git não sabe qual versão manter — então ele para e pede que você decida. Na maioria das vezes o Git junta as mudanças automaticamente. Mas quando duas versões alteram a mesma linha de jeitos diferentes, ele marca o trecho no arquivo assim:</p>
+    <pre class="codeblock"><span class="c">&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD</span>
+total = preco * quantidade
+<span class="c">=======</span>
+total = preco * quantidade * 1.1  # com imposto
+<span class="c">&gt;&gt;&gt;&gt;&gt;&gt;&gt; feature/calculo-imposto</span></pre>
+    <div class="box tip">
+      <strong>Conflito não é erro — é o Git pedindo sua decisão.</strong> No VS Code com GitLens instalado, aparecem botões <em>"Accept Current Change"</em> / <em>"Accept Incoming Change"</em> — clique no que quiser manter. Se preferir resolver manualmente: apague as linhas com <code>&lt;&lt;&lt;</code> / <code>===</code> / <code>&gt;&gt;&gt;</code>, deixe só o trecho que deve ficar e faça um novo commit.
+    </div>
+
+    <!-- ══ GITIGNORE ══ -->
+    <h3>O que o Git não deve guardar: <code>.gitignore</code></h3>
+    <p>Nem tudo numa pasta de projeto deve ir para o GitHub — senhas, arquivos temporários do sistema, ambientes virtuais. O arquivo <code>.gitignore</code> lista o que o Git deve ignorar completamente.</p>
+    <p><strong>Como criar o arquivo:</strong> no VS Code, clique em <strong>File → New File…</strong> (<kbd>Ctrl</kbd>+<kbd>N</kbd>), salve com <kbd>Ctrl</kbd>+<kbd>S</kbd> e nomeie exatamente como <code>.gitignore</code> (com ponto no início, sem extensão). O VS Code vai perguntar o tipo — escolha <strong>Plain Text</strong>. Depois cole o conteúdo abaixo:</p>
+    <pre class="codeblock"><span class="c"># .gitignore — copie este modelo para o seu repositório</span>
+*.pyc
+__pycache__/
+.env
+venv/
+.DS_Store</pre>
+    <div class="box tip">
+      <strong>💡 Nunca coloque senhas ou tokens de API em arquivos versionados.</strong> Mesmo que você apague depois, o histórico do Git guarda tudo. Use variáveis de ambiente (<code>.env</code> no <code>.gitignore</code>) para dados sensíveis.
+    </div>
+  </section>
+    <div class="checagem">
+      <strong>✅ Checagem rápida — antes de avançar:</strong>
+      Você consegue fazer um <code>git add</code>, <code>git commit</code> e <code>git push</code> para o <strong>seu</strong> repositório no GitHub sem consultar o guia?
+    </div>
+<!-- checagem_2._Instalando_Python -->
+
+  <section>
+    <h2>3. Listas, Tuplas e Dicionários</h2>
+    <p>Voltando ao Python — até a Semana 02, cada variável guardava <strong>um único valor</strong>. Agora você aprende a guardar <strong>vários valores organizados</strong> numa única estrutura.</p>
+    <table>
+      <tr><th>Estrutura</th><th>Característica</th><th>Exemplo</th></tr>
+      <tr><td><strong>Lista</strong></td><td>Mutável, ordenada, acessada por posição</td><td><code>compras = ["arroz", "feijão"]</code></td></tr>
+      <tr><td><strong>Tupla</strong></td><td>Imutável — não pode mudar depois de criada</td><td><code>coordenadas = (10, 20)</code></td></tr>
+      <tr><td><strong>Dicionário</strong></td><td>Acessado por chave (nome), não por posição</td><td><code>produto = {"nome": "Mouse", "preco": 45}</code></td></tr>
+    </table>
+
+    <!-- ══ LISTAS ══ -->
+    <h3>Lista</h3>
+
+    <h4>Exemplo 1 — Criando e acessando uma lista</h4>
+    <pre class="codeblock">compras = ["arroz", "feijão", "leite"]
+
+print(compras[0])      <span class="c"># arroz  — posição 0 é sempre o primeiro</span>
+print(compras[-1])     <span class="c"># leite  — posição -1 é sempre o último</span>
+
+compras.append("café") <span class="c"># adiciona ao final da lista</span>
+print(compras)         <span class="c"># ["arroz", "feijão", "leite", "café"]</span></pre>
+
+    <div class="box">
+      <strong>⚠️ Erro real do Python — IndexError:</strong> a lista <code>compras</code> tem 4 itens (índices 0 a 3). Se você pedir <code>compras[10]</code>:
+      <pre class="codeblock" style="margin:10px 0 0;">IndexError: list index out of range</pre>
+      "Índice fora do intervalo" — você pediu uma posição que não existe. Tente provocar esse erro de propósito no notebook.
+    </div>
+
+    <h4>Exemplo 2 — Medindo e percorrendo uma lista</h4>
+    <pre class="codeblock">notas = [8.5, 7.0, 9.5, 6.0]
+
+print(f"Total de notas: {len(notas)}")   <span class="c"># 4</span>
+print(f"Maior nota: {max(notas)}")        <span class="c"># 9.5</span>
+print(f"Menor nota: {min(notas)}")        <span class="c"># 6.0</span>
+
+for nota in notas:
+    print(nota)                           <span class="c"># imprime cada nota</span></pre>
+
+    <div class="ex">
+      <strong>✏️ Atividade Prática 3-A (no notebook):</strong> crie uma lista com 5 frutas e exiba a primeira e a última.
+      <p style="font-size:.85rem;color:#555;margin:6px 0 4px;">💡 Dica: para o primeiro item use o índice <code>0</code>. Para o último, você pode usar o índice <code>-1</code> (funciona em qualquer lista, independente do tamanho).</p>
+      <pre><code># Atividade 3-A
+frutas = ["___", "___", "___", "___", "___"]
+
+print("Primeira fruta:", frutas[___])
+print("Última fruta:",  frutas[___])</code></pre>
+    </div>
+
+    <div class="ex">
+      <strong>✏️ Atividade Prática 3-B (no notebook):</strong> crie uma lista com 3 nomes, adicione o seu próprio nome com <code>append()</code> e exiba a lista completa.
+      <pre><code># Atividade 3-B
+nomes = ["Ana", "Carlos", "Bia"]
+
+# adicione seu nome aqui
+nomes.___("___")
+
+print(nomes)
+print(f"Total de nomes: {len(nomes)}")</code></pre>
+    </div>
+
+    <!-- ══ TUPLAS ══ -->
+    <h3>Tupla</h3>
+
+    <h4>Exemplo 1 — Dados que não devem mudar</h4>
+    <pre class="codeblock">coordenadas = (10, 20)
+
+print(f"X = {coordenadas[0]}, Y = {coordenadas[1]}")</pre>
+
+    <div class="box">
+      <strong>⚠️ Erro real do Python — TypeError:</strong> tente alterar um valor da tupla com <code>coordenadas[0] = 99</code>:
+      <pre class="codeblock" style="margin:10px 0 0;">TypeError: 'tuple' object does not support item assignment</pre>
+      "O objeto tupla não permite atribuição" — a imutabilidade funcionando. Tente provocar esse erro no notebook.
+    </div>
+
+    <h4>Exemplo 2 — Tupla para data de nascimento</h4>
+    <pre class="codeblock">nascimento = (15, 3, 2005)   <span class="c"># dia, mês, ano</span>
+
+dia = nascimento[0]
+mes = nascimento[1]
+ano = nascimento[2]
+
+print(f"Data de nascimento: {dia}/{mes}/{ano}")</pre>
+
+    <div class="ex">
+      <strong>✏️ Atividade Prática 3-C (no notebook):</strong> crie uma tupla com sua cidade, estado e país. Exiba uma frase usando f-string.
+      <pre><code># Atividade 3-C
+localizacao = ("___", "___", "___")   # cidade, estado, país
+
+print(f"Moro em {localizacao[___]}, {localizacao[___]}, {localizacao[___]}.")</code></pre>
+    </div>
+
+    <!-- ══ DICIONÁRIOS ══ -->
+    <h3>Dicionário</h3>
+
+    <h4>Exemplo 1 — Acessando valores por chave</h4>
+    <pre class="codeblock">produto = {"nome": "Mouse", "preco": 45.0, "estoque": 12}
+
+print(f"{produto['nome']} custa R$ {produto['preco']}")
+print(f"Estoque disponível: {produto['estoque']} unidades")</pre>
+
+    <h4>Exemplo 2 — Atualizando um valor no dicionário</h4>
+    <pre class="codeblock">aluno = {"nome": "Carlos", "nota": 7.5}
+
+print(f"Nota atual: {aluno['nota']}")   <span class="c"># 7.5</span>
+
+aluno["nota"] = 9.0                     <span class="c"># dicionário é mutável — pode alterar</span>
+print(f"Nota corrigida: {aluno['nota']}")</span><span class="c">  # 9.0</span></pre>
+
+    <div class="box tip">
+      <strong>Dicionário ≠ Tupla:</strong> ao contrário da tupla, o dicionário <strong>permite alterar valores</strong> depois de criado. Só o que não muda é a chave.
+    </div>
+
+    <div class="ex">
+      <strong>✏️ Atividade Prática 3-D (no notebook):</strong> crie um dicionário representando um animal de estimação (nome, espécie, idade) e exiba uma frase completa.
+      <pre><code># Atividade 3-D
+animal = {
+    "nome":    "___",
+    "especie": "___",
+    "idade":   ___
+}
+
+print(f"Meu animal se chama {animal['___']} e tem {animal['___']} anos.")
+
+# Bônus: atualize a idade para um ano a mais
+animal["idade"] = animal["idade"] + ___
+print(f"Ano que vem terá {animal['idade']} anos.")</code></pre>
+    </div>
+
+    </section>
+    <div class="checagem">
+      <strong>✅ Checagem rápida — antes de avançar:</strong>
+      Você consegue criar uma lista, uma tupla e um dicionário e acessar um elemento de cada um?
+    </div>
+<!-- checagem_3._Listas,_Tuplas -->
+
+  <section>
+    <h2>4. Treino em Squads — Sexta-feira (Encontro 3)</h2>
+    <p>Na sexta-feira, você vai se dividir em squads com seus colegas. Seu squad vai receber <strong>um mini-projeto diferente</strong> (já com código inicial pronto no <code>notebook_colab.ipynb</code>, seção 5) e a missão de <strong>versioná-lo em conjunto</strong>: cada integrante faz pelo menos um commit, e o squad apresenta o histórico de commits (não só o resultado final).</p>
+    <table>
+      <tr><th>Squad</th><th>Mini-projeto</th></tr>
+      <tr><td>A</td><td>Lista de tarefas (lista) — adicionar uma nova tarefa e exibir a lista completa</td></tr>
+      <tr><td>B</td><td>Cadastro de produtos (lista de dicionários) — adicionar um produto novo</td></tr>
+      <tr><td>C</td><td>Lista de compras (lista) — remover um item duplicado</td></tr>
+      <tr><td>D</td><td>Agenda de contatos (dicionário) — atualizar o telefone de um contato</td></tr>
+      <tr><td>E</td><td>Estoque (tupla x lista) — corrigir um bug de cálculo de total</td></tr>
+    </table>
+    <div class="box tip">
+      <strong>🗣️ Depois das apresentações:</strong> participe do quiz gamificado em equipes — qual squad teve o histórico de commits mais claro? Algum squad teve conflito ao juntar o trabalho de mais de uma pessoa?
+    </div>
+  </section>
+
+  
+    <div class="fechamento">
+      <h3>🏁 Fechamento — Semana 03</h3>
+      <p><strong>Nesta semana você aprendeu:</strong></p>
+      <ul><li>Git instalado e funcionando: commit, push e pull sem medo</li><li>Ambiente local configurado com Python e VS Code</li><li>Listas, tuplas e dicionários como estruturas para organizar dados</li></ul>
+      <p style="margin-top:14px;"><strong>Próxima semana:</strong> Semana 04 — Manipulação de Arquivos e Modularização: ler dados de arquivos CSV/JSON e criar funções reutilizáveis.</p>
+    </div>
+<section>
+    <h2>Quiz de Fixação</h2>
+    <p>Responda e clique em <strong>Verificar</strong> para ver o feedback de cada questão.</p>
+
+    <div class="qs" data-correct="b">
+      <p class="contextualizacao"><strong>Contextualização:</strong> Uma desenvolvedora está trabalhando num projeto de análise de vendas e acaba de corrigir um bug na função de cálculo de desconto. Ela quer salvar essa alteração no histórico do repositório Git, incluindo uma mensagem clara que explique o que foi feito, para que seus colegas de equipe entendam o histórico sem precisar ler o código inteiro.</p>
+      <p class="comando"><strong>Comando:</strong> Para registrar a alteração no histórico do Git com uma mensagem descritiva, a desenvolvedora deve executar o comando:</p>
+      <label><input type="radio" name="q1" value="a"> <code>git push</code></label>
+      <label><input type="radio" name="q1" value="b"> <code>git commit -m "mensagem"</code></label>
+      <label><input type="radio" name="q1" value="c"> <code>git clone</code></label>
+      <label><input type="radio" name="q1" value="d"> <code>git branch</code></label>
+      <button type="button" onclick="check(this)">Verificar</button>
+      <div class="feedback"></div>
+    </div>
+
+    <div class="qs" data-correct="c">
+      <p class="contextualizacao"><strong>Contextualização:</strong> Uma analista de dados está modelando informações de cidades em Python. Ela precisa armazenar a latitude e a longitude de cada cidade — valores que nunca devem ser alterados após o cadastro, pois representam uma posição geográfica fixa. Ela precisa escolher a estrutura de dados correta para garantir que esses valores não possam ser modificados acidentalmente.</p>
+      <p class="comando"><strong>Comando:</strong> Para garantir que os dados de latitude e longitude não possam ser alterados após a criação, a analista deve usar uma:</p>
+      <label><input type="radio" name="q2" value="a"> Lista</label>
+      <label><input type="radio" name="q2" value="b"> Dicionário</label>
+      <label><input type="radio" name="q2" value="c"> Tupla</label>
+      <label><input type="radio" name="q2" value="d"> String formatada (f-string)</label>
+      <button type="button" onclick="check(this)">Verificar</button>
+      <div class="feedback"></div>
+    </div>
+
+    <div class="qs" data-correct="c">
+      <p class="contextualizacao"><strong>Contextualização:</strong> Um sistema de controle de estoque armazena as informações de cada produto como um dicionário Python: <code>produto = &#123;"nome": "Caderno", "preco": 12.5&#125;</code>. Um desenvolvedor precisa recuperar o preço do produto para calcular o valor total de uma venda com desconto aplicado.</p>
+      <p class="comando"><strong>Comando:</strong> Para acessar o preço do produto armazenado no dicionário, o desenvolvedor deve escrever:</p>
+      <label><input type="radio" name="q3" value="a"> <code>produto[1]</code></label>
+      <label><input type="radio" name="q3" value="b"> <code>produto.preco</code></label>
+      <label><input type="radio" name="q3" value="c"> <code>produto["preco"]</code></label>
+      <label><input type="radio" name="q3" value="d"> <code>produto(preco)</code></label>
+      <button type="button" onclick="check(this)">Verificar</button>
+      <div class="feedback"></div>
+    </div>
+
+    <div class="qs" data-correct="b">
+      <p class="contextualizacao"><strong>Contextualização:</strong> Uma equipe de três desenvolvedores está trabalhando no mesmo repositório Git para adicionar novas funcionalidades a um sistema de relatórios. Para que cada integrante possa trabalhar de forma independente sem sobrescrever o código dos colegas, o líder técnico orienta o uso de um recurso do Git que cria uma linha paralela de desenvolvimento para cada desenvolvedor.</p>
+      <p class="comando"><strong>Comando:</strong> O recurso do Git que permite criar uma linha paralela de desenvolvimento, isolando o trabalho de cada membro sem afetar o código principal, é chamado de:</p>
+      <label><input type="radio" name="q4" value="a"> Pull request</label>
+      <label><input type="radio" name="q4" value="b"> Branch</label>
+      <label><input type="radio" name="q4" value="c"> Commit</label>
+      <label><input type="radio" name="q4" value="d"> Push</label>
+      <button type="button" onclick="check(this)">Verificar</button>
+      <div class="feedback"></div>
+    </div>
+
+    <div class="qs" data-correct="a">
+      <p class="contextualizacao"><strong>Contextualização:</strong> Um estudante está instalando Python 3.12 no Windows pela primeira vez para começar a desenvolver seus scripts de análise de dados. Após a instalação, ao tentar usar o Python pelo terminal, ele recebe o erro: <code>'python' is not recognized as an internal or external command</code>. Ao investigar, descobre que esqueceu de marcar uma opção importante durante o processo de instalação.</p>
+      <p class="comando"><strong>Comando:</strong> Para evitar esse erro durante a instalação do Python no Windows, o estudante deve obrigatoriamente marcar a opção:</p>
+      <label><input type="radio" name="q5" value="a"> "Add Python to PATH"</label>
+      <label><input type="radio" name="q5" value="b"> "Install for all users"</label>
+      <label><input type="radio" name="q5" value="c"> "Create desktop shortcut"</label>
+      <label><input type="radio" name="q5" value="d"> "Disable path length limit"</label>
+      <button type="button" onclick="check(this)">Verificar</button>
+      <div class="feedback"></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Exercícios da Semana</h2>
+    <div class="ex">
+      <strong>Fácil:</strong> Crie uma lista com 5 itens e imprima o segundo e o último usando índices.
+    </div>
+    <div class="ex">
+      <strong>Médio:</strong> Crie uma lista de dicionários representando produtos e percorra com <code>for</code> imprimindo nome e preço de cada um.
+    </div>
+    <div class="ex">
+      <strong>Avançado:</strong> Crie um carrinho de compras (lista de dicionários com produto/preço/quantidade) e calcule o valor total.
+    </div>
+    <p>Lista completa em <code>04_exercicios.md</code>.</p>
+  </section>
+
+</main>
+
+<footer>
+  Curso: Análise de Dados com Python — SENAI (Turma T5) · Semana 03<br>
+  <strong>Professor: Cláudio Ferreira Neves - Especialista em Dados</strong>
+</footer>
+
+<script>
+function check(btn){
+  const qs = btn.closest('.qs');
+  const correct = qs.getAttribute('data-correct');
+  const name = qs.querySelector('input').name;
+  const selected = qs.querySelector('input[name="' + name + '"]:checked');
+  const fb = qs.querySelector('.feedback');
+
+  if(!selected){
+    fb.className = 'feedback wrong';
+    fb.textContent = '⚠️ Selecione uma alternativa antes de verificar.';
+    return;
+  }
+
+  if(selected.value === correct){
+    fb.className = 'feedback correct';
+    fb.textContent = '✅ Correto! Muito bem.';
+  } else {
+    const correctLabel = qs.querySelector('input[value="' + correct + '"]').closest('label').textContent.trim();
+    fb.className = 'feedback wrong';
+    fb.textContent = '❌ Incorreto. A resposta certa é: ' + correctLabel;
+  }
+}
+</script>
+
+</body>
+</html>
