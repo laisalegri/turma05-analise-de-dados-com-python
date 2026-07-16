@@ -28,11 +28,14 @@
 
 # Gabaritos e cadernos internos do professor em formato notebook
 # (ficam só na máquina do professor, nunca no repositório da turma).
-# Ignora QUALQUER .ipynb por padrão e libera só o notebook do aluno
-# (notebook_colab.ipynb) — cobre gabarito_professor_*, notebook_colab_professor.ipynb,
-# gabarito_treino_squads_*.ipynb e qualquer outro nome que apareça no futuro.
+# Ignora QUALQUER .ipynb por padrão e libera só o(s) notebook(s) do aluno —
+# notebook_colab.ipynb (Semanas 01-02, nome antigo, já publicado) e
+# notebook_colab_aluno.ipynb (Semana 03 em diante). Cobre gabarito_professor_*,
+# notebook_colab_professor.ipynb, gabarito_treino_squads_*.ipynb e qualquer
+# outro nome que apareça no futuro.
 *.ipynb
 !notebook_colab.ipynb
+!notebook_colab_aluno.ipynb
 
 # Checkpoints e cache do Jupyter/Colab
 .ipynb_checkpoints/
