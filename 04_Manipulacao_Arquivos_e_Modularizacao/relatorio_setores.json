@@ -1,0 +1,9 @@
+{
+  "total_funcionarios": 30,
+  "por setor": {
+    "Comercial": 8,
+    "Logística": 10,
+    "Estoque": 9,
+    "RH": 3
+  }
+}
