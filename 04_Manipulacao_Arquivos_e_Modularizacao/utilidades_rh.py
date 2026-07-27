@@ -1,7 +1,12 @@
 import re
 
-def calcular_horas_trabalhadas(entrada, saida):
-    return (saida - entrada).seconds / 3600
+def calcular_horas_trabalhadas(*registros):
+    total_horas = 0
+
+    for entrada, saida in registros:
+        total_horas += (saida - entrada).seconds / 3600
+
+    return total_horas / len(registros)
 
 def calcular_atraso(hora_entrada, minuto_entrada, hora_prevista=8, minuto_previsto=0):
     minutos_reais = hora_entrada * 60 + minuto_entrada
