@@ -252,19 +252,19 @@
       <strong>💡 Por que 3 formatos diferentes?</strong> Isso é muito comum no mundo real: cada sistema de uma empresa é de um fornecedor diferente, e cada um exporta do seu jeito. Parte do trabalho de quem manipula dados é justamente saber ler qualquer formato que aparecer — CSV quando o dado é tabular e simples, JSON quando tem estrutura mais livre (como o e-mail, que é só uma lista de registros), Excel quando vem de planilhas com múltiplas abas, como o banco de horas.
     </div>
     <div class="box tip">
-      <strong>📌 Rodando no Google Colab?</strong> Diferente do VS Code local, o Colab não enxerga os arquivos desta pasta automaticamente. Antes de rodar os exemplos abaixo, envie os 3 arquivos (<code>cadastro_funcionario.csv</code>, <code>emails_corporativos.json</code>, <code>recursos_humanos.xlsx</code>) usando o ícone de pasta 📁 na barra lateral esquerda → <strong>Upload</strong> — ou rode a célula de upload no topo do notebook desta semana.
+      <strong>📌 Rodando no Google Colab?</strong> Diferente do VS Code local, o Colab não enxerga os arquivos desta pasta automaticamente — rode a célula de upload no topo do notebook desta semana para enviar os 3 arquivos (<code>cadastro_funcionario.csv</code>, <code>emails_corporativos.json</code>, <code>recursos_humanos.xlsx</code>); ela já organiza tudo na subpasta <code>dataset/</code> certinha. Rodando localmente, os arquivos já estão em <code>dataset/</code>, na pasta desta semana.
     </div>
 
     <div class="box tip">
       <strong>📖 Antes do primeiro código: o que significa "abrir" um arquivo?</strong>
       <p style="margin:8px 0;">Assim como você abre um arquivo do Windows dando duplo clique nele, o Python também precisa "abrir" um arquivo antes de conseguir ler o que está escrito dentro. E, do mesmo jeito que é boa prática fechar um programa quando termina de usar, o Python também precisa <strong>fechar</strong> o arquivo depois de ler — senão ele fica "reservado", e nenhum outro programa consegue mexer nele enquanto isso. Em Python, isso é feito assim:</p>
-      <pre class="codeblock" style="margin:10px 0;">with open("cadastro_funcionario.csv", encoding="utf-8") as arquivo:
+      <pre class="codeblock" style="margin:10px 0;">with open("dataset/cadastro_funcionario.csv", encoding="utf-8") as arquivo:
     <span class="c"># aqui dentro, o arquivo está aberto e disponível</span>
     ...
 <span class="c"># aqui fora, o Python já fechou o arquivo sozinho</span></pre>
       <p style="margin:8px 0;">Repare em 3 coisas:</p>
       <ul style="margin:0 0 0 20px;line-height:1.9;">
-        <li><code>open("cadastro_funcionario.csv", encoding="utf-8")</code> é a parte que efetivamente abre o arquivo. Você já vai entender o <code>encoding="utf-8"</code> em instantes.</li>
+        <li><code>open("dataset/cadastro_funcionario.csv", encoding="utf-8")</code> é a parte que efetivamente abre o arquivo. Você já vai entender o <code>encoding="utf-8"</code> em instantes.</li>
         <li><code>as arquivo</code> dá um apelido pro arquivo aberto — você poderia chamar de qualquer nome (<code>f</code>, <code>meu_arquivo</code>...), mas <code>arquivo</code> deixa claro o que é.</li>
         <li>A palavra <code>with</code> é quem garante que o Python vai <strong>fechar o arquivo automaticamente</strong> assim que o bloco indentado (a parte recuada, embaixo dos dois-pontos) terminar — mesmo se algo der errado no meio do caminho. Sempre que for ler ou escrever um arquivo em Python, você vai começar com <code>with open(...) as ...:</code>. Decore essa estrutura: ela vai aparecer o resto do curso inteiro.</li>
       </ul>
@@ -273,7 +273,7 @@
     <h3>Exemplo 1 — Lendo o cadastro de funcionários (CSV)</h3>
     <pre class="codeblock">import csv
 
-with open("cadastro_funcionario.csv", encoding="utf-8") as arquivo:
+with open("dataset/cadastro_funcionario.csv", encoding="utf-8") as arquivo:
     leitor = csv.DictReader(arquivo)
     funcionarios = list(leitor)
 
@@ -285,7 +285,7 @@ print(funcionarios[0])</pre>
     <h3>Exemplo 2 — Lendo os e-mails corporativos (JSON)</h3>
     <pre class="codeblock">import json
 
-with open("emails_corporativos.json", encoding="utf-8") as arquivo:
+with open("dataset/emails_corporativos.json", encoding="utf-8") as arquivo:
     emails = json.load(arquivo)
 
 print(emails[0])</pre>
@@ -310,7 +310,7 @@ except FileNotFoundError:
     <p>Até agora você só <strong>leu</strong> arquivos. Mas o RH também vai pedir pra você <strong>gerar</strong> um novo CSV — por exemplo, uma lista só com os funcionários de um setor. Para escrever, o Python usa <code>csv.DictWriter</code>, o "irmão" de escrita do <code>csv.DictReader</code> que você já usou:</p>
     <pre class="codeblock">import csv
 
-with open("cadastro_funcionario.csv", encoding="utf-8") as arquivo:
+with open("dataset/cadastro_funcionario.csv", encoding="utf-8") as arquivo:
     funcionarios = list(csv.DictReader(arquivo))
 
 funcionarios_estoque = [f for f in funcionarios if f["setor"] == "Estoque"]
@@ -340,7 +340,7 @@ print(f"{len(funcionarios_estoque)} funcionários do Estoque salvos em funcionar
     </div>
     <pre class="codeblock">from openpyxl import load_workbook
 
-planilha = load_workbook("recursos_humanos.xlsx")
+planilha = load_workbook("dataset/recursos_humanos.xlsx")
 print("Abas disponíveis:", planilha.sheetnames)
 
 aba_ponto = planilha["banco_horas"]
@@ -401,7 +401,7 @@ id_convertido = int(id_do_csv)                    <span class="c"># 1 (número)<
     </div>
     <pre class="codeblock">from openpyxl import load_workbook
 
-planilha = load_workbook("recursos_humanos.xlsx")
+planilha = load_workbook("dataset/recursos_humanos.xlsx")
 aba_ponto = planilha["banco_horas"]
 
 registro = None
@@ -430,7 +430,7 @@ print(f"Horas trabalhadas: {horas_trabalhadas:.2f}h")</pre>
     <h4>Exemplo 2 — Calculando o atraso em minutos</h4>
     <pre class="codeblock">from openpyxl import load_workbook
 
-planilha = load_workbook("recursos_humanos.xlsx")
+planilha = load_workbook("dataset/recursos_humanos.xlsx")
 aba_ponto = planilha["banco_horas"]
 
 registro = None
@@ -521,7 +521,7 @@ for cpf in [cpf_valido, cpf_invalido]:
     <h4>Exemplo 2 — Separando todos os e-mails válidos dos inválidos</h4>
     <pre class="codeblock">import json, re
 
-with open("emails_corporativos.json", encoding="utf-8") as arquivo:
+with open("dataset/emails_corporativos.json", encoding="utf-8") as arquivo:
     emails = json.load(arquivo)
 
 padrao = r"^[^\s@]+@[^\s@]+\.[^\s@]+$"
@@ -543,7 +543,7 @@ print(f"E-mails inválidos: {len(invalidos)}")</pre>
     <p>Separar em duas listas (Exemplo 2) é o primeiro passo. Agora que você tem <code>validos</code> e <code>invalidos</code> prontos, dá pra usar cada lista sozinha — aqui, só pra imprimir o e-mail de quem está correto.</p>
     <pre class="codeblock">import json, re
 
-with open("emails_corporativos.json", encoding="utf-8") as arquivo:
+with open("dataset/emails_corporativos.json", encoding="utf-8") as arquivo:
     emails = json.load(arquivo)
 
 padrao = r"^[^\s@]+@[^\s@]+\.[^\s@]+$"
@@ -630,7 +630,7 @@ print(calcular_atraso(7, 45))        <span class="c"># chegou antes → -15</spa
 def calcular_horas_trabalhadas(entrada, saida):
     return (saida - entrada).seconds / 3600
 
-planilha = load_workbook("recursos_humanos.xlsx")
+planilha = load_workbook("dataset/recursos_humanos.xlsx")
 aba_ponto = planilha["banco_horas"]
 
 registro = None
@@ -709,11 +709,11 @@ print(calcular_atraso_lambda(8*60 + 30))    <span class="c"># 30</span></pre>
     <pre class="codeblock">import csv
 from openpyxl import load_workbook
 
-with open("cadastro_funcionario.csv", encoding="utf-8") as arquivo:
+with open("dataset/cadastro_funcionario.csv", encoding="utf-8") as arquivo:
     funcionarios = list(csv.DictReader(arquivo))
 nome_por_id = {int(f["id_funcionario"]): f["funcionario"] for f in funcionarios}
 
-planilha = load_workbook("recursos_humanos.xlsx")
+planilha = load_workbook("dataset/recursos_humanos.xlsx")
 aba_ponto = planilha["banco_horas"]
 
 ids_do_dia = [1, 2, 8]  <span class="c"># Ana Souza, Bruno Lima, Helena Martins</span>

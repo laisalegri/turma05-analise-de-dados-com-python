@@ -64,7 +64,7 @@ Use este caminho nos primeiros blocos do curso. Você não precisa instalar nada
    %cd "/content/drive/MyDrive/Turma05/turma05-analise-de-dados-com-python"
    !ls                              # semanas disponíveis
 
-   %cd "01_Introducao_Fundamentos_Analise_Dados"   # troque pelo nome da semana atual
+   %cd "01_Introducao_Fundamentos_Analise_Dados/Aluno"   # troque pelo nome da semana atual (mantendo o /Aluno no final)
    !ls
    !pwd
    ```

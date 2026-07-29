@@ -20,13 +20,13 @@
 *.jpeg
 
 # Exceção: infográfico de Git/GitHub da Semana 03, publicado para os alunos
-!03_Versionamento_e_Python_Local/github.png
+!03_Versionamento_e_Python_Local/Aluno/html/github.png
 
 # Ficha de produto e demais PDFs internos
 *.pdf
 
 # Exceção: versão em PDF do infográfico de Git/GitHub da Semana 03, publicada para os alunos
-!03_Versionamento_e_Python_Local/Fluxo_Git_GitHub_VSCode_HD.pdf
+!03_Versionamento_e_Python_Local/Aluno/html/Fluxo_Git_GitHub_VSCode_HD.pdf
 
 # Apresentações de slide (template oficial e decks gerados por semana) -
 # material de apoio do professor para a aula em vivo, nao publicado ao aluno
@@ -42,6 +42,14 @@
 *.ipynb
 !notebook_colab.ipynb
 !notebook_colab_aluno.ipynb
+
+# Pasta Professor/ inteira (qualquer semana): a partir da Semana 04, ela pode
+# conter uma cópia própria de dataset/ (csv/json/xlsx) para o notebook do
+# professor rodar sozinho — esses formatos NÃO são cobertos pelas regras de
+# extensão acima (só bloqueiam .md/.pptx/.ipynb), então ignorar a pasta inteira
+# por caminho (como /arquivos/ acima) garante que nada dentro dela suba, do
+# mesmo jeito que uma pasta ignorada não é "designorada" por exceção de extensão.
+**/Professor/
 
 # Checkpoints e cache do Jupyter/Colab
 .ipynb_checkpoints/
