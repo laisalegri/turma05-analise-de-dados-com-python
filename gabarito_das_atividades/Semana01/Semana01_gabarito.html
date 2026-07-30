@@ -1,0 +1,732 @@
+﻿<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Semana 01 — Gabarito das Atividades e Squads</title>
+<style>
+  :root{
+    --red:#CC0000;
+    --red-dark:#990000;
+    --ink:#1a1a2e;
+    --bg:#f7f7fa;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    font-family:'Segoe UI', Roboto, Arial, sans-serif;
+    background:var(--bg);
+    color:#222;
+    line-height:1.6;
+  }
+  .hero{
+    background:linear-gradient(135deg,#0d1b2a,#1b263b,var(--red));
+    color:#fff;
+    padding:60px 24px;
+    text-align:center;
+  }
+  .hero h1{
+    margin:0 0 10px;
+    font-size:2.2rem;
+  }
+  .hero h1 span{ color:#FFD60A; }
+  .hero p{
+    max-width:760px;
+    margin:14px auto 0;
+    font-size:1.05rem;
+    opacity:.92;
+  }
+  .badge{
+    display:inline-block;
+    background:rgba(255,255,255,.15);
+    border:1px solid rgba(255,255,255,.4);
+    border-radius:20px;
+    padding:6px 16px;
+    margin-top:18px;
+    font-size:.9rem;
+  }
+  main{
+    max-width:980px;
+    margin:0 auto;
+    padding:40px 20px 80px;
+  }
+  section{ margin-bottom:48px; }
+  h2{
+    color:var(--red-dark);
+    border-bottom:3px solid var(--red);
+    padding-bottom:8px;
+    font-size:1.5rem;
+  }
+  h3{ color:var(--ink); }
+  table{
+    width:100%;
+    border-collapse:collapse;
+    margin:18px 0;
+    box-shadow:0 1px 4px rgba(0,0,0,.08);
+  }
+  th, td{
+    border:1px solid #ddd;
+    padding:10px 12px;
+    text-align:left;
+    font-size:.95rem;
+  }
+  th{
+    background:var(--red);
+    color:#fff;
+  }
+  tr:nth-child(even){ background:#fafafa; }
+  .box{
+    background:#fff3f3;
+    border-left:5px solid var(--red);
+    padding:16px 20px;
+    border-radius:6px;
+    margin:18px 0;
+  }
+  .box.tip{
+    background:#F0F7FF;
+    border-left-color:#1565C0;
+  }
+  .ciclo{
+    display:flex;
+    flex-wrap:wrap;
+    gap:14px;
+    margin:24px 0;
+  }
+  .ciclo .etapa{
+    flex:1 1 160px;
+    background:var(--ink);
+    color:#fff;
+    border-radius:10px;
+    padding:18px 14px;
+    text-align:center;
+    position:relative;
+  }
+  .ciclo .etapa .num{
+    display:block;
+    font-size:1.6rem;
+    font-weight:bold;
+    color:#FFD60A;
+  }
+  .ciclo .etapa.coleta{ background:#1b263b; }
+  .ciclo .etapa.limpeza{ background:#3a0a5e; }
+  .ciclo .etapa.analise{ background:#0f3460; }
+  .ciclo .etapa.visualizacao{ background:#7b2d8b; }
+  .ciclo .etapa.comunicacao{ background:var(--red-dark); }
+  .qs{
+    background:var(--ink);
+    color:#eee;
+    border-radius:10px;
+    padding:20px 22px;
+    margin:16px 0;
+  }
+  .qs code{
+    background:rgba(255,255,255,.15);
+    color:#E0E0E0;
+    padding:2px 6px;
+    border-radius:4px;
+    font-family:Consolas, monospace;
+  }
+  .qs label{
+    display:block;
+    background:rgba(255,255,255,.06);
+    padding:8px 12px;
+    margin:6px 0;
+    border-radius:6px;
+    cursor:pointer;
+  }
+  .qs label:hover{ background:rgba(255,255,255,.12); }
+  .qs button{
+    background:var(--red);
+    color:#fff;
+    border:none;
+    padding:8px 18px;
+    border-radius:6px;
+    cursor:pointer;
+    margin-top:10px;
+    font-weight:bold;
+  }
+  .qs button:hover{ background:var(--red-dark); }
+  .feedback{
+    margin-top:10px;
+    padding:10px 14px;
+    border-radius:6px;
+    display:none;
+    font-weight:bold;
+  }
+  .feedback.correct{ background:#1b5e20; display:block; }
+  .feedback.wrong{ background:#7a1f1f; display:block; }
+  .ex{
+    background:#F0F7FF;
+    border:1px solid #BBDEFB;
+    border-radius:8px;
+    padding:16px 20px;
+    margin:14px 0;
+  }
+  pre.codeblock{
+    background:var(--ink);
+    color:#E0E0E0;
+    padding:16px 20px;
+    border-radius:8px;
+    overflow-x:auto;
+    font-family:Consolas, monospace;
+    font-size:.9rem;
+    margin:14px 0;
+  }
+  pre.codeblock .c{ color:#8a8aa0; }
+  .caminho{
+    background:#fff;
+    border:1px solid #eee;
+    border-radius:10px;
+    padding:6px 22px 22px;
+    margin:18px 0 28px;
+  }
+  .caminho > h3{
+    background:var(--ink);
+    color:#fff;
+    margin:0 -22px 18px;
+    padding:12px 22px;
+    border-radius:10px 10px 0 0;
+  }
+  ol.passos{ list-style:none; padding:0; margin:0; counter-reset:passo; }
+  ol.passos > li{
+    counter-increment:passo;
+    position:relative;
+    background:#fafafa;
+    border:1px solid #eee;
+    border-left:4px solid var(--red);
+    border-radius:8px;
+    padding:14px 18px 14px 54px;
+    margin:14px 0;
+  }
+  ol.passos > li::before{
+    content:counter(passo);
+    position:absolute;
+    left:14px;
+    top:16px;
+    width:26px;
+    height:26px;
+    border-radius:50%;
+    background:var(--red);
+    color:#fff;
+    font-weight:bold;
+    font-size:.85rem;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  ol.passos h4{ margin:0 0 6px; color:var(--ink); font-size:1.02rem; }
+  ol.passos .porque{ color:#555; font-size:.88rem; margin:4px 0; }
+  ol.passos .porque strong{ color:var(--red-dark); }
+  ol.passos pre.codeblock{ margin:8px 0 0; font-size:.82rem; }
+  .glossario dt{ font-weight:bold; color:var(--red-dark); margin-top:10px; }
+  .glossario dd{ margin:2px 0 0; color:#333; }
+  footer{
+    background:var(--ink);
+    color:#ccc;
+    text-align:center;
+    padding:26px 16px;
+    font-size:.9rem;
+  }
+  footer strong{ color:#fff; }
+  @media (max-width:768px){
+    .hero h1{ font-size:1.6rem; }
+    .ciclo{ flex-direction:column; }
+  }
+
+  /* Estrutura de aula: abertura / checagem / fechamento */
+  .abertura{background:#E8F5E9;border-left:5px solid #1B5E20;border-radius:8px;padding:20px 24px;margin:0 0 32px;}
+  .abertura h3{color:#1B5E20;margin:0 0 10px;font-size:1.05rem;}
+  .abertura ul,.fechamento ul{margin:8px 0 0;padding-left:22px;line-height:1.8;}
+  .checagem{background:#FFF3E0;border-left:5px solid #E65100;border-radius:6px;padding:14px 18px;margin:0 0 28px;font-size:.95rem;}
+  .checagem strong{color:#BF360C;display:block;margin-bottom:6px;}
+  .fechamento{background:#E3F2FD;border-left:5px solid #0D47A1;border-radius:8px;padding:20px 24px;margin:0 0 32px;}
+  .fechamento h3{color:#0D47A1;margin:0 0 10px;font-size:1.05rem;}
+
+    .qs .contextualizacao { background: rgba(255,255,255,.07); border-left: 3px solid #78C043; padding: 8px 12px; border-radius: 4px; font-size: 0.93em; color: #ccc; line-height: 1.55; margin-bottom: 8px; font-style: italic; }
+    .qs .comando { font-weight: 600; margin-bottom: 10px; color: #fff; }
+    .topo-autor {
+    background: #0d1b2a;
+    color: rgba(255,255,255,0.72);
+    font-size: 0.82em;
+    font-weight: 500;
+    padding: 7px 28px;
+    text-align: left;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    letter-spacing: 0.01em;
+  }
+  .gabarito{background:#E8F5E9;border:2px solid #2E7D32;border-radius:8px;padding:16px 20px;margin:10px 0 18px;}
+  .gabarito > strong{color:#1B5E20;display:block;margin-bottom:8px;font-size:1rem;}
+  .gabarito pre.codeblock{margin:8px 0 0;}
+  .banner-gabarito{background:#1B5E20;color:#fff;text-align:center;padding:10px 16px;font-weight:bold;font-size:.95rem;}
+</style>
+</head>
+<body>
+
+<div class="topo-autor">Professor: Cláudio Ferreira Neves - Especialista em Dados</div>
+<div class="banner-gabarito">📘 Gabarito das Atividades e Squads — Semana 01</div>
+<div class="hero">
+  <h1>Semana 01 · <span>Introdução e Fundamentos da Análise de Dados</span></h1>
+  <p>Unidade Curricular: <strong>Manipulação de Dados com Python e SQL</strong> (150h) — Bloco 1, Semanas 01 e 02. Antes de programar, vamos entender o ambiente do curso, o mercado de trabalho e os conceitos que sustentam tudo o que vem a seguir.</p>
+  <span class="badge">3 encontros · 9h · Ambientação + primeiro contato com código (variável + print)</span>
+</div>
+
+<main>
+
+  <section>
+    <h2>Competência da Unidade Curricular</h2>
+    <div class="box tip">
+      "Desenvolver competências em lógica de programação com Python, modelagem de dados com SQL e NoSQL e utilização de bibliotecas específicas para manipulação, transformação e visualização de dados, apoiando processos de análise de dados."
+    </div>
+    <p>Esta semana constrói a base conceitual — o que é dado, qual o papel do analista, em qual ambiente vamos trabalhar — sobre a qual essa competência será desenvolvida nas próximas semanas.</p>
+  </section>
+
+  <section>
+    <h2>Objetivos da Semana</h2>
+    <ul>
+      <li>Conhecer o funcionamento do curso e configurar as ferramentas (Discord, e-mail/Meet, AVA, Espaço do Estudante, Laboratório Virtual)</li>
+      <li>Entender onde o analista de dados atua no mercado de trabalho</li>
+      <li>Diferenciar <strong>dado</strong>, <strong>informação</strong>, <strong>conhecimento</strong> e <strong>tipo</strong></li>
+      <li>Descrever as 5 etapas da <strong>análise de dados</strong></li>
+    </ul>
+  </section>
+    <div class="abertura">
+      <h3>🟢 Abertura — Semana 01: Introdução e Fundamentos</h3>
+      <p>Esta é a <strong>primeira semana do curso</strong>. Não há pré-requisito técnico — só curiosidade.</p>
+      <p><strong>O que você vai aprender hoje:</strong></p>
+      <ul><li>Entender o que é análise de dados e qual é o papel do analista de dados</li><li>Conhecer o ciclo de vida dos dados: coleta → limpeza → análise → visualização → comunicação</li><li>Dar os primeiros passos com Python: variáveis, tipos de dados e <code>print()</code></li></ul>
+    </div>
+
+
+  <section>
+    <h2>Avaliação Diagnóstica</h2>
+    <p>Antes de começar, reflita e marque suas respostas (sem certo ou errado — é só para sua própria autorreflexão agora; a versão oficial usada pelo professor para sondar a turma é aplicada em sala, no início do Encontro 1):</p>
+    <div class="box">
+      <label style="display:block;margin:6px 0;"><input type="checkbox"> Já escrevi algum código ou fórmula (mesmo que simples, como no Excel) antes</label>
+      <label style="display:block;margin:6px 0;"><input type="checkbox"> Já ouvi falar em Python, SQL ou Pandas</label>
+      <label style="display:block;margin:6px 0;"><input type="checkbox"> Já usei o Google Colab ou Jupyter Notebook</label>
+      <label style="display:block;margin:6px 0;"><input type="checkbox"> Já participei de algum curso ou trabalho que envolvesse análise de dados</label>
+      <label style="display:block;margin:6px 0;"><input type="checkbox"> Sei o que é Git/GitHub</label>
+    </div>
+  </section>
+
+  <section>
+    <h2>O que é, no fim das contas, "Análise de Dados"?</h2>
+    <div class="box tip">
+      <strong>💡 Definição simples:</strong> Análise de dados é o processo de transformar números, textos e registros brutos do dia a dia em decisões melhores. É isso, resumido em uma frase — todo o resto desta semana (e do curso) é aprender a fazer esse processo de forma estruturada e repetível.
+    </div>
+    <div class="box">
+      <strong>⚠️ O que NÃO é análise de dados:</strong> ter uma planilha cheia de números, por si só, <u>não</u> é analisar dados — é só ter coletado dados (etapa 1 de 5, que você vai ver na seção 3). Análise de dados só acontece quando alguém limpa, examina, visualiza e comunica algo útil a partir desses números. Guardar dados não é o mesmo que entendê-los.
+    </div>
+  </section>
+    <div class="checagem">
+      <strong>✅ Checagem rápida — antes de avançar:</strong>
+      Você consegue explicar — com suas palavras — o que significa transformar dados em informação? Se não, releia essa seção antes de continuar.
+    </div>
+<!-- checagem_O_que_é -->
+
+  <section>
+    <h2>1. Funcionamento do Curso e Ferramentas</h2>
+    <p>O curso é organizado em <strong>semanas</strong>, cada uma com 3 encontros síncronos: <strong>Terça</strong> e <strong>Quinta</strong> trazem conteúdo novo, e <strong>Sexta</strong> é sempre um treino ativo em squads (não uma revisão passiva). Além disso, toda <strong>segunda</strong> há aula de inglês e toda <strong>quarta</strong> aula de carreira.</p>
+
+    <table>
+      <tr><th>Ferramenta</th><th>Para que serve</th></tr>
+      <tr><td>Discord</td><td>Comunicação da turma, dúvidas entre encontros, avisos da coordenação</td></tr>
+      <tr><td>E-mail / Google Meet</td><td>Comunicação formal e encontros remotos quando necessário</td></tr>
+      <tr><td>AVA (Ambiente Virtual de Aprendizagem)</td><td>Materiais da semana, listas de exercícios autocorrigíveis, entrega de atividades</td></tr>
+      <tr><td>Espaço do Estudante</td><td>Acompanhamento de frequência, notas e dados cadastrais do aluno</td></tr>
+      <tr><td>Laboratório Virtual (Google Colab)</td><td>Onde vamos programar a partir da Semana 02 — hoje, só um primeiro contato</td></tr>
+      <tr><td>YouTube</td><td>Aula inaugural e gravações de apoio</td></tr>
+    </table>
+
+    <div class="box">
+      <strong>📺 Aula Inaugural:</strong> segunda 29/06 às 19h, via YouTube — apresentação do modelo de curso, cronograma, equipe e combinados.<br>
+      Link: <a href="https://www.youtube.com/watch?v=zmMRCS4DzmQ" target="_blank" rel="noopener">youtube.com/watch?v=zmMRCS4DzmQ</a>
+    </div>
+
+    <p>Ao abrir o Laboratório Virtual (Google Colab) pela primeira vez, vamos rodar juntos o primeiro código do curso:</p>
+    <pre class="codeblock">print("Bem-vindo(a) ao curso de Análise de Dados com Python!")
+print("A partir da próxima semana, vamos aprender lógica de programação de verdade.")</pre>
+    <div class="ex">
+      <strong>✏️ Agora é sua vez:</strong> no notebook (<code>notebook_colab.ipynb</code>), execute essa célula com <code>Ctrl+Enter</code>.
+    </div>
+
+    <h3>Mercado de trabalho para o Analista de Dados</h3>
+    <p>A análise de dados deixou de ser exclusividade de grandes empresas de tecnologia. Hoje, qualquer negócio que coleta dados — vendas, atendimento, redes sociais, sensores — precisa de alguém que transforme esses dados em decisão.</p>
+    <table>
+      <tr><th>Onde a análise de dados é usada</th><th>Benefício direto</th></tr>
+      <tr><td>Varejo e e-commerce</td><td>Entender quais produtos vendem mais e por quê</td></tr>
+      <tr><td>Saúde</td><td>Identificar padrões em diagnósticos e otimizar atendimentos</td></tr>
+      <tr><td>Indústria (Indústria 4.0)</td><td>Monitorar máquinas e prever falhas antes que aconteçam</td></tr>
+      <tr><td>Marketing</td><td>Direcionar campanhas para o público certo</td></tr>
+      <tr><td>Setor público</td><td>Planejar políticas com base em dados reais da população</td></tr>
+    </table>
+
+    <div class="box tip">
+      <strong>🗺️ Mapa do que vem a seguir:</strong> ao pesquisar vagas, você vai ver termos como Python, SQL, Excel e Power BI — ainda não precisa saber o que cada um faz, só guarde este mapa:
+      <ul>
+        <li><strong>Python</strong> — você começa a programar de fato já na Semana 02</li>
+        <li><strong>Pandas/NumPy</strong> — ferramentas de Python para manipular tabelas de dados, a partir da Semana 05</li>
+        <li><strong>SQL</strong> e <strong>Excel/Power BI</strong> — vêm em blocos mais avançados do curso</li>
+      </ul>
+      Toda vez que você ouvir um termo novo de tecnologia nesta semana, ele vai aparecer de novo, explicado, mais adiante — não precisa entender agora.
+    </div>
+  </section>
+    <div class="checagem">
+      <strong>✅ Checagem rápida — antes de avançar:</strong>
+      Você localizou o notebook da semana e conseguiu abrir o Google Colab? Se ainda não, resolva isso antes de avançar.
+    </div>
+<!-- checagem_1._Funcionamento -->
+
+  <section>
+    <h2>2. Conceitos Fundamentais: Dado, Informação, Conhecimento e Tipo</h2>
+    <p>Antes de qualquer ferramenta, é preciso entender a matéria-prima com a qual vamos trabalhar.</p>
+    <table>
+      <tr><th>Conceito</th><th>Definição</th><th>Exemplo</th></tr>
+      <tr><td><strong>Dado</strong></td><td>Registro bruto, sem contexto</td><td><code>37</code></td></tr>
+      <tr><td><strong>Tipo</strong></td><td>A natureza desse dado</td><td>veja a tabela abaixo</td></tr>
+      <tr><td><strong>Informação</strong></td><td>Dado organizado, com contexto</td><td>"A temperatura do paciente é 37°C"</td></tr>
+      <tr><td><strong>Conhecimento</strong></td><td>Informação aplicada a uma decisão</td><td>"37°C é febre? Não — está dentro do normal, não preciso agir"</td></tr>
+    </table>
+
+    <h3>O conceito de Tipo, com mais de um exemplo</h3>
+    <p>"Tipo" não é uma palavra única — é uma categoria, e existem vários tipos diferentes de dado. Veja 4 lado a lado:</p>
+    <table>
+      <tr><th>Tipo</th><th>O que guarda</th><th>Exemplo</th></tr>
+      <tr><td>Número</td><td>Quantidades, medidas</td><td><code>37</code> (temperatura)</td></tr>
+      <tr><td>Texto</td><td>Palavras, frases</td><td><code>"João Silva"</code> (nome)</td></tr>
+      <tr><td>Data</td><td>Dia, mês, ano (ou hora)</td><td><code>"2026-06-30"</code> (data da matrícula)</td></tr>
+      <tr><td>Verdadeiro/Falso</td><td>Sim ou não, ligado ou desligado</td><td><code>Sim</code> (cliente está ativo?)</td></tr>
+    </table>
+    <p>Isso importa porque o <strong>tipo</strong> é o que determina o que você pode fazer com o dado: números podem ser somados, textos podem ser comparados letra a letra, datas podem ser subtraídas para calcular "quantos dias faltam". A partir da Semana 02, esses tipos vão ganhar nomes em Python: <code>int</code> (número inteiro), <code>float</code> (número decimal), <code>str</code> (texto) e <code>bool</code> (verdadeiro/falso).</p>
+
+    <div class="box tip">
+      <strong>💡 Pense assim:</strong> dado é a matéria-prima; informação é o produto organizado; conhecimento é a decisão que você toma com ele.
+    </div>
+
+    <div class="box">
+      <strong>🔍 Onde fica a fronteira entre Dado e Informação?</strong> Se eu só dissesse "<code>152</code>", sem dizer mais nada, isso ainda seria só <strong>dado</strong> — um número solto, sem contexto. Só virou <strong>informação</strong> no exemplo abaixo porque dissemos o que ele representa: "vendemos 152 unidades hoje, 20% acima da média". O número sozinho não muda — o que muda é o contexto que colocamos em volta dele.
+    </div>
+
+    <p>Veja isso em código — o <strong>dado</strong> vira uma <strong>variável</strong>, e o <code>print()</code> mostra a <strong>informação</strong>:</p>
+    <pre class="codeblock"><span class="c"># DADO: um número guardado em uma variável</span>
+temperatura = 37
+
+<span class="c"># INFORMAÇÃO: o dado organizado, com contexto</span>
+print(f"A temperatura do paciente é {temperatura}°C")
+
+<span class="c"># CONHECIMENTO: a decisão, comparando a informação com um critério/faixa conhecida</span>
+<span class="c"># a faixa de temperatura corporal considerada normal é 36°C a 37,5°C</span>
+print("37°C está dentro da faixa normal (36°C–37,5°C) — não preciso agir.")</pre>
+    <div class="box tip">
+      <strong>💡 O padrão por trás do "Conhecimento":</strong> quase toda decisão segue a mesma receita: <em>informação + um critério de comparação (faixa, meta, limite) = conhecimento</em>. Aqui o critério foi "a faixa normal é 36°C–37,5°C". Guarde esse padrão — ele vai se repetir o curso inteiro.
+    </div>
+
+    <h3>Exemplo 2 — Vendas do dia em uma loja</h3>
+    <table>
+      <tr><th>Conceito</th><th>Exemplo</th></tr>
+      <tr><td>Dado</td><td><code>152</code> (tipo: número)</td></tr>
+      <tr><td>Informação</td><td>"Vendemos 152 unidades hoje, 20% acima da média das últimas 4 semanas"</td></tr>
+      <tr><td>Conhecimento</td><td>"Como estamos 20% acima da média, vamos repor o estoque antes do fim de semana"</td></tr>
+    </table>
+    <pre class="codeblock">vendas_hoje = 152
+
+print(f"Vendemos {vendas_hoje} unidades hoje, 20% acima da média das últimas 4 semanas")
+print("Como estamos 20% acima da média, vamos repor o estoque antes do fim de semana.")</pre>
+
+            <div class="ex">
+      <strong>✏️ Atividade Prática 1 — Sua vez de programar</strong>
+      <p>Na célula de código abaixo, <strong>substitua os <code>...</code> pelos seus próprios valores</strong> (mantenha as aspas em textos) e execute com <code>Ctrl+Enter</code>.</p>
+      <pre><code># Pense em UM dado real do seu dia a dia (trabalho, estudo ou vida pessoal) e complete:
+
+meu_dado = ...              # exemplo: 8  (ou &quot;atrasado&quot;, ou a sua situação)
+minha_informacao = &quot;...&quot;    # escreva, entre aspas, o dado com contexto
+meu_conhecimento = &quot;...&quot;    # escreva, entre aspas, a decisão que você tomaria
+
+print(f&quot;Dado: {meu_dado}&quot;)
+print(f&quot;Informação: {minha_informacao}&quot;)
+print(f&quot;Conhecimento: {meu_conhecimento}&quot;)</code></pre>
+    </div>
+    <div class="gabarito">
+      <strong>✅ Gabarito (exemplo de resposta — a resposta de cada aluno pode variar, o critério é a coerência do raciocínio):</strong>
+      <pre class="codeblock"># Pense em UM dado real do seu dia a dia (trabalho, estudo ou vida pessoal) e complete:
+
+meu_dado = 8                # exemplo: 8  (ou "atrasado", ou a sua situação)
+minha_informacao = "Dormi 8 horas na última noite, dentro da faixa de 7 a 9 horas recomendada para um adulto"
+meu_conhecimento = "Como dormi dentro da faixa ideal, posso manter a rotina de estudos sem precisar tirar um cochilo à tarde"
+
+print(f"Dado: {meu_dado}")
+print(f"Informação: {minha_informacao}")
+print(f"Conhecimento: {meu_conhecimento}")</pre>
+    </div>
+  </section>
+    <div class="checagem">
+      <strong>✅ Checagem rápida — antes de avançar:</strong>
+      Você consegue dar um exemplo real de dado que só vira informação depois de ser processado?
+    </div>
+<!-- checagem_2._Conceitos -->
+
+  <section>
+    <h2>3. O Ciclo de Vida da Análise de Dados</h2>
+    <p>Toda análise de dados — simples ou complexa — passa por 5 etapas. Esse ciclo vai se repetir, semana após semana, em tudo que faremos no curso.</p>
+    <div class="ciclo">
+      <div class="etapa coleta"><span class="num">1</span>Coleta</div>
+      <div class="etapa limpeza"><span class="num">2</span>Limpeza</div>
+      <div class="etapa analise"><span class="num">3</span>Análise</div>
+      <div class="etapa visualizacao"><span class="num">4</span>Visualização</div>
+      <div class="etapa comunicacao"><span class="num">5</span>Comunicação</div>
+    </div>
+    <h3>Exemplo 1 — Loja de roupas com queda de vendas</h3>
+    <table>
+      <tr><th>Etapa</th><th>O que acontece</th><th>Aplicado ao cenário</th></tr>
+      <tr><td>1. Coleta</td><td>Reunir os dados de diferentes fontes</td><td>Exportar dados do sistema de vendas dos últimos 6 meses</td></tr>
+      <tr><td>2. Limpeza</td><td>Corrigir erros, remover duplicatas e dados ausentes</td><td>Remover vendas duplicadas e corrigir preços negativos</td></tr>
+      <tr><td>3. Análise</td><td>Buscar padrões, comparações e causas</td><td>Comparar vendas por região e por vendedor</td></tr>
+      <tr><td>4. Visualização</td><td>Transformar números em gráficos compreensíveis</td><td>Gráfico de linha mostrando a queda mês a mês</td></tr>
+      <tr><td>5. Comunicação</td><td>Apresentar o resultado e a recomendação</td><td>"As vendas caíram 18% na região Sul após a saída de um vendedor-chave"</td></tr>
+    </table>
+    <pre class="codeblock">print("1. Coleta:", "exportar os dados de vendas dos últimos 6 meses do sistema da loja")
+print("2. Limpeza:", "remover vendas duplicadas e corrigir preços negativos ou nulos")
+print("3. Análise:", "comparar vendas por região, por vendedor e por mês")
+print("4. Visualização:", "gráfico de linha mostrando a queda mês a mês por região")
+print("5. Comunicação:", "as vendas caíram 18% na região Sul após a saída de um vendedor-chave")</pre>
+
+    <h3>Exemplo 2 — Streaming de vídeo com aumento de cancelamentos</h3>
+    <table>
+      <tr><th>Etapa</th><th>Aplicado ao cenário</th></tr>
+      <tr><td>1. Coleta</td><td>Reunir dados de assinaturas, cancelamentos e horas de uso da plataforma</td></tr>
+      <tr><td>2. Limpeza</td><td>Remover contas de teste e datas de cancelamento inconsistentes</td></tr>
+      <tr><td>3. Análise</td><td>Comparar tempo de uso de quem cancelou com o de quem permaneceu</td></tr>
+      <tr><td>4. Visualização</td><td>Gráfico de barras comparando horas assistidas por mês entre os dois grupos</td></tr>
+      <tr><td>5. Comunicação</td><td>"Quem cancela assiste 70% menos conteúdo no 1º mês — melhorar recomendações para novos assinantes"</td></tr>
+    </table>
+    <pre class="codeblock">print("1. Coleta:", "reunir dados de assinaturas, cancelamentos e horas de uso da plataforma")
+print("2. Limpeza:", "remover contas de teste e datas de cancelamento inconsistentes")
+print("3. Análise:", "comparar tempo de uso de quem cancelou com o de quem permaneceu")
+print("4. Visualização:", "gráfico de barras comparando horas assistidas por mês entre os dois grupos")
+print("5. Comunicação:", "quem cancela assiste 70% menos conteúdo no 1º mês — melhorar recomendações")</pre>
+
+            <div class="ex">
+      <strong>✏️ Atividade Prática 2 — Sua vez de programar</strong>
+      <p>Escolha <strong>um cenário do seu trabalho, estudo ou vida pessoal</strong> e complete o código abaixo, substituindo os <code>"..."</code> pelo seu texto.</p>
+      <pre><code>meu_cenario = &quot;...&quot;  # descreva em poucas palavras o cenário escolhido
+print(&quot;Cenário:&quot;, meu_cenario)
+
+print(&quot;1. Coleta:&quot;, &quot;...&quot;)
+print(&quot;2. Limpeza:&quot;, &quot;...&quot;)
+print(&quot;3. Análise:&quot;, &quot;...&quot;)
+print(&quot;4. Visualização:&quot;, &quot;...&quot;)
+print(&quot;5. Comunicação:&quot;, &quot;...&quot;)</code></pre>
+    </div>
+    <div class="gabarito">
+      <strong>✅ Gabarito (exemplo de resposta — a resposta de cada aluno pode variar, o critério é a coerência do raciocínio):</strong>
+      <pre class="codeblock">meu_cenario = "Controle de gastos pessoais no fim do mês"  # descreva em poucas palavras o cenário escolhido
+print("Cenário:", meu_cenario)
+
+print("1. Coleta:", "reunir os extratos do banco e do cartão de crédito do mês")
+print("2. Limpeza:", "remover lançamentos duplicados (compra parcelada aparecendo 2 vezes) e agrupar por categoria")
+print("3. Análise:", "comparar o gasto de cada categoria (alimentação, transporte, lazer) com o mês anterior")
+print("4. Visualização:", "gráfico de pizza mostrando o percentual gasto em cada categoria")
+print("5. Comunicação:", "os gastos com lazer subiram 30% este mês — vale reduzir para não estourar o orçamento")</pre>
+    </div>
+  </section>
+    <div class="checagem">
+      <strong>✅ Checagem rápida — antes de avançar:</strong>
+      Você consegue listar as 5 etapas do ciclo de vida dos dados sem olhar o material?
+    </div>
+<!-- checagem_3._O_Ciclo -->
+
+  <section>
+    <h2>4. Treino em Squads — Sexta-feira (Encontro 3)</h2>
+    <p>Na sexta-feira, você vai se dividir em squads com seus colegas (presencial ou em salas remotas/breakout no Discord/Meet). Seu squad vai receber <strong>um cenário diferente</strong> dos outros squads, e vocês terão 20–25 min para mapear as 5 etapas antes de apresentar em até 3 minutos.</p>
+    <table>
+      <tr><th>Squad</th><th>Cenário</th></tr>
+      <tr><td>B</td><td>E-commerce: 1 em cada 5 pedidos está sendo devolvido nos últimos 2 meses</td></tr>
+      <tr><td>C</td><td>Hospital: tempo de espera no pronto-atendimento aumentou</td></tr>
+      <tr><td>D</td><td>Indústria: uma máquina específica quebra com mais frequência</td></tr>
+      <tr><td>E</td><td>Prefeitura: moradores reclamam de buracos nas ruas nas redes sociais</td></tr>
+    </table>
+    <div class="box tip">
+      <strong>🗣️ Depois das apresentações:</strong> participe do debate com a turma — qual cenário teve a etapa de Limpeza mais difícil? Em qual a Comunicação seria mais delicada? O que todos os cenários têm em comum?
+    </div>
+
+    <h3>✅ Gabarito — os 4 cenários de squad, resolvidos</h3>
+    <p>Cada squad recebeu só <strong>um</strong> dos cenários abaixo. Aqui estão os 4 resolvidos, para conferência.</p>
+
+    <div class="gabarito">
+      <strong>Cenário B — E-commerce com muitas devoluções</strong>
+      <p><strong>Problema:</strong> Uma loja online identificou que 1 em cada 5 pedidos está sendo devolvido nos últimos 2 meses. O squad deve aplicar as 5 etapas da análise de dados para descobrir por que o índice de devoluções é tão alto e propor uma ação concreta que a loja possa implementar.</p>
+      <p><strong>Solução:</strong> O dado crítico não é o volume de devoluções — é o motivo. Sem ele, sabemos que algo está errado, mas não onde agir. O caminho: coletar pedidos + devoluções com os motivos registrados, padronizar variações do mesmo motivo na Limpeza ("produto errado" = "item incorreto" = o mesmo problema), analisar por categoria e por motivo, visualizar os produtos mais devolvidos, e comunicar a causa raiz com ação específica. A descoberta-chave é que "produto diferente da descrição" aponta para problema interno (fotos e textos das SKUs), não para qualidade do produto em si — essa distinção muda completamente a recomendação.</p>
+      <pre class="codeblock">cenario_do_squad = "E-commerce com muitas devoluções — 1 em cada 5 pedidos retornado nos últimos 2 meses"
+print("Cenário:", cenario_do_squad)
+
+print("1. Coleta:", "dados do sistema de pedidos (produto, valor, canal de venda, data) e dados de devoluções (motivo registrado, data, produto devolvido)")
+print("2. Limpeza:", "remover devoluções duplicadas (mesmo pedido com mais de um registro), padronizar motivos escritos de formas diferentes ('produto errado' vs 'item incorreto'), tratar datas faltantes")
+print("3. Análise:", "calcular taxa de devolução por produto, por categoria e por motivo; identificar se há concentração em uma marca ou fornecedor específico; comparar os 2 meses com o histórico anterior")
+print("4. Visualização:", "gráfico de barras com os 10 produtos mais devolvidos; gráfico de pizza com os motivos mais frequentes; gráfico de linha com a evolução mensal da taxa de devolução")
+print("5. Comunicação:", "os produtos da categoria Eletrônicos têm taxa de devolução 3x acima da média — o motivo mais frequente é 'produto diferente da descrição'. Recomendamos revisar fotos e textos dessas SKUs antes de novas campanhas")
+
+pergunta_para_outros_squads = "Quando a análise mostra que 60% das devoluções são de um só produto, como vocês distinguiriam se o problema é a qualidade do produto, a descrição falsa ou a expectativa incorreta do cliente?"
+print("Pergunta para os outros squads:", pergunta_para_outros_squads)</pre>
+    </div>
+
+    <div class="gabarito">
+      <strong>Cenário C — Hospital com tempo de espera crescente</strong>
+      <p><strong>Problema:</strong> Pacientes estão reclamando que o tempo de espera no pronto-atendimento aumentou. O squad deve aplicar as 5 etapas da análise de dados para identificar quando e por que o tempo de espera cresceu e propor uma intervenção que o hospital possa executar.</p>
+      <p><strong>Solução:</strong> O sintoma é o tempo de espera, mas a causa pode ser volume de pacientes, número de médicos, tipo de urgência ou sazonalidade (gripe). O dado que desvenda este caso é cruzar o tempo médio de espera por horário com a escala de plantão: quando o turno da tarde passou de 2 para 1 médico, o tempo triplicou — e isso aparece no dado, sem precisar de testemunho. Atenção especial na Limpeza: os dados faltantes provavelmente se concentram no horário de pico (o sistema travou exatamente quando mais precisava registrar). Na Comunicação, "falta médico no turno da tarde" é politicamente sensível — o analista apresenta o dado ("com 1 médico, espera = 90min; com 2, espera = 35min"), não o julgamento.</p>
+      <pre class="codeblock">cenario_do_squad = "Hospital com tempo de espera crescente no pronto-atendimento"
+print("Cenário:", cenario_do_squad)
+
+print("1. Coleta:", "registros de entrada de pacientes (hora de chegada, hora da triagem, hora do atendimento, hora da alta); escala de plantão dos médicos; classificação de urgência; volume de pacientes por dia e por hora")
+print("2. Limpeza:", "tratar registros sem horário de atendimento (sistema travou durante pico?); remover entradas duplicadas do mesmo paciente; padronizar classificação de urgência registrada de formas diferentes por plantonistas distintos")
+print("3. Análise:", "calcular tempo médio de espera por hora do dia, por dia da semana e por nível de urgência; verificar se o aumento coincide com mudança no número de médicos por turno, com sazonalidade (gripe, feriados) ou com tipo de queixa")
+print("4. Visualização:", "gráfico de linha com tempo médio de espera por hora do dia; heatmap com dia da semana × hora; gráfico de barras comparando tempo de espera por turno antes e depois do aumento")
+print("5. Comunicação:", "o tempo médio de espera entre 13h e 16h subiu de 35 para 90 minutos — no mesmo período, o turno da tarde passou de 2 para 1 médico. Recomendamos reforçar o quadro neste horário ou criar um fluxo de triagem acelerada para casos leves")
+
+pergunta_para_outros_squads = "Como vocês lidariam com dados de saúde de pacientes durante a análise? O que muda quando os dados são sensíveis pela LGPD?"
+print("Pergunta para os outros squads:", pergunta_para_outros_squads)</pre>
+    </div>
+
+    <div class="gabarito">
+      <strong>Cenário D — Indústria com quebras frequentes de máquina</strong>
+      <p><strong>Problema:</strong> Uma fábrica percebeu que uma máquina específica está quebrando com frequência crescente. O squad deve aplicar as 5 etapas da análise de dados para identificar o que mudou para causar as quebras e propor uma correção antes da próxima parada não planejada.</p>
+      <p><strong>Solução:</strong> O desafio central é separar quebra real de parada planejada — o sistema de manutenção mistura os dois, e essa distinção exige conversa com o técnico (lição: Limpeza nunca é só técnica, é negócio). O dado que desvenda o caso é o ponto de inflexão: ao plotar as quebras por mês, o salto de 4x após março aponta para uma mudança naquele período — e o log revela troca de fornecedor de rolamentos. Leituras de sensor impossíveis (ex.: 900°C num sensor calibrado para 0–200°C) são falha do sensor, não da máquina — tratá-las como dado inválido na Limpeza evita uma conclusão falsa na Análise.</p>
+      <pre class="codeblock">cenario_do_squad = "Indústria com quebras frequentes da máquina de produção"
+print("Cenário:", cenario_do_squad)
+
+print("1. Coleta:", "logs de manutenção (data, tipo de intervenção, peça trocada, técnico responsável); dados de operação (horas ligada, carga de produção, tipo de produto fabricado no momento da quebra); leituras de sensores (temperatura, vibração, pressão); notas fiscais de peças de reposição")
+print("2. Limpeza:", "remover registros de paradas planejadas (manutenção preventiva não é quebra); corrigir datas inseridas retroativamente; tratar leituras de sensor impossíveis (pico de 900°C em sensor de 0–200°C indica falha do sensor, não da máquina)")
+print("3. Análise:", "contar quebras por mês antes e depois de uma data-chave; verificar se as quebras se concentram em um turno, um operador ou um tipo de produto fabricado; identificar se houve troca de peça ou de fornecedor perto do início do problema")
+print("4. Visualização:", "gráfico de linha com número de quebras por mês; linha do tempo sobrepondo datas de manutenção e quebras; gráfico de barras por turno e por operador")
+print("5. Comunicação:", "as quebras aumentaram 4 vezes após março, quando houve troca de fornecedor de rolamentos — as peças do novo fornecedor têm vida útil estimada 60% menor. Recomendamos retornar ao fornecedor anterior ou exigir laudo técnico de qualidade antes de usar o novo lote")
+
+pergunta_para_outros_squads = "Os sensores geram leituras a cada segundo. Com meses de dados, são milhões de linhas. Como vocês decidiriam qual granularidade usar na análise — segundo, minuto ou hora?"
+print("Pergunta para os outros squads:", pergunta_para_outros_squads)</pre>
+    </div>
+
+    <div class="gabarito">
+      <strong>Cenário E — Prefeitura com reclamações de buracos nas ruas</strong>
+      <p><strong>Problema:</strong> Moradores estão reclamando nas redes sociais sobre buracos nas ruas. O squad deve aplicar as 5 etapas da análise de dados para transformar reclamações dispersas em informação acionável: onde estão os buracos, quais bairros são mais afetados e se o tempo de conserto está dentro do aceitável.</p>
+      <p><strong>Solução:</strong> Este é o cenário de Coleta mais complexa: dados de redes sociais são texto livre, não estruturado. A Limpeza tem triplo desafio — endereços informais ("perto da padaria do João"), posts duplicados sobre o mesmo buraco e posts irônicos. O dado de contexto que transforma o diagnóstico é a precipitação (chuva): cruzar volume de reclamações com a curva de chuva revela que os picos ocorrem depois de eventos de chuva forte em bairros com asfalto antigo — um achado que muda a priorização do investimento. A visualização geográfica (mapa de calor por bairro) comunica muito mais do que um gráfico de barras aqui.</p>
+      <pre class="codeblock">cenario_do_squad = "Prefeitura com aumento de reclamações sobre buracos nas ruas"
+print("Cenário:", cenario_do_squad)
+
+print("1. Coleta:", "posts de redes sociais com menção a buracos (Twitter/X, Instagram); reclamações registradas no canal 156; ordens de serviço de tapa-buracos emitidas e concluídas; dados de precipitação (chuva gera buracos e pode explicar picos de reclamação)")
+print("2. Limpeza:", "remover posts duplicados do mesmo morador sobre o mesmo buraco; extrair localização de texto livre ('perto do mercado da esquina' não é endereço válido); filtrar posts irônicos ou não relacionados a buracos reais; padronizar bairros escritos de formas diferentes")
+print("3. Análise:", "mapear concentração geográfica das reclamações por bairro; calcular tempo médio entre reclamação e conserto; identificar se picos de reclamação coincidem com períodos de chuva intensa; comparar volume de reclamações com ordens de serviço concluídas")
+print("4. Visualização:", "mapa de calor com distribuição geográfica dos buracos; gráfico de linha com volume de reclamações por semana sobreposto à curva de precipitação; gráfico de barras com tempo médio de resposta por bairro")
+print("5. Comunicação:", "os bairros X, Y e Z concentram 68% das reclamações, com tempo médio de conserto de 47 dias — 3x acima da meta de 15 dias. Recomendamos priorizar essas regiões e revisar o fluxo de abertura de ordens de serviço para reduzir o tempo de resposta")
+
+pergunta_para_outros_squads = "Como vocês tratariam reclamações onde o morador não informa o endereço exato, só diz 'tem um buraco perto da padaria do João'? Isso é um problema de Coleta ou de Limpeza?"
+print("Pergunta para os outros squads:", pergunta_para_outros_squads)</pre>
+    </div>
+  </section>
+
+
+<section>
+    <h2>Quiz de Fixação</h2>
+    <p>Responda e clique em <strong>Verificar</strong> para ver o feedback de cada questão.</p>
+
+    <div class="qs" data-correct="c">
+      <p class="contextualizacao"><strong>Contextualização:</strong> Uma empresa de varejo decidiu adotar uma metodologia de aprendizado ativo para treinar sua equipe de analistas de dados. Nessa abordagem, cada profissional pratica resolução de problemas reais em grupo, sem depender de um instrutor presente o tempo todo. No curso de Análise de Dados do SENAI, esse modelo é aplicado semanalmente num dia fixo, com formação de squads, desafios novos e apresentação de resultados.</p>
+      <p class="comando"><strong>Comando:</strong> De acordo com a dinâmica de aprendizado ativo adotada no curso, o dia fixo reservado para o treino em squads é:</p>
+      <label><input type="radio" name="q1" value="a"> Segunda-feira</label>
+      <label><input type="radio" name="q1" value="b"> Quarta-feira</label>
+      <label><input type="radio" name="q1" value="c"> Sexta-feira</label>
+      <label><input type="radio" name="q1" value="d"> Quinta-feira</label>
+      <button type="button" onclick="check(this)">Verificar</button>
+      <div class="feedback"></div>
+    </div>
+
+    <div class="qs" data-correct="c">
+      <p class="contextualizacao"><strong>Contextualização:</strong> Uma analista de dados recebe uma planilha com centenas de registros. Em um campo isolado, aparece apenas o número <code>37</code>, sem cabeçalho de coluna, sem unidade de medida e sem nenhuma descrição. Ela precisa classificar esse registro corretamente antes de decidir como tratá-lo no pipeline de dados.</p>
+      <p class="comando"><strong>Comando:</strong> De acordo com a hierarquia do conhecimento estudada, o número <code>37</code> isolado e sem contexto representa:</p>
+      <label><input type="radio" name="q2" value="a"> Conhecimento</label>
+      <label><input type="radio" name="q2" value="b"> Informação</label>
+      <label><input type="radio" name="q2" value="c"> Dado</label>
+      <label><input type="radio" name="q2" value="d"> Comunicação</label>
+      <button type="button" onclick="check(this)">Verificar</button>
+      <div class="feedback"></div>
+    </div>
+
+    <div class="qs" data-correct="b">
+      <p class="contextualizacao"><strong>Contextualização:</strong> Um gerente de operações solicitou à equipe de dados um relatório sobre o desempenho de vendas do último trimestre. A analista responsável passou por várias etapas: obteve os registros do sistema, removeu duplicatas e valores inconsistentes, realizou cálculos comparativos e, por fim, criou gráficos e uma narrativa explicativa para apresentar à diretoria.</p>
+      <p class="comando"><strong>Comando:</strong> A sequência percorrida pela analista corresponde ao ciclo de vida da análise de dados, que deve seguir a ordem:</p>
+      <label><input type="radio" name="q3" value="a"> Limpeza → Coleta → Comunicação → Análise → Visualização</label>
+      <label><input type="radio" name="q3" value="b"> Coleta → Limpeza → Análise → Visualização → Comunicação</label>
+      <label><input type="radio" name="q3" value="c"> Análise → Visualização → Coleta → Limpeza → Comunicação</label>
+      <label><input type="radio" name="q3" value="d"> Comunicação → Análise → Coleta → Visualização → Limpeza</label>
+      <button type="button" onclick="check(this)">Verificar</button>
+      <div class="feedback"></div>
+    </div>
+
+    <div class="qs" data-correct="d">
+      <p class="contextualizacao"><strong>Contextualização:</strong> Um aluno do curso precisou verificar sua nota na atividade avaliativa da Semana 01 e checar o registro de presença da última sexta-feira. Para isso, acessou a plataforma oficial indicada no primeiro dia de aula, onde ficam centralizados a frequência, as notas e os dados cadastrais de todos os estudantes do SENAI.</p>
+      <p class="comando"><strong>Comando:</strong> A plataforma que centraliza as informações acadêmicas dos alunos — frequência, notas e dados cadastrais — é o:</p>
+      <label><input type="radio" name="q4" value="a"> Discord</label>
+      <label><input type="radio" name="q4" value="b"> Google Meet</label>
+      <label><input type="radio" name="q4" value="c"> E-mail</label>
+      <label><input type="radio" name="q4" value="d"> Espaço do Estudante</label>
+      <button type="button" onclick="check(this)">Verificar</button>
+      <div class="feedback"></div>
+    </div>
+
+    <div class="qs" data-correct="c">
+      <p class="contextualizacao"><strong>Contextualização:</strong> Após processar dados de vendas de uma rede de lojas do Sul do Brasil, a equipe de análise identificou uma queda expressiva nos resultados após a saída de um funcionário-chave. A líder de dados transformou os números em uma frase direta para o diretor comercial: <em>"As vendas caíram 18% na região Sul após a saída de um vendedor-chave."</em></p>
+      <p class="comando"><strong>Comando:</strong> Com base no ciclo de vida da análise de dados, a frase entregue ao diretor comercial representa a etapa de:</p>
+      <label><input type="radio" name="q5" value="a"> Coleta</label>
+      <label><input type="radio" name="q5" value="b"> Limpeza</label>
+      <label><input type="radio" name="q5" value="c"> Comunicação</label>
+      <label><input type="radio" name="q5" value="d"> Visualização</label>
+      <button type="button" onclick="check(this)">Verificar</button>
+      <div class="feedback"></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Exercícios da Semana</h2>
+    <div class="ex">
+      <strong>Fácil:</strong> Liste 3 exemplos de dados que você gera no seu dia a dia (pessoal ou profissional).
+    </div>
+    <div class="ex">
+      <strong>Médio:</strong> Escolha um cenário do seu trabalho ou estudo e descreva como as 5 etapas do ciclo de análise de dados se aplicariam a ele.
+    </div>
+    <div class="ex">
+      <strong>Avançado:</strong> Pesquise uma vaga real de Analista de Dados Jr. (LinkedIn, Catho, Gupy) e identifique 3 competências exigidas que você ainda não tem — e que este curso vai te ajudar a desenvolver.
+    </div>
+    <p>Lista completa em <code>04_exercicios.md</code>.</p>
+  </section>
+
+</main>
+
+<footer>
+  Curso: Análise de Dados com Python — SENAI (Turma T5) · Semana 01<br>
+  <strong>Professor: Cláudio Ferreira Neves - Especialista em Dados</strong>
+</footer>
+
+<script>
+function check(btn){
+  const qs = btn.closest('.qs');
+  const correct = qs.getAttribute('data-correct');
+  const name = qs.querySelector('input').name;
+  const selected = qs.querySelector('input[name="' + name + '"]:checked');
+  const fb = qs.querySelector('.feedback');
+
+  if(!selected){
+    fb.className = 'feedback wrong';
+    fb.textContent = '⚠️ Selecione uma alternativa antes de verificar.';
+    return;
+  }
+
+  if(selected.value === correct){
+    fb.className = 'feedback correct';
+    fb.textContent = '✅ Correto! Muito bem.';
+  } else {
+    const correctLabel = qs.querySelector('input[value="' + correct + '"]').closest('label').textContent.trim();
+    fb.className = 'feedback wrong';
+    fb.textContent = '❌ Incorreto. A resposta certa é: ' + correctLabel;
+  }
+}
+</script>
+
+</body>
+</html>

@@ -43,6 +43,11 @@
 !notebook_colab.ipynb
 !notebook_colab_aluno.ipynb
 
+# Exceção: gabarito oficial das atividades e squads de cada semana já encerrada,
+# publicado para os alunos por pedido explícito (não é o notebook do professor
+# nem contém material de semanas ainda em andamento).
+!gabarito_das_atividades/**/*.ipynb
+
 # Pasta Professor/ inteira (qualquer semana): a partir da Semana 04, ela pode
 # conter uma cópia própria de dataset/ (csv/json/xlsx) para o notebook do
 # professor rodar sozinho — esses formatos NÃO são cobertos pelas regras de
