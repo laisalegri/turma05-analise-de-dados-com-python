@@ -39,7 +39,7 @@
 # notebook_colab_aluno.ipynb (Semana 03 em diante). Cobre gabarito_professor_*,
 # notebook_colab_professor.ipynb, gabarito_treino_squads_*.ipynb e qualquer
 # outro nome que apareça no futuro.
-*.ipynb
+# *.ipynb
 !notebook_colab.ipynb
 !notebook_colab_aluno.ipynb
 
