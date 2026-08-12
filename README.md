@@ -34,6 +34,8 @@
 Repositório de consulta da **Turma T5** durante o Módulo Básico (*Manipulação de Dados com Python e SQL*). Aqui ficam:
 
 - O material de estudo de cada semana (teoria + notebook prático)
+- O [Guia de configuração do GitHub](GUIA_GITHUB.md) — Git, GitHub e VS Code, num guia próprio sem prazo atrelado a uma aula
+- O [gabarito oficial das atividades e squads](gabarito_das_atividades/) de cada semana já encerrada
 
 ---
 
@@ -42,6 +44,11 @@ Repositório de consulta da **Turma T5** durante o Módulo Básico (*Manipulaç�
 ```
 turma05-analise-de-dados-com-python/
 ├── README.md
+├── GUIA_GITHUB.md                          ← configuração de Git/GitHub/VS Code (sem prazo de aula)
+├── gabarito_das_atividades/                ← gabarito oficial das semanas já encerradas
+│   └── Semana0X/
+│       ├── Semana0X_gabarito.html
+│       └── Semana0X_gabarito.ipynb
 ├── 01_Introducao_Fundamentos_Analise_Dados/
 │   └── Aluno/
 │       ├── html/aula_teorica.html   ← teoria + quiz interativo
@@ -70,7 +77,11 @@ turma05-analise-de-dados-com-python/
 │       ├── dataset/                        ← arquivos reais usados no notebook (CSV)
 │       ├── html/aula_teorica.html          ← teoria + quiz interativo
 │       └── notebook_colab.ipynb            ← notebook prático (abra no Google Colab)
-└── 07_..._ a 12_..._ (Semanas 07–12, liberadas ao longo do curso)
+├── 07_Visualizacao_e_Pipelines/
+│   └── Aluno/
+│       ├── html/aula_teorica.html          ← teoria + quiz interativo
+│       └── notebook_colab.ipynb            ← notebook prático (abra no Google Colab)
+└── 08_..._ a 12_..._ (Semanas 08–12, liberadas ao longo do curso)
 ```
 
 ---
@@ -87,7 +98,7 @@ Escolha a forma que preferir para acessar o material de cada semana:
 | 04 | Manipulação de Arquivos e Modularização | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/cfneves/turma05-analise-de-dados-com-python/blob/main/04_Manipulacao_Arquivos_e_Modularizacao/Aluno/notebook_colab_aluno.ipynb) | [⬇ Semana04.ipynb](https://github.com/cfneves/turma05-analise-de-dados-com-python/blob/main/04_Manipulacao_Arquivos_e_Modularizacao/Aluno/notebook_colab_aluno.ipynb) | [⬇ Semana04.html](https://github.com/cfneves/turma05-analise-de-dados-com-python/blob/main/04_Manipulacao_Arquivos_e_Modularizacao/Aluno/html/aula_teorica.html) |
 | 05 | Pandas e NumPy | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/cfneves/turma05-analise-de-dados-com-python/blob/main/05_Pandas_e_NumPy/Aluno/notebook_colab.ipynb) | [⬇ Semana05.ipynb](https://github.com/cfneves/turma05-analise-de-dados-com-python/blob/main/05_Pandas_e_NumPy/Aluno/notebook_colab.ipynb) | [⬇ Semana05.html](https://github.com/cfneves/turma05-analise-de-dados-com-python/blob/main/05_Pandas_e_NumPy/Aluno/html/aula_teorica.html) |
 | 06 | Limpeza e Transformação de Dados | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/cfneves/turma05-analise-de-dados-com-python/blob/main/06_Limpeza_e_Transformacao_de_Dados/Aluno/notebook_colab.ipynb) | [⬇ Semana06.ipynb](https://github.com/cfneves/turma05-analise-de-dados-com-python/blob/main/06_Limpeza_e_Transformacao_de_Dados/Aluno/notebook_colab.ipynb) | [⬇ Semana06.html](https://github.com/cfneves/turma05-analise-de-dados-com-python/blob/main/06_Limpeza_e_Transformacao_de_Dados/Aluno/html/aula_teorica.html) |
-| 07 | Visualização e Pipelines | *em breve* | *em breve* | *em breve* |
+| 07 | Visualização e Pipelines | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/cfneves/turma05-analise-de-dados-com-python/blob/main/07_Visualizacao_e_Pipelines/Aluno/notebook_colab.ipynb) | [⬇ Semana07.ipynb](https://github.com/cfneves/turma05-analise-de-dados-com-python/blob/main/07_Visualizacao_e_Pipelines/Aluno/notebook_colab.ipynb) | [⬇ Semana07.html](https://github.com/cfneves/turma05-analise-de-dados-com-python/blob/main/07_Visualizacao_e_Pipelines/Aluno/html/aula_teorica.html) |
 | 08 | Banco de Dados Relacionais e Não Relacionais | *em breve* | *em breve* | *em breve* |
 | 09 | Modelagem de Dados e SQL | *em breve* | *em breve* | *em breve* |
 | 10 | SQL Avançado | *em breve* | *em breve* | *em breve* |
