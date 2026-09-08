@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Semana 11 — Integração Python e SQL</title>
+<style>
+  :root{ --red:#CC0000; --red-dark:#990000; --ink:#1a1a2e; --bg:#f7f7fa; }
+  *{box-sizing:border-box;}
+  body{ margin:0; font-family:'Segoe UI', Roboto, Arial, sans-serif; background:var(--bg); color:#222; line-height:1.6; }
+  .hero{ background:linear-gradient(135deg,#0d1b2a,#1b263b,var(--red)); color:#fff; padding:60px 24px; text-align:center; }
+  .hero h1{ margin:0 0 10px; font-size:2.2rem; }
+  .hero h1 span{ color:#FFD60A; }
+  .hero p{ max-width:760px; margin:14px auto 0; font-size:1.05rem; opacity:.92; }
+  .badge{ display:inline-block; background:rgba(255,255,255,.15); border:1px solid rgba(255,255,255,.4); border-radius:20px; padding:6px 16px; margin-top:18px; font-size:.9rem; }
+  main{ max-width:980px; margin:0 auto; padding:40px 20px 80px; }
+  section{ margin-bottom:48px; }
+  h2{ color:var(--red-dark); border-bottom:3px solid var(--red); padding-bottom:8px; font-size:1.5rem; }
+  h3{ color:var(--ink); }
+  table{ width:100%; border-collapse:collapse; margin:18px 0; box-shadow:0 1px 4px rgba(0,0,0,.08); }
+  th, td{ border:1px solid #ddd; padding:10px 12px; text-align:left; font-size:.95rem; }
+  th{ background:var(--red); color:#fff; }
+  tr:nth-child(even){ background:#fafafa; }
+  .box{ background:#fff3f3; border-left:5px solid var(--red); padding:16px 20px; border-radius:6px; margin:18px 0; }
+  .box.tip{ background:#F0F7FF; border-left-color:#1565C0; }
+  .qs{ background:var(--ink); color:#eee; border-radius:10px; padding:20px 22px; margin:16px 0; }
+  .qs code{ background:rgba(255,255,255,.15); color:#E0E0E0; padding:2px 6px; border-radius:4px; font-family:Consolas, monospace; }
+  .qs label{ display:block; background:rgba(255,255,255,.06); padding:8px 12px; margin:6px 0; border-radius:6px; cursor:pointer; }
+  .qs label:hover{ background:rgba(255,255,255,.12); }
+  .qs button{ background:var(--red); color:#fff; border:none; padding:8px 18px; border-radius:6px; cursor:pointer; margin-top:10px; font-weight:bold; }
+  .qs button:hover{ background:var(--red-dark); }
+  .feedback{ margin-top:10px; padding:10px 14px; border-radius:6px; display:none; font-weight:bold; }
+  .feedback.correct{ background:#1b5e20; display:block; }
+  .feedback.wrong{ background:#7a1f1f; display:block; }
+  .ex{ background:#F0F7FF; border:1px solid #BBDEFB; border-radius:8px; padding:16px 20px; margin:14px 0; }
+  pre.codeblock{ background:var(--ink); color:#E0E0E0; padding:16px 20px; border-radius:8px; overflow-x:auto; font-family:Consolas, monospace; font-size:.9rem; margin:14px 0; }
+  pre.codeblock .c{ color:#8a8aa0; }
+  footer{ background:var(--ink); color:#ccc; text-align:center; padding:26px 16px; font-size:.9rem; }
+  footer strong{ color:#fff; }
+  @media (max-width:768px){ .hero h1{ font-size:1.6rem; } }
+  .abertura{background:#E8F5E9;border-left:5px solid #1B5E20;border-radius:8px;padding:20px 24px;margin:0 0 32px;}
+  .abertura h3{color:#1B5E20;margin:0 0 10px;font-size:1.05rem;}
+  .abertura ul,.fechamento ul{margin:8px 0 0;padding-left:22px;line-height:1.8;}
+  .checagem{background:#FFF3E0;border-left:5px solid #E65100;border-radius:6px;padding:14px 18px;margin:0 0 28px;font-size:.95rem;}
+  .checagem strong{color:#BF360C;display:block;margin-bottom:6px;}
+  .fechamento{background:#E3F2FD;border-left:5px solid #0D47A1;border-radius:8px;padding:20px 24px;margin:0 0 32px;}
+  .fechamento h3{color:#0D47A1;margin:0 0 10px;font-size:1.05rem;}
+  .topo-autor { background: #0d1b2a; color: rgba(255,255,255,0.72); font-size: 0.82em; font-weight: 500; padding: 7px 28px; text-align: left; border-bottom: 1px solid rgba(255,255,255,0.08); letter-spacing: 0.01em; }
+  .checklist{margin:8px 0 0;padding-left:22px;line-height:1.9;}
+</style>
+</head>
+<body>
+
+<div class="topo-autor">Professor: Cláudio Ferreira Neves - Especialista em Dados</div>
+<div class="hero">
+  <h1>Semana 11 · <span>Integração Python e SQL</span></h1>
+  <p>Unidade Curricular: <strong>Manipulação de Dados com Python e SQL</strong> (150h) — Bloco 5, Semana 11. Você instala e configura o ambiente do zero, conecta o Python direto a um banco de dados com <code>pyodbc</code>, e executa o CRUD completo (Create, Read, Update, Delete) por código.</p>
+  <span class="badge">3 encontros · 9h · pyodbc, driver ODBC, CRUD via Python</span>
+</div>
+
+<main>
+
+  <section>
+    <h2>Competência da Unidade Curricular</h2>
+    <div class="box tip">
+      "Desenvolver competências em lógica de programação com Python, modelagem de dados com SQL e NoSQL e utilização de bibliotecas específicas para manipulação, transformação e visualização de dados, apoiando processos de análise de dados."
+    </div>
+    <p>Nas Semanas 08 a 10 você dominou o SQL dentro do PostgreSQL usando <code>psycopg2</code> — uma biblioteca específica para esse banco. Esta semana muda a pergunta: existe uma forma de conectar Python a <strong>qualquer</strong> banco relacional (SQL Server, MySQL, Oracle, SQLite), sem trocar de biblioteca a cada projeto? A resposta é o padrão <strong>ODBC</strong>, acessado pelo Python através da biblioteca <code>pyodbc</code>.</p>
+    <div class="box">
+      <strong>🧠 Por que praticar com SQLite?</strong> Para focar na técnica de conexão (que é igual pra qualquer banco), esta semana usa dois bancos SQLite reais e prontos: um catálogo de loja de mídia digital (<strong>Chinook</strong> — álbuns, artistas, clientes) e uma base pública de salários municipais (<strong>SF Salaries</strong>). São bancos de verdade, com dados de verdade — só não exigem instalar um servidor completo pra você praticar.
+    </div>
+  </section>
+
+  <div class="abertura">
+    <h3>🟢 Abertura — o que você vai aprender nesta semana</h3>
+    <ul>
+      <li>Instalar e configurar do zero o que o Python precisa pra conversar com um banco de dados (biblioteca + driver)</li>
+      <li>Entender quando faz sentido integrar Python e SQL, em vez de usar só um dos dois</li>
+      <li>Conectar o Python a um banco com <code>pyodbc</code> de ponta a ponta: conexão → cursor → execução → encerramento</li>
+      <li>Fazer o CRUD completo por código: <code>INSERT</code>, duas formas de <code>SELECT</code>, <code>UPDATE</code> e <code>DELETE</code></li>
+    </ul>
+  </div>
+
+  <section>
+    <h2>1. Instalação e Configuração: preparando seu computador</h2>
+    <p>Diferente de semanas anteriores, aqui não basta um <code>pip install</code>. Você precisa de <strong>2 coisas</strong> antes de escrever qualquer código de conexão:</p>
+    <table>
+      <tr><th>O quê</th><th>Como se instala</th></tr>
+      <tr><td>Biblioteca <code>pyodbc</code></td><td><code>%pip install pyodbc</code> — normal, como qualquer biblioteca Python</td></tr>
+      <tr><td>Driver ODBC do SQLite</td><td>Um programa do <strong>Windows</strong>, baixado do site do fabricante e instalado como qualquer outro programa — <code>pip</code> não instala isso</td></tr>
+    </table>
+    <div class="box">
+      <strong>⚠️ Erro real que você vai ver antes de instalar:</strong> se você rodar <code>import pyodbc</code> sem ter instalado a biblioteca, o Python devolve exatamente isto:
+    </div>
+    <pre class="codeblock"><span class="c">&gt;&gt;&gt; import pyodbc</span>
+ModuleNotFoundError: No module named 'pyodbc'</pre>
+    <p>Isso não é um bug — é o Python te dizendo, com precisão, que aquela biblioteca ainda não existe no seu computador. Resolve-se instalando, nunca "corrigindo" o código.</p>
+    <p>O driver ODBC do SQLite se baixa em <strong>http://www.ch-werner.de/sqliteodbc/</strong> (escolha a versão de <strong>64 bits</strong> — o nome do arquivo de 32 bits tem "_w32", é o erro mais comum aqui). Depois de instalar e reiniciar o VS Code, confirme com:</p>
+    <pre class="codeblock"><span class="c">-- deve aparecer "SQLite3 ODBC Driver" na lista</span>
+import pyodbc
+print(pyodbc.drivers())</pre>
+    <div class="box tip">
+      <strong>💡 Isso é trabalho de uma vez só.</strong> Depois que o driver aparece na lista, você não precisa reinstalar em nenhum outro notebook desta semana — é uma configuração do computador, não do projeto.
+    </div>
+  </section>
+
+  <section>
+    <h2>2. Por que integrar Python e SQL?</h2>
+    <p>A integração entre Python e SQL permite executar comandos SQL diretamente pelo seu código, dentro do banco de dados — e já trazer o resultado pronto pra dentro de uma análise, sem sair do script.</p>
+    <table>
+      <tr><th>Situação</th><th>O que usar</th></tr>
+      <tr><td>Só consultar/alterar dados manualmente</td><td>SQL direto numa ferramenta de banco</td></tr>
+      <tr><td>Um sistema, automação ou análise precisa ler/escrever sozinho</td><td>Python + SQL</td></tr>
+    </table>
+    <div class="box tip">
+      <strong>💡 Guarde esta ideia:</strong> o <code>pyodbc</code> funciona com a mesma estrutura de código pra vários bancos diferentes (SQL Server, MySQL, Oracle, SQLite) — só o driver muda. O que você aprender aqui vale pra qualquer um deles.
+    </div>
+  </section>
+
+  <section>
+    <h2>3. Conectando ao banco com pyodbc</h2>
+    <p>Toda conexão com <code>pyodbc</code> segue o mesmo caminho, em 3 etapas: <strong>conectar → criar um cursor → executar comandos SQL</strong>.</p>
+    <pre class="codeblock"><span class="c">-- modelo genérico de conexão</span>
+dados_conexao = ("Driver={Seu_Driver};"
+                "Server=SeuServidor;"
+                "Database=NomeDoBanco;")</pre>
+    <table>
+      <tr><th>Peça</th><th>Papel</th></tr>
+      <tr><td><code>Driver={...}</code></td><td>Só este campo usa chaves <code>{ }</code> — exigência do ODBC, porque nomes de driver costumam ter espaço (ex: "SQLite3 ODBC Driver")</td></tr>
+      <tr><td><code>Server</code></td><td>Em bancos com servidor (como o PostgreSQL), é o endereço da máquina. No SQLite (sem servidor) o campo existe só porque o formato exige, mas não tem efeito real</td></tr>
+      <tr><td><code>Database</code></td><td>No SQLite, é o caminho do arquivo <code>.sqlite</code>/<code>.db</code></td></tr>
+    </table>
+    <pre class="codeblock"><span class="c">-- conexão real, cursor e primeira consulta</span>
+import pyodbc
+
+dados_conexao = ("Driver={SQLite3 ODBC Driver};"
+            "Server=localhost;"
+            "Database=dataset/salarios.sqlite;")
+
+conexao = pyodbc.connect(dados_conexao)
+cursor = conexao.cursor()
+
+cursor.execute("SELECT * FROM Salaries")
+valores = cursor.fetchall()
+
+cursor.close()
+conexao.close()</pre>
+    <div class="box">
+      <strong>⚠️ Sempre feche cursor e conexão</strong> ao terminar — isso libera o arquivo do banco pra outros programas e evita erros de "arquivo em uso" na próxima conexão.
+    </div>
+  </section>
+
+  <section>
+    <h2>4. Create — inserindo dados (INSERT)</h2>
+    <p>O C do CRUD. O comando <code>INSERT INTO</code> cria uma linha nova numa tabela — aqui, um álbum novo no banco <code>chinook.db</code> (catálogo de uma loja de mídia digital).</p>
+    <pre class="codeblock"><span class="c">-- inserindo um álbum novo, associado a um artista já cadastrado</span>
+cursor.execute('''
+INSERT INTO albums (Title, ArtistId)
+VALUES
+('Lira Rock', 4)
+''')
+
+conexao.commit()</pre>
+    <div class="box">
+      <strong>⚠️ <code>conexao.commit()</code> é obrigatório</strong> depois de qualquer INSERT/UPDATE/DELETE — sem ele, a alteração fica só na memória e nunca é salva de verdade no arquivo do banco. (O <code>pyodbc</code> também aceita <code>cursor.commit()</code>, que faz exatamente a mesma coisa — este material usa sempre <code>conexao.commit()</code>, pra não ter dúvida de qual dos dois usar.)
+    </div>
+  </section>
+
+  <section>
+    <h2>5. Read — duas formas de consultar</h2>
+    <p>Existem 2 formas de trazer um resultado de volta pro Python:</p>
+    <table>
+      <tr><th>Forma</th><th>Como funciona</th></tr>
+      <tr><td>Manual</td><td><code>cursor.execute()</code> + <code>cursor.fetchall()</code> — você monta o DataFrame a partir do resultado, usando <code>cursor.description</code> pra pegar os nomes das colunas</td></tr>
+      <tr><td>Direto com Pandas</td><td><code>pd.read_sql("SQL", conexao)</code> — o Pandas já devolve um DataFrame pronto, numa linha só</td></tr>
+    </table>
+    <pre class="codeblock"><span class="c">-- forma manual</span>
+cursor.execute("SELECT * FROM customers")
+valores = cursor.fetchall()
+descricao = cursor.description
+cursor.close()
+
+colunas = [tupla[0] for tupla in descricao]
+tabela = pd.DataFrame.from_records(valores, columns=colunas)</pre>
+    <pre class="codeblock"><span class="c">-- forma direta, com o modulo nativo sqlite3 (sem precisar do driver ODBC)</span>
+import sqlite3
+conexao = sqlite3.connect("dataset/chinook.db")
+tabela = pd.read_sql("SELECT * FROM customers", conexao)</pre>
+    <div class="box tip">
+      <strong>💡 Se o <code>sqlite3</code> nativo já lê o arquivo sem instalar nada, por que instalar <code>pyodbc</code> + driver?</strong> Esse atalho só existe porque o banco É um arquivo SQLite. Num SQL Server, MySQL ou no PostgreSQL das Semanas 08-10, esse módulo nativo não serve — você precisaria do <code>pyodbc</code> (ou do <code>psycopg2</code>, específico do Postgres) do mesmo jeito. O Passo de instalação vale pra qualquer banco real que você usar depois do curso.
+    </div>
+  </section>
+
+  <section>
+    <h2>6. Update — atualizando registros</h2>
+    <p>O comando <code>UPDATE</code> altera valores de linhas que já existem.</p>
+    <pre class="codeblock"><span class="c">-- corrigindo o e-mail de um cliente</span>
+cursor.execute('''
+UPDATE customers SET Email='lira@embraer.com.br' WHERE Email='luisg@embraer.com.br'
+''')
+
+conexao.commit()</pre>
+  </section>
+
+  <section>
+    <h2>7. Delete — removendo registros</h2>
+    <p>O comando <code>DELETE</code> remove linhas inteiras de uma tabela.</p>
+    <pre class="codeblock"><span class="c">-- removendo um álbum pelo Id</span>
+cursor.execute('''
+DELETE FROM albums WHERE AlbumId=2
+''')
+
+conexao.commit()</pre>
+    <div class="box">
+      <strong>⚠️ Cuidado com o <code>DELETE</code> sem <code>WHERE</code></strong> — sem essa cláusula, o comando apaga a tabela inteira, não só uma linha.
+    </div>
+  </section>
+
+  <div class="checagem">
+    <strong>✅ Antes de seguir para a Semana 12, confirme:</strong>
+    Você sabe instalar/configurar o `pyodbc` + driver do zero, conectar num banco SQLite de ponta a ponta, e rodar Create, Read (das 2 formas), Update e Delete por código.
+  </div>
+
+  <section>
+    <h2>Quiz de Fixação</h2>
+    <p>Responda e clique em <strong>Verificar</strong> para ver o feedback de cada questão.</p>
+
+    <div class="qs" data-correct="b">
+      <p><strong>1.</strong> Por que o erro <code>ModuleNotFoundError: No module named 'pyodbc'</code> aparece antes da instalação?</p>
+      <label><input type="radio" name="q1" value="a"> Porque o código tem um erro de sintaxe</label>
+      <label><input type="radio" name="q1" value="b"> Porque a biblioteca ainda não foi instalada nesse computador</label>
+      <label><input type="radio" name="q1" value="c"> Porque o banco de dados está desligado</label>
+      <label><input type="radio" name="q1" value="d"> Porque falta o driver ODBC, não a biblioteca</label>
+      <button type="button" onclick="check(this)">Verificar</button>
+      <div class="feedback"></div>
+    </div>
+
+    <div class="qs" data-correct="c">
+      <p><strong>2.</strong> Por que só o campo <code>Driver</code> fica entre chaves <code>{ }</code> na string de conexão?</p>
+      <label><input type="radio" name="q2" value="a"> É só um estilo, poderia ser em qualquer campo</label>
+      <label><input type="radio" name="q2" value="b"> Porque o SQLite exige isso</label>
+      <label><input type="radio" name="q2" value="c"> Porque nomes de driver costumam ter espaço, e as chaves marcam onde ele começa e termina</label>
+      <label><input type="radio" name="q2" value="d"> Porque é um valor obrigatório, diferente dos outros</label>
+      <button type="button" onclick="check(this)">Verificar</button>
+      <div class="feedback"></div>
+    </div>
+
+    <div class="qs" data-correct="b">
+      <p><strong>3.</strong> O que acontece se você esquecer o <code>commit()</code> depois de um <code>INSERT</code>?</p>
+      <label><input type="radio" name="q3" value="a"> O Python trava</label>
+      <label><input type="radio" name="q3" value="b"> A alteração não é salva de verdade no arquivo do banco</label>
+      <label><input type="radio" name="q3" value="c"> A tabela é apagada</label>
+      <label><input type="radio" name="q3" value="d"> Nada — commit é opcional no pyodbc</label>
+      <button type="button" onclick="check(this)">Verificar</button>
+      <div class="feedback"></div>
+    </div>
+
+    <div class="qs" data-correct="d">
+      <p><strong>4.</strong> Qual comando é perigoso rodar sem uma cláusula <code>WHERE</code>?</p>
+      <label><input type="radio" name="q4" value="a"> SELECT</label>
+      <label><input type="radio" name="q4" value="b"> INSERT</label>
+      <label><input type="radio" name="q4" value="c"> Nenhum, o WHERE é só opcional</label>
+      <label><input type="radio" name="q4" value="d"> DELETE (e também UPDATE)</label>
+      <button type="button" onclick="check(this)">Verificar</button>
+      <div class="feedback"></div>
+    </div>
+
+    <div class="qs" data-correct="a">
+      <p><strong>5.</strong> Qual a diferença entre ler com <code>cursor.fetchall()</code> e com <code>pd.read_sql()</code>?</p>
+      <label><input type="radio" name="q5" value="a"> fetchall() devolve uma lista de tuplas; read_sql() já devolve um DataFrame pronto</label>
+      <label><input type="radio" name="q5" value="b"> São exatamente a mesma coisa, com nomes diferentes</label>
+      <label><input type="radio" name="q5" value="c"> fetchall() só funciona com PostgreSQL</label>
+      <label><input type="radio" name="q5" value="d"> read_sql() não aceita comandos SELECT</label>
+      <button type="button" onclick="check(this)">Verificar</button>
+      <div class="feedback"></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Exercícios da Semana</h2>
+    <div class="ex"><strong>Create:</strong> a Chinook Records fechou uma parceria para remasterizar álbuns antigos. Insira em <code>albums</code> um registro com <code>Title = 'Back in Black (Remaster)'</code> e <code>ArtistId = 1</code> (AC/DC), e confirme com um SELECT.</div>
+    <div class="ex"><strong>Read:</strong> o time de suporte quer uma lista de nome e e-mail de todos os clientes brasileiros. Consulte <code>FirstName</code>, <code>LastName</code> e <code>Email</code> em <code>customers</code> onde <code>Country = 'Brazil'</code>.</div>
+    <div class="ex"><strong>Update:</strong> o cliente de <code>CustomerId</code> 2 mudou de cidade para <code>'Berlin'</code>. Atualize a coluna <code>City</code> e confirme.</div>
+    <div class="ex"><strong>Delete:</strong> a parceria de remasterização foi cancelada — remova o álbum <code>'Back in Black (Remaster)'</code> que você criou no exercício de Create.</div>
+    <p>Essas 4 atividades estão no <code>notebook_colab_aluno.ipynb</code> desta semana, prontas pra você resolver direto no código.</p>
+  </section>
+
+  <div class="fechamento">
+    <h3>🏁 Fechamento — Semana 11</h3>
+    <p><strong>Nesta semana você aprendeu:</strong></p>
+    <ul>
+      <li>Instalar e configurar do zero o que o Python precisa pra falar com um banco de dados</li>
+      <li>Por que integrar Python e SQL, e quando vale a pena</li>
+      <li>Conectar com <code>pyodbc</code> de ponta a ponta: conexão → cursor → execução → encerramento</li>
+      <li>Fazer o CRUD completo por código: Create, Read (2 formas), Update e Delete</li>
+    </ul>
+    <p><strong>Próxima semana:</strong> a Semana 12 usa essa mesma técnica de conexão para consolidar dados de fontes diferentes num pipeline de ETL completo.</p>
+  </div>
+
+</main>
+
+<footer>
+  Curso: Análise de Dados com Python — SENAI (Turma T5) · Semana 11<br>
+  <strong>Professor: Cláudio Ferreira Neves - Especialista em Dados</strong>
+</footer>
+
+<script>
+function check(btn){
+  const qs = btn.closest('.qs');
+  const correct = qs.getAttribute('data-correct');
+  const name = qs.querySelector('input').name;
+  const selected = qs.querySelector('input[name="' + name + '"]:checked');
+  const fb = qs.querySelector('.feedback');
+  if(!selected){ fb.className = 'feedback wrong'; fb.textContent = '⚠️ Selecione uma alternativa antes de verificar.'; return; }
+  if(selected.value === correct){ fb.className = 'feedback correct'; fb.textContent = '✅ Correto! Muito bem.'; }
+  else {
+    const correctLabel = qs.querySelector('input[value="' + correct + '"]').closest('label').textContent.trim();
+    fb.className = 'feedback wrong'; fb.textContent = '❌ Incorreto. A resposta certa é: ' + correctLabel;
+  }
+}
+</script>
+
+</body>
+</html>
