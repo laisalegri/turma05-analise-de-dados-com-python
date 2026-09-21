@@ -73,6 +73,13 @@
 # mesmo jeito que uma pasta ignorada não é "designorada" por exceção de extensão.
 **/Professor/
 
+# Pasta gerada ao rodar o segundo bônus de ETL da Semana 11
+# (notebook_bonus_etl_medalhao.ipynb) — simula bronze/prata/ouro escrevendo
+# CSVs de verdade dentro do projeto do aluno. É saída de rodar a atividade
+# (não insumo), então nunca deve subir pro GitHub — mesmo raciocínio do
+# **/Professor/ acima, mas aqui é o próprio aluno gerando localmente.
+**/etl_medalhao/
+
 # Checkpoints e cache do Jupyter/Colab
 .ipynb_checkpoints/
 **/.ipynb_checkpoints/
