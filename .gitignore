@@ -80,6 +80,24 @@
 # **/Professor/ acima, mas aqui é o próprio aluno gerando localmente.
 **/etl_medalhao/
 
+# Semana 13: o notebook do aluno baixa os CSVs do Portal da Transparência
+# (~500 MB) para Aluno/data/. É insumo baixado localmente, nunca vai pro GitHub.
+13_Projeto_Avaliativo_Pipeline_ETL/Aluno/data/
+
+# Projetos avaliativos resolvidos (Mini-Projeto M1S07 e Projeto Final): só a
+# pasta Aluno/ de cada um é publicada. O resto (entregas e clones dos alunos,
+# correções com notas, enunciados em PDF, dados brutos, Professor/) fica local.
+/T5_miniprojeto/*
+!/T5_miniprojeto/Aluno/
+/T5_miniprojeto/Aluno/df_limpo.csv
+/T5_Projeto_Final/*
+!/T5_Projeto_Final/Aluno/
+!/T5_Projeto_Final/Aluno/3_analise.ipynb
+/T5_Projeto_Final/Aluno/data/
+
+# Credenciais (o modelo .env.example continua publicado)
+**/.env
+
 # Checkpoints e cache do Jupyter/Colab
 .ipynb_checkpoints/
 **/.ipynb_checkpoints/

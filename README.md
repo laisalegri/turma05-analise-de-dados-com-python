@@ -87,7 +87,11 @@ turma05-analise-de-dados-com-python/
 │       ├── img/                            ← diagramas (SVG) de modelagem relacional e NoSQL
 │       ├── html/aula_teorica.html          ← teoria + quiz interativo
 │       └── notebook_colab_aluno.ipynb      ← notebook prático (abra no Google Colab)
-└── 09_..._ a 12_..._ (Semanas 09–12, liberadas ao longo do curso)
+├── 09_..._ a 12_..._ (Semanas 09–12, liberadas ao longo do curso)
+├── T5_miniprojeto/
+│   └── Aluno/                              ← Mini-Projeto M1S07 resolvido (notebook + dataset/ + README)
+└── T5_Projeto_Final/
+    └── Aluno/                              ← Projeto Final: pipeline ETL (scripts + notebooks + README)
 ```
 
 ---
@@ -114,6 +118,19 @@ Escolha a forma que preferir para acessar o material de cada semana:
 > **⬇ SemanaNNN.ipynb** e **⬇ SemanaNNN.html** — abrem a página do arquivo no GitHub. Para baixar: clique no ícone **⬇** (*Download raw file*) no **canto superior direito** da página.
 > Após baixar: abra o `.ipynb` no Colab ou VS Code; abra o `.html` no navegador (funciona offline).
 > **📄 Apostilas** — abre a pasta com os PDFs de referência daquela semana; clique em cada arquivo e depois no ícone **⬇** pra baixar.
+
+---
+
+## Projetos resolvidos
+
+Os dois projetos avaliativos do Módulo 1, prontos para você **executar na sua máquina** e estudar cada etapa. Cada pasta tem um `README.md` com os comandos.
+
+| Projeto | O que faz | Onde roda | Pasta |
+|---|---|---|---|
+| **Mini-Projeto (M1S07)** — Análise Exploratória da base Varejo | lê 830 mil itens de compras com `csv.DictReader` e Pandas, limpa (nulos, `#N/D`, duplicatas, datas), valida o `CO_ID`, calcula estatísticas, agrupa e conclui | VS Code ou [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/cfneves/turma05-analise-de-dados-com-python/blob/main/T5_miniprojeto/Aluno/notebook_colab_aluno.ipynb) | [📁 T5_miniprojeto/Aluno](https://github.com/cfneves/turma05-analise-de-dados-com-python/tree/main/T5_miniprojeto/Aluno) |
+| **Projeto Final (M1S13)** — Pipeline ETL de Viagens a Serviço | baixa os dados do Portal da Transparência e monta as camadas Raw, Silver e Gold no PostgreSQL, com 7 perguntas de negócio e gráficos | VS Code + PostgreSQL local | [📁 T5_Projeto_Final/Aluno](https://github.com/cfneves/turma05-analise-de-dados-com-python/tree/main/T5_Projeto_Final/Aluno) |
+
+> Para baixar uma pasta inteira: na página inicial do repositório, clique em **Code → Download ZIP**, descompacte e abra a pasta do projeto no VS Code (**File → Open Folder**).
 
 ---
 
