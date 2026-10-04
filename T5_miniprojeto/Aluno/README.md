@@ -41,6 +41,7 @@ pip install pandas matplotlib
 | 3 | diagnóstico: nulos por coluna, duplicatas e `#N/D` |
 | 4 | remoção das 4 colunas 100% vazias (`dropna(axis=1, how="all")`) |
 | 5 | categoria vazia vira `"Sem Categoria"` com uma função `if/else` |
+| 5.1 | textos padronizados com métodos e expressão regular (`re.sub`) e inteiros validados (`re.fullmatch`); corrige `REFRIGERANTE LIMaO` |
 | 6 | remoção de 96.553 linhas duplicadas (`drop_duplicates()`) |
 | 7 | data de texto para data com o módulo `datetime` (`strptime`) |
 | 8 | regra de negócio: cada `CO_ID` é 1 compra, de 1 cliente, em 1 data |
@@ -63,6 +64,30 @@ Esta base mostra por que o diagnóstico vem antes da limpeza. O `isna()` diz que
 4. O movimento por dia **cresceu**: de 50,9 compras por dia em 2019 para 62,5 em 2022. Comparar totais por ano engana, porque cada ano tem uma quantidade diferente de dias registrados.
 5. Cada `CO_ID` é uma compra com 1 cliente e 1 data (18.471 compras, média de 39,7 itens): contar linhas é contar itens, e não compras.
 6. **Problemas remanescentes:** não há coluna de quantidade nem de valor, as datas não cobrem todos os dias do ano, e 3.228 itens continuam "Sem Categoria" até o cadastro de produtos ser corrigido na origem.
+
+## Rubrica: onde cada critério é atendido
+
+| Critério da rubrica | Pontos | Onde está |
+|---|---:|---|
+| 1. Versionamento: arquivos organizados + README com a reflexão sobre ETL e qualidade de dados | 1,25 | este README (seção "Reflexão") e a pasta com notebook e `dataset/` |
+| 2. Documentação: README com 3 a 6 tópicos de insights | 1,25 | este README (seção "Conclusões", 6 tópicos) |
+| 3. Leitura estruturada e nativa com `csv.DictReader` | 1,50 | Passo 1 |
+| 4. `if/else` para "Sem Categoria" + nulos tratados com justificativa | 1,50 | Passos 4 e 5 |
+| 5. Regra do número da compra (`CO_ID`) validada + data convertida com `datetime` | 1,50 | Passos 7 e 8 |
+| 6. Pelo menos dois agrupamentos (`groupby()`) | 1,50 | Passos 10 a 12 (três agrupamentos) |
+| 7. Estatísticas de `CL_FHL`: média, mediana, desvio padrão, moda, máximo, mínimo, contagem e quartis | 1,50 | Passo 9 |
+
+As Sprints do enunciado também estão cobertas: importação (Passo 1), limpeza de texto e inteiros com expressão regular (Passo 5.1), nulos, duplicatas e datas (Passos 4 a 7), estatística descritiva (Passo 9) e relatório com contadores (Passo 14).
+
+## Na sua entrega
+
+Este projeto resolvido fica dentro do repositório da turma. Na **sua** entrega, o enunciado pede também:
+
+- um repositório **público** na sua conta do GitHub, com o nome `Miniprojeto_NomeAluno_Analise_de_Dados_T5`;
+- **vários commits**, mostrando o progresso do trabalho (não envie tudo num único commit final);
+- o arquivo `README_NomeDoAluno_Turma.md` com as instruções de execução, além do `README.md`;
+- o script (ou o notebook), o `README.md` e o **`df_limpo.csv`** gerado pelo seu código (Sprint 6); o `df_limpo.csv` tem cerca de 44 MB e cabe no GitHub, que só recusa arquivos acima de 100 MB;
+- o link do repositório enviado na tarefa do AVA.
 
 ---
 *Prof. Especialista Cláudio F. Neves*

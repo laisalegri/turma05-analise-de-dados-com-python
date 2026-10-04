@@ -133,5 +133,45 @@ Três achados da camada Silver que ajudam a ler as respostas com cuidado:
 - **Qualidade:** incluir testes automáticos das funções de conversão e mais validações Raw × Silver.
 - **Automação:** agendar a execução do pipeline e incluir os meses seguintes do ano.
 
+## Versionamento com Git: branches e commits
+
+Este projeto de referência fica dentro do repositório da turma. No **seu** repositório, o critério 1 da rubrica (1,5 ponto) pede **uma branch por funcionalidade**, com nomes padronizados, e **commits separados**, com mensagens curtas no imperativo ("implementa X", "corrige Y"). Um fluxo que atende o critério, uma branch por fase do pipeline:
+
+| Branch | O que entra nela | Exemplos de commit |
+|---|---|---|
+| `main` | estrutura inicial e cada fase já concluída (via merge) | `cria estrutura do projeto e .gitignore` |
+| `feature/fase0-banco` | `0_criar_banco.sql` | `cria tabelas raw` · `cria tabelas silver com PK, FK e constraints` |
+| `feature/fase1-extracao` | `1_extrair.py` | `implementa download do zip` · `implementa carga raw em blocos com TRUNCATE` |
+| `feature/fase2-transformacao` | `2_transformar.py` | `implementa conversão de decimais e datas` · `calcula valor_total e duracao_dias` |
+| `feature/fase3-analise` | `3_analise.ipynb` | `cria camada gold com JOIN e GROUP BY` · `responde perguntas 1 a 7 com gráficos` |
+| `docs/readme` | `README.md` | `documenta execução, decisões e conclusões` |
+
+Os comandos para cada funcionalidade:
+
+```bash
+git checkout -b feature/fase1-extracao   # cria a branch e entra nela
+git add 1_extrair.py
+git commit -m "implementa download do zip"
+git push -u origin feature/fase1-extracao
+git checkout main
+git merge feature/fase1-extracao          # leva a fase pronta para a main
+git push
+```
+
+Nunca faça commit do `.env` (a senha) nem da pasta `data/`: o `.gitignore` já impede os dois.
+
+## Rubrica: onde cada critério é atendido
+
+| Critério | Pontos | Onde está |
+|---|---:|---|
+| 1. Versionamento com branches e commits | 1,5 | no seu repositório, seguindo a seção anterior |
+| 2. Organização dos arquivos (`.sql`, `.py` e `README.md`) | 1,0 | arquivos numerados pela ordem de execução (seção "Estrutura do repositório") |
+| 3. Extração e camada Raw: download + carga, `try/except`, sem duplicar em reexecuções | 0,5 | `1_extrair.py` (`requests`, `TRUNCATE`, `try/except` + `rollback()`) |
+| 4. Tipagem e limpeza: todos os campos convertidos | 1,0 | `2_transformar.py` (`texto_para_decimal`, `texto_para_data`, inteiros) + conferência Raw × Silver |
+| 5. Camada Gold com `JOIN` + `GROUP BY` (tabela e view) | 1,0 | `3_analise.ipynb`, Parte B (`gold_*` e `vw_gold_*`) |
+| 6. Perguntas de negócio respondidas com evidências | 1,5 | `3_analise.ipynb` (7 perguntas: consulta, tabela, gráfico e conclusão) e seção "Perguntas de negócio" acima |
+| 7. Gráficos com título, eixos nomeados e legenda | 1,5 | os 7 gráficos do `3_analise.ipynb` |
+| 8. Modelagem Silver: PK, FK e constraints | 2,0 | `0_criar_banco.sql` (4 PK, 3 FK e as 8 constraints do enunciado, dentro do `CREATE TABLE`) |
+
 ---
 *Projeto de referência do curso Análise de Dados com Python — Prof. Especialista Cláudio F. Neves*
