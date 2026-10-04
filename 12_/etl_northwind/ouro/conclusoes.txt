@@ -1,0 +1,10 @@
+RELATÓRIO DE VENDAS - NORTHWIND (camada Ouro)
+
+1. A receita total analisada é de R$ 1.032.444,79.
+2. Dairy Products lidera com R$ 230.951,17; as duas maiores categorias somam 44.7% da receita.
+3. Meat/Poultry é a categoria de menor receita, com R$ 21.994,89.
+4. O maior ticket médio por pedido é de Beverages: R$ 949,23.
+5. O melhor mês completo foi 1998-03, com R$ 95.970,04.
+6. O maior cliente é QUICK-Stop (Germany), com R$ 97.398,81.
+7. Os 10 maiores clientes concentram 44.6% da receita - risco de dependência a acompanhar.
+8. Atenção: o mês 1998-05 está incompleto (última venda em 04/05/1998) e não deve ser comparado.
