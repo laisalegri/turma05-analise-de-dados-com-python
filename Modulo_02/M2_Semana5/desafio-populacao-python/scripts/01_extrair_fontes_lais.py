@@ -65,7 +65,7 @@ def extrair_estados_api() -> pd.DataFrame:
    print(f"------------------------------------------------------")
    print(estados_api.head(5))
    print(f"\nNa API do IBGE retorna {len(estados_api)} estados.")
-
+   return estados_api
 
 def extrair_populacao_wikipedia() -> pd.DataFrame:
     response = requests.get(

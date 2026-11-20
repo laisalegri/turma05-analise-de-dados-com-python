@@ -31,3 +31,6 @@
 -- TODO: INSERT ... ON CONFLICT (sigla, ano_referencia) DO UPDATE ...
 
 -- TODO: SELECT "depois"
+UPDATE dw_populacao.dim_estado_scd2
+SET nome_estado = 'Pernambuco'
+WHERE sigla = 'PE';
